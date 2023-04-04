@@ -145,6 +145,78 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/04/%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85python%E7%9A%84%E5%BA%93%E5%8F%8A%E4%BE%9D%E8%B5%96%E5%BA%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李治澎">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="随笔">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/04/04/%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85python%E7%9A%84%E5%BA%93%E5%8F%8A%E4%BE%9D%E8%B5%96%E5%BA%93/" class="post-title-link" itemprop="url">Untitled</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-04-04 20:36:36" itemprop="dateCreated datePublished" datetime="2023-04-04T20:36:36+08:00">2023-04-04</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <hr>
+<h2 id="title-离线安装python的库及依赖库"><a href="#title-离线安装python的库及依赖库" class="headerlink" title="title:离线安装python的库及依赖库"></a>title:离线安装python的库及依赖库</h2><p>面对服务器上无法连接互联网，没有办法直接用pip安装所需要的库的情况，可以现在本地下载所有需要的库和库的依赖，然后上传到服务器，通过pip命令安装。</p>
+<p>具体操作如下：</p>
+<ol>
+<li>首先使用pip的download的功能下载所有需要的库</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pip download -d ./path torch -i https://pypi.mirrors.ustc.edu.cn/simple/</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><p>将./path文件上传到服务器</p>
+</li>
+<li><p>在服务器上安装</p>
+</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pip install --no-index --find-links=./path torch</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/02/%E5%B0%8F%E6%98%8E%E4%B8%8E%E7%8E%8B%E7%8C%AB/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -347,7 +419,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-count">3</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
