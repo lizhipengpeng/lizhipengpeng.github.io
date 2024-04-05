@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="大模型可用数据集 huggfaceing数据集仓库: https:&#x2F;&#x2F;huggingface.co&#x2F;datasets   包含了自然语言处理、计算机视觉、语音、多模态等数据集，内置100多个多语言公共数据集下载   ModelScope数据集仓库:https:&#x2F;&#x2F;modelscope.cn&#x2F;datasets   提供了覆盖自然语言处理、计算机视觉、语音、多模态等数据集，更有阿里巴巴集团贡献的专业领">
+<meta property="og:type" content="article">
+<meta property="og:title" content="随笔">
+<meta property="og:url" content="http://example.com/2023/08/15/LLM_data/index.html">
+<meta property="og:site_name" content="随笔">
+<meta property="og:description" content="大模型可用数据集 huggfaceing数据集仓库: https:&#x2F;&#x2F;huggingface.co&#x2F;datasets   包含了自然语言处理、计算机视觉、语音、多模态等数据集，内置100多个多语言公共数据集下载   ModelScope数据集仓库:https:&#x2F;&#x2F;modelscope.cn&#x2F;datasets   提供了覆盖自然语言处理、计算机视觉、语音、多模态等数据集，更有阿里巴巴集团贡献的专业领">
+<meta property="og:locale">
+<meta property="og:image" content="http://example.com/home/killer/Pictures/%E6%88%AA%E5%9B%BE/2023-05-01_11-18.png">
+<meta property="og:image" content="http://example.com/home/killer/Pictures/%E6%88%AA%E5%9B%BE/2023-05-01_11-20.png">
+<meta property="article:published_time" content="2023-08-15T13:30:49.014Z">
+<meta property="article:modified_time" content="2023-10-26T02:10:47.747Z">
+<meta property="article:author" content="李治澎">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/home/killer/Pictures/%E6%88%AA%E5%9B%BE/2023-05-01_11-18.png">
+
+<link rel="canonical" href="http://example.com/2023/08/15/LLM_data/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title> | 随笔</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">随笔</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/08/15/LLM_data/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李治澎">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="随笔">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-08-15 21:30:49" itemprop="dateCreated datePublished" datetime="2023-08-15T21:30:49+08:00">2023-08-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-10-26 10:10:47" itemprop="dateModified" datetime="2023-10-26T10:10:47+08:00">2023-10-26</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="大模型可用数据集"><a href="#大模型可用数据集" class="headerlink" title="大模型可用数据集"></a>大模型可用数据集</h2><ol>
+<li>huggfaceing数据集仓库: <a target="_blank" rel="noopener" href="https://huggingface.co/datasets">https://huggingface.co/datasets</a></li>
+</ol>
+<ul>
+<li>包含了自然语言处理、计算机视觉、语音、多模态等数据集，内置100多个多语言公共数据集下载</li>
+</ul>
+<ol start="2">
+<li>ModelScope数据集仓库:<a target="_blank" rel="noopener" href="https://modelscope.cn/datasets">https://modelscope.cn/datasets</a></li>
+</ol>
+<ul>
+<li>提供了覆盖自然语言处理、计算机视觉、语音、多模态等数据集，更有阿里巴巴集团贡献的专业领域数据集，</li>
+</ul>
+<ol start="3">
+<li>flagopen数据集仓库: <a target="_blank" rel="noopener" href="https://data.baai.ac.cn/data">https://data.baai.ac.cn/data</a></li>
+</ol>
+<ul>
+<li>内置公共数据集下载，可下200G大规模预训练语料<a target="_blank" rel="noopener" href="https://data.baai.ac.cn/details/WuDaoCorporaText">WuDaoCorpora</a></li>
+</ul>
+<ol start="4">
+<li>cluebenchmarks数据集仓库：<a target="_blank" rel="noopener" href="https://www.cluebenchmarks.com/dataSet_search.html">https://www.cluebenchmarks.com/dataSet_search.html</a></li>
+</ol>
+<ul>
+<li>多个中英文NLP数据集，并可申请下载100GB的高质量中文预训练语料<a target="_blank" rel="noopener" href="https://github.com/CLUEbenchmark/CLUECorpus2020">CLUECorpus2020</a></li>
+</ul>
+<ol start="5">
+<li><a target="_blank" rel="noopener" href="https://github.com/esbatmop/MNBVC">MNBVC</a>: Massive Never-ending BT Vast Chinese corpus</li>
+</ol>
+<ul>
+<li>超大规模中文语料集</li>
+</ul>
+<ol start="6">
+<li>OpenDataLab数据集仓库: <a target="_blank" rel="noopener" href="https://opendatalab.com/">https://opendatalab.com/</a></li>
+</ol>
+<ul>
+<li>OpenDataLab 是有影响力的数据开源开放平台，公开数据集触手可及。</li>
+</ul>
+<ol start="7">
+<li><a target="_blank" rel="noopener" href="https://oscar-project.org/">OSCAR</a>: Open Super-large Crawled Aggregated coRpus, 多语言数据集</li>
+</ol>
+<ul>
+<li>最新版本包含1.4T的中文语言数据集</li>
+</ul>
+<ol start="8">
+<li><a target="_blank" rel="noopener" href="https://www.gutenberg.org/">Gutenberg</a>:免费的英文电子书</li>
+</ol>
+<ul>
+<li>Project Gutenberg is a library of over 70,000 free eBooks</li>
+</ul>
+<h2 id="垂直领域可用数据"><a href="#垂直领域可用数据" class="headerlink" title="垂直领域可用数据"></a>垂直领域可用数据</h2><ol>
+<li><a target="_blank" rel="noopener" href="http://www.junmiwo.cn/">军迷窝</a></li>
+<li><a target="_blank" rel="noopener" href="https://xinghe.starsee.cn/pages/dynamic/dynamic">星河搜索</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.milthink.com/">占知文库</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/386284627">军事网站汇总</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.janes.com/">简氏防务周刊</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.qfss.com.cn/">水墨芋</a></li>
+<li><a target="_blank" rel="noopener" href="http://cmano-db.com/">武器装备数据库</a></li>
+<li>百度网盘</li>
+<li><a target="_blank" rel="noopener" href="https://jdzh.cnki.net/zzzh.html">军队指挥学科知识大数据平台</a></li>
+<li><a target="_blank" rel="noopener" href="https://r.cnki.net/index/81/">国防军事门户网站</a></li>
+</ol>
+<h2 id="中文微调指令数据集"><a href="#中文微调指令数据集" class="headerlink" title="中文微调指令数据集"></a>中文微调指令数据集</h2><table>
+<thead>
+<tr>
+<th align="center">名称</th>
+<th align="center">大小</th>
+<th align="center">语言</th>
+<th align="center">下载</th>
+<th align="center">作者</th>
+<th align="center">项目地址</th>
+<th>时间</th>
+<th align="center">备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Bactrian-X</td>
+<td align="center">67K</td>
+<td align="center">多语言</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://huggingface.co/datasets/MBZUAI/Bactrian-X">dataset</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/mbzuai-nlp">MBZUAI</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/mbzuai-nlp/bactrian-x">bactrian-x</a></td>
+<td>2023-05</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">CrimeKgAssitant</td>
+<td align="center">52k</td>
+<td align="center">中文</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/LiuHC0428/LAW-GPT">dataset</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/LiuHC0428">hongchengliu</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/LiuHC0428/LAW-GPT">LAW-GPT</a></td>
+<td>2023-05</td>
+<td align="center">中文法律</td>
+</tr>
+<tr>
+<td align="center">moss-002-sft-data</td>
+<td align="center">1.1M</td>
+<td align="center">中英文</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://huggingface.co/datasets/fnlp/moss-002-sft-data">dataset</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/OpenLMLab">复旦大学</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/OpenLMLab/MOSS">MOSS</a></td>
+<td>2023-04</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">moss-003-sft-data</td>
+<td align="center">1.1M</td>
+<td align="center">中英文</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/OpenLMLab/MOSS/tree/main/SFT_data/conversations/conversation_without_plugins">dataset</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/OpenLMLab">复旦大学</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/OpenLMLab/MOSS">MOSS</a></td>
+<td>2023-04</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">moss-003-sft-plugin-data</td>
+<td align="center">300K</td>
+<td align="center">中英文</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/OpenLMLab/MOSS/tree/main/SFT_data/conversations/conversation_with_plugins">dataset</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/OpenLMLab">复旦大学</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/OpenLMLab/MOSS">MOSS</a></td>
+<td>2023-04</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">Safety-Prompts</td>
+<td align="center">100K</td>
+<td align="center">中文</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/thu-coai/Safety-Prompts">dataset</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/thu-coai">清华大学</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/thu-coai/Safety-Prompts">Safety-Prompts</a></td>
+<td>2023-04</td>
+<td align="center"><a target="_blank" rel="noopener" href="http://115.182.62.166:18000/">评测平台</a></td>
+</tr>
+<tr>
+<td align="center">OASST1</td>
+<td align="center">/</td>
+<td align="center">多语言</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://huggingface.co/datasets/OpenAssistant/oasst1">dataset</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://huggingface.co/OpenAssistant">OpenAssistant</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/LAION-AI/Open-Assistant">Open-Assistant</a></td>
+<td>2023-04</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">ShareChat</td>
+<td align="center">90K</td>
+<td align="center">中英文</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://paratranz.cn/projects/6725/files">dataset</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://paratranz.cn/projects/6725">czhko</a></td>
+<td align="center"></td>
+<td>2023-04</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">GPT-4-LLM</td>
+<td align="center">52K</td>
+<td align="center">中文</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/Instruction-Tuning-with-GPT-4/GPT-4-LLM/blob/main/data/alpaca_gpt4_data_zh.json">dataset</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/Instruction-Tuning-with-GPT-4">Instruction-Tuning-with-GPT-4</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/Instruction-Tuning-with-GPT-4/GPT-4-LLM">GPT-4-LLM</a></td>
+<td>2023-04</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2304.03277">paper</a></td>
+</tr>
+<tr>
+<td align="center">COIG</td>
+<td align="center">200K</td>
+<td align="center">中文</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://huggingface.co/datasets/BAAI/COIG">dataset</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://huggingface.co/BAAI">BAAI</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/FlagOpen/FlagInstruct">FlagInstruct</a></td>
+<td>2023-04</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2304.07987.pdf">paper</a></td>
+</tr>
+<tr>
+<td align="center">RedGPT</td>
+<td align="center">50k</td>
+<td align="center">中文</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/ziliwangnlp/RedGPT">dataset</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/ziliwangnlp">MiniGPT</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/ziliwangnlp/RedGPT">RedGPT</a></td>
+<td>2023-04</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">shareGPT_cn</td>
+<td align="center">20k</td>
+<td align="center">中文</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://huggingface.co/datasets/shareAI/shareGPT_cn">dataset</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://huggingface.co/shareAI">shareAI</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://huggingface.co/datasets/shareAI/shareGPT_cn">shareGPT_cn</a></td>
+<td>2023-04</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">generated_chat_0.4M</td>
+<td align="center">0.4M</td>
+<td align="center">中文</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://huggingface.co/datasets/BelleGroup/generated_chat_0.4M">dataset</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/LianjiaTech">Ke Technologies</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/LianjiaTech/BELLE">BELLE</a></td>
+<td>2023-04</td>
+<td align="center">个性化角色对话数据</td>
+</tr>
+<tr>
+<td align="center">multiturn_chat_0.8M</td>
+<td align="center">0.8M</td>
+<td align="center">中文</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://huggingface.co/datasets/BelleGroup/multiturn_chat_0.8M">dataset</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/LianjiaTech">Ke Technologies</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/LianjiaTech/BELLE">BELLE</a></td>
+<td>2023-04</td>
+<td align="center">多轮任务对话</td>
+</tr>
+<tr>
+<td align="center">school_math_0.25M</td>
+<td align="center">0.25M</td>
+<td align="center">中文</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://huggingface.co/datasets/BelleGroup/school_math_0.25M">dataset</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/LianjiaTech">Ke Technologies</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/LianjiaTech/BELLE">BELLE</a></td>
+<td>2023-04</td>
+<td align="center">中文数学题数据</td>
+</tr>
+<tr>
+<td align="center">Zhihu-KOL</td>
+<td align="center">/</td>
+<td align="center">中文</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://huggingface.co/datasets/wangrui6/Zhihu-KOL"> dataset</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://huggingface.co/wangrui6">Rui Wang</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/wangrui6/Zhihu-KOL">Zhihu-KOL</a></td>
+<td>2023-03</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">InstructionWild</td>
+<td align="center">104k</td>
+<td align="center">中英文</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/XueFuzhao/InstructionWild/tree/main/data">dataset</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/XueFuzhao">Xue Fuzhao</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/XueFuzhao/InstructionWild">InstructionWild</a></td>
+<td>2023-03</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">Alpaca-CoT</td>
+<td align="center">/.</td>
+<td align="center">中英文</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://huggingface.co/datasets/QingyiSi/Alpaca-CoT/tree/main">dataset</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://huggingface.co/QingyiSi">Qingyi Si</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/PhoebusSi/Alpaca-CoT">Alpaca-CoT</a></td>
+<td>2023-03</td>
+<td align="center"><strong>内置多个数据集（推荐）</strong></td>
+</tr>
+<tr>
+<td align="center">GuanacoDataset</td>
+<td align="center">/</td>
+<td align="center">中/多语言</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://huggingface.co/datasets/JosephusCheung/GuanacoDataset">dataset</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/Guanaco-Model">Guanaco</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://guanaco-model.github.io/">guanaco-model</a></td>
+<td>2023-03</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">Traditional-Chinese-alpaca</td>
+<td align="center">52K</td>
+<td align="center">中文</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/ntunlplab/traditional-chinese-alpaca/tree/main/data">dataset</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/ntunlplab">NTU NLP Lab</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/ntunlplab/traditional-chinese-alpaca">Traditional-Chinese Alpaca</a></td>
+<td>2023-03</td>
+<td align="center">gpt翻译</td>
+</tr>
+<tr>
+<td align="center">alpaca_chinese_dataset</td>
+<td align="center">/</td>
+<td align="center">中文</td>
+<td align="center"><a href="">dataset</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/hikariming">akou</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/hikariming/alpaca_chinese_dataset">alpaca_chinese_dataset</a></td>
+<td>2023-03</td>
+<td align="center">人工校验</td>
+</tr>
+<tr>
+<td align="center">alpaca-chinese-dataset</td>
+<td align="center">/</td>
+<td align="center">中文</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/carbonz0/alpaca-chinese-dataset">dataset</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/carbonz0">carbonz</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/carbonz0/alpaca-chinese-dataset">alpaca-chinese-dataset</a></td>
+<td>2023-03</td>
+<td align="center">机器翻译</td>
+</tr>
+<tr>
+<td align="center">train_2M_CN</td>
+<td align="center">2M</td>
+<td align="center">中文</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://huggingface.co/datasets/BelleGroup/train_2M_CN">dataset</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/LianjiaTech">Ke Technologies</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/LianjiaTech/BELLE">BELLE</a></td>
+<td>2023-03</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">train_1M_CN</td>
+<td align="center">1M</td>
+<td align="center">中文</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://huggingface.co/datasets/BelleGroup/train_1M_CN">dataset</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/LianjiaTech">Ke Technologies</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/LianjiaTech/BELLE">BELLE</a></td>
+<td>2023-03</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">train_0.5M_CN</td>
+<td align="center">0.5M</td>
+<td align="center">中文</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://huggingface.co/datasets/BelleGroup/train_0.5M_CN">dataset</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/LianjiaTech">Ke Technologies</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/LianjiaTech/BELLE">BELLE</a></td>
+<td>2023-03</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">HC3 人类-ChatGPT 问答</td>
+<td align="center">/</td>
+<td align="center">中文</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://www.modelscope.cn/datasets/simpleai/HC3-Chinese/summary">dataset</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/Hello-SimpleAI">SimpleAI</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/Hello-SimpleAI/chatgpt-comparison-detection">chatgpt-comparison-detection</a></td>
+<td>2023-03</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">firefly-train-1.1M</td>
+<td align="center">1.1M</td>
+<td align="center">中文</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://huggingface.co/datasets/YeungNLP/firefly-train-1.1M">dataset</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/yangjianxin1">Jianxin Yang</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/yangjianxin1/Firefly">Firefly</a></td>
+<td>2023-03</td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<h2 id="Harnessing-the-Power-of-LLMs-in-Practice-A-Survey-on-ChatGPT-and-Beyond-paper"><a href="#Harnessing-the-Power-of-LLMs-in-Practice-A-Survey-on-ChatGPT-and-Beyond-paper" class="headerlink" title="Harnessing the Power of LLMs in Practice: A Survey on ChatGPT and Beyond(paper)"></a>Harnessing the Power of LLMs in Practice: A Survey on ChatGPT and Beyond(paper)</h2><p>perspectives of models, data, and downstream tasks</p>
+<ol>
+<li><p>introduction and brief summary of current GPT- and BERT-style LLMs</p>
+<p>differ in <u>training strategies</u>, <u>model architectures</u>, and <u>use cases</u>. image(Summary of Large Language Models)</p>
+<p>Transformer-based models, encoder-decoder models, encoder-only language models and decoder-only language models  image (evolutionary tree of modern LLMs)</p>
+<p>from above two image, four ideas:</p>
+<p>a) decoder-only model became dominating of LLM;</p>
+<p>b) openai maintains its leadership of LLM;</p>
+<p>c) Meta open-source their LLM;</p>
+<p>d) closed-source tendency of LLM and so API-based rsearch will become the predominant method;</p>
+<p>e) encoder-decoder based-model remain promising.</p>
+<p>1.1 BERT-style Language Models: Encoder-Decoder or Encoder-only</p>
+<p>need big data -&gt; unsupervised training -&gt; masked train method and surrounding context -&gt; MLMs advantages: deeper understanding of the relationships between words and the context -&gt; BERT, RoBERTa, T5.</p>
+<p>1.2 GPT-style Language Models: Decoder-only</p>
+<p>bigger model better performance -&gt; autoregressive language model (given a word generate latter words) -&gt; these model use data about downstream tasks, examples:GPT3, OPT, PaLM, BLOOM -&gt; GPT3 with prompting and in-context learning( prompt with little labeled data) -&gt; examples: CodeX for code generation, BloombergGPT for financial domain, chatgpt for conversational tasks.</p>
+</li>
+<li><p>influence of pre-training data ,training data, and test data</p>
+</li>
+<li><p>discussion about the use and non-use cases of LLM for various NLP tasks</p>
+</li>
+<li><p>examples of the successful use cases and the limitations of LLMs in practice.</p>
+</li>
+</ol>
+<h2 id="理解大语言模型——10篇论文的简明清单"><a href="#理解大语言模型——10篇论文的简明清单" class="headerlink" title="理解大语言模型——10篇论文的简明清单"></a><a target="_blank" rel="noopener" href="https://swarma.org/?p=41040">理解大语言模型——10篇论文的简明清单</a></h2><p>attention mechanism -&gt; transformer(from paper <em>Attention Is All You Need</em>) -&gt; BERT(encoder only) -&gt; GPT (decoder only) -&gt; BART(encoder-decoder) -&gt; Linear Scaling Law for under-training problem( better data with smaller model is better than less data with bigger model) -&gt; Reinforcement Learning with Human Feedback ，RLHF</p>
+<p>some LLM for downstream task( all about biology): </p>
+<ol>
+<li>ProtTrans : LLM for Life’s Code</li>
+<li>AlphaFold: Protein Structure Prediction</li>
+<li>Large Language Models Generate Functional Protein Sequences Across Diverse Families</li>
+</ol>
+<h2 id="A-Survey-of-Large-Language-Models"><a href="#A-Survey-of-Large-Language-Models" class="headerlink" title="A Survey of Large Language Models"></a>A Survey of Large Language Models</h2><ol>
+<li><p>background</p>
+<p>pre-trained model -&gt; LLM(complicated engineering issues) </p>
+</li>
+<li><p>key findings</p>
+</li>
+<li><p>mainstream techniques</p>
+</li>
+</ol>
+<h2 id="大模型相关技术综述"><a href="#大模型相关技术综述" class="headerlink" title="大模型相关技术综述"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/liangwqi/article/details/129051791#t98">大模型相关技术综述</a></h2><ol>
+<li><p>LLM history</p>
+<p>word2vec -&gt; elmo(word embedding) -&gt; transformer</p>
+</li>
+<li><p>mainstream architecture</p>
+<p>bert style, bert and gpt style, gpt style</p>
+</li>
+</ol>
+<h2 id="大语言模型调研汇总"><a href="#大语言模型调研汇总" class="headerlink" title="大语言模型调研汇总"></a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/614766286">大语言模型调研汇总</a></h2><ol>
+<li>Basic Language Model</li>
+</ol>
+<p><img src="/home/killer/Pictures/%E6%88%AA%E5%9B%BE/2023-05-01_11-18.png"></p>
+<p>GPT-style 表示 decoder-only 的自回归语言模型，T5-style 表示 encoder-decoder 的语言模型，GLM-style 表示 GLM 特殊的模型结构，Multi-task 是指 ERNIE 3.0 的模型结构</p>
+<p>当前绝大部分的大语言模型都是 Decoder-only 的模型结构, 大部分大语言模型都不开源</p>
+<ol start="2">
+<li>Instruction-Finetuned Language Model</li>
+</ol>
+<p>Instruction（指令）是指通过自然语言形式对任务进行描述</p>
+<p><img src="/home/killer/Pictures/%E6%88%AA%E5%9B%BE/2023-05-01_11-20.png"></p>
+<h2 id="探索大语言模型垂直化训练技术和应用"><a href="#探索大语言模型垂直化训练技术和应用" class="headerlink" title="探索大语言模型垂直化训练技术和应用"></a><a target="_blank" rel="noopener" href="https://www.jiqizhixin.com/articles/2023-03-20-6">探索大语言模型垂直化训练技术和应用</a></h2><ol>
+<li><p>参数规模和数据规模的探索</p>
+<p>缩放法则 （Scaling Laws): more parameters, more data, more loops, less loss</p>
+<p>Compute-Optimal: 语言模型训练数据大小，应该和模型参数量大小等比放大</p>
+<p>Open and Efficient: 百亿模型的潜力仍有待深入挖掘</p>
+<p>数据规模存在瓶颈 ：开放数据即将耗尽</p>
+<p>选择最合适的训练数据: 正确的训练数据对提升某些能力有重要效果，“对症下药”很关键，未来在垂直领域任务中可能存在优化空间。</p>
+</li>
+<li><p>垂直领域适应预训练</p>
+<blockquote>
+<ul>
+<li><p>先用大规模通用语料预训练，再用小规模领域语料二次训练</p>
+</li>
+<li><p>直接进行大规模领域语料预训练</p>
+<blockquote>
+<p>一个医学领域的代表模型 PubMedGPT 2.7 B。一个是金融领域 BBT-FinT5 模型。它们的参数规模都不大，但是这些用垂直领域的数据做的专用训练，它的效果比参数规模更小一点的小模型来说有非常明显的提升。另外，和相同规模通用大规模的 Finetune 相比，垂直领域大模型的效果仍然是领先的。</p>
+<p>因此，路线二是一个性价比非常高的方案，它用到的参数规模并不大，但在垂直领域的效果不错。同时，垂直领域大模型所用资源会比通用大模型少很多，并且和超大规模模型在垂直领域的效果是接近的，这种方式也给我们开启了一些尝试的空间。</p>
+<p>应用了知识增强技术的领域大模型在领域任务上的效果， 好于领域小模型和通用大模型。所以这可能是一条值得去探索的中间道路，是一种垂直领域比大模型要略小一点，但比小模型要大的中间态的模型。</p>
+</blockquote>
+</li>
+<li><p>通用语料比例混合领域语料同时训练 </p>
+</li>
+</ul>
+</blockquote>
+</li>
+<li><p>提示 Prompt 垂直优化</p>
+<blockquote>
+<ol>
+<li>一种是产品化思路。产品化的是请垂直领域的专家，针对每项垂直任务，来设计用于生成 prompt 的产品，由专家编写大量不同的 prompt，评估或输出好的 prompt 后，进行片段切分，形成相应的产品，这对未来 AIGC 任务会起到很好的作用。</li>
+<li>另一种是自动化的思路，通过借过外部工具，或通过自动化的流程方法和训练方式，对 Prompt 进行自动优化。</li>
+</ol>
+</blockquote>
+</li>
+<li><p>模型功能的垂直效能增强</p>
+<blockquote>
+<ul>
+<li>CoT 增强</li>
+<li>use other models</li>
+<li>使用垂直知识库</li>
+<li>使用搜索引擎</li>
+<li>内容转换</li>
+</ul>
+</blockquote>
+<ol>
+<li>多语言模型</li>
+<li>参数小不代表模型效果就差</li>
+<li>chat base model  or base model</li>
+<li>专注垂直领域的话 也不一定追求大</li>
+</ol>
+<ol>
+<li><p>==LLaMA  OPT==：用的人很多，模型的参数和数据量对应，模型很扎实 Meta</p>
+</li>
+<li><p>BLOOM：参数量大 BigScience (非盈利兴趣组织)</p>
+</li>
+<li><p>GPT-NEO：EleutherAI发布的，名头很响亮</p>
+</li>
+<li><p>GLM： 清华推出的 对中文支持较好（<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/626786797">网传效果很差</a>）</p>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="垂类大模型技术落地"><a href="#垂类大模型技术落地" class="headerlink" title="垂类大模型技术落地"></a><a target="_blank" rel="noopener" href="https://www.jiqizhixin.com/articles/2023-04-17">垂类大模型技术落地</a></h2><ol>
+<li><p>Character.AI </p>
+<p>Character.AI 专注于 UGC 的个性化聊天机器人,从模型的开发，训练，到数据的收集，终端应用整条价值链。值得关注的是，Character.AI 开发了自己的类似于 GPT 的 Pre-trained 模型，这种 Pre-trained 模型拥有高效的 LLM 推理算法，推理成本远远低于 ChatGPT</p>
+</li>
+<li><p>毫末智行</p>
+<p>毫末智行专注于自动驾驶认知大模型，旗下的 DriveGPT 模型参数达到了 1200 亿，通过引入量产驾驶数据，训练初始模型，再通过引入驾驶接管 Clips 数据完成反馈模型 (Reward Model) 的训练，然后再通过强化学习的方式，使用反馈模型去不断优化迭代初始模型，形成对自动驾驶认知决策模型的持续优化</p>
+</li>
+<li><p>Bloomberg</p>
+<p>大名鼎鼎的 Bloomberg 也加入了垂类大模型的战局，推出了 Bloomgberg GPT. 和 to C 场景不同，金融领域需要更高的准确性和可靠性，所以 Bloomberg GPT 在模型层数和参数量上会有明显增加，并采用混合精度的训练策略。</p>
+</li>
+<li><p>ZMO.AI </p>
+<p> ZMO 自有的 6000 万高清营销照片数据集</p>
+</li>
+</ol>
+<p>诚然，Character.AI, 毫末智行，BloombergGPT 和 ZMO 都在验证一件事情，大模型终究是需要细分场景的数据和规则的，在特定场景中需要大量专门优化通用大模型来提升生成质量，并且符合这个专业场景的可控输入和输出才能真正的落地使用。</p>
+<h2 id="千“垂”百炼：垂直领域与语言模型"><a href="#千“垂”百炼：垂直领域与语言模型" class="headerlink" title="千“垂”百炼：垂直领域与语言模型"></a><a target="_blank" rel="noopener" href="https://www.cnblogs.com/createMoMo/p/17300111.html">千“垂”百炼：垂直领域与语言模型</a></h2><ol>
+<li><p>我不缺钱，我就是想把这种AI语言模型想尽办法和我的业务结合。我不管这种结合是真的契合还是勉强的。这样可以吗？</p>
+<p>可以，因为不缺钱，可以尽情的试错</p>
+<p>原因大概有2个:</p>
+<ul>
+<li>它很可能已经具备垂直领域的知识.这种AI模型是学习过海量资料的，无论你是在哪个垂直领域，它可能都有所涉及。它对于垂直领域的互动不见得会效果不好</li>
+<li>重的是它的某项技能。你可能也不需要这个AI模型学习过垂直领域相关的资料（换句话说，它即使不懂这个领域，同样可以帮助到你）。在这种情况下，取决于你看上了语言模型的哪些语言技能。比如，AI语言模型具有不错的文字总结能力，随便扔给它一篇业内的文章，虽然它可能看不太懂，但是它仍然可以总结出质量不错的简报。</li>
+</ul>
+</li>
+<li><p>我的垂直领域能接受语言模型的不完美吗？</p>
+<p>会犯错, 不确定性, 不方便“教训”, 不灵活, 带来额外支出(api bill) or 如果自己部署语言模型，需要购置能够运行语言模型的软硬件资源；拥有语言模型并不是全部，还是需要投入人力、财力、时间去打磨如何让模型与自己的业务相结合</p>
+</li>
+<li><p>我想把这种语言模型融入到自己的垂直领域，这到底是我无意识陷入了盲目跟随潮流，还是真的会对我的业务有帮助？</p>
+<p>对业务有无帮助看实际验证的效果，不凭空想象。如果找不到和自己业务类似的先例，这个问题的答案只有自己才能找到。</p>
+</li>
+<li><p>我不懂技术原理，如果我提出来一些天马行空、甚至不切实际、超出模型能力范围的想法，技术/研发人员会笑话我、反感我吗？</p>
+<p>垂直领域的落地正需要非技术和技术想法之间的碰撞, 从非技术人员的角度来看，我们需要他/她进行大胆、创新的业务规划。同时也需要技术人员对能够实现的功能进行评估（比如需要多少资源），对无法实现的业务功能及时提醒对方。</p>
+<p>从技术人员的角度看，我们同样可以为业务规划贡献想法。AI技术是不断发展的，以前很难实现、遥不可及的功能，在今天可能很容易就可以实现，但非技术人员可能没有及时的意识到这一点。这需要我们去提醒非技术人员，耐心的向他们科普目前技术能够做到哪些事情。</p>
+</li>
+<li><p>我听说做这个很烧钱，但是我没有那么多钱，我还有机会试一试吗？</p>
+<p>主要是借助现有经验或使用现有模型，不是从头创造。即使使用很小的模型（小模型的学习效率和知识储备能力不如大模型），经过恰当的训练（尤其根据人类的反馈），小模型是有机会与大模型的表现相媲美的（在垂直领域表现如何需要自行验证）</p>
+</li>
+<li><p>现有的可用语言模型很好，但是在我的领域表现还不够出色，我还是想要针对自己的领域研发一个模型。最应该注意什么？</p>
+<ul>
+<li>业务刚需还是为了华而不实的功能</li>
+<li>巧妇难为无米之炊，有无语言模型可用的学习数据</li>
+<li>在现有模型基础上继续研发是否合规</li>
+</ul>
+</li>
+</ol>
+<p><strong>归根到底是可用的垂直领域数据</strong></p>
+<p>example:ChatDoctor：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2303.14070">基于医学领域知识的LLaMA模型微调医学聊天模型</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/07/13/%E7%A0%94%E7%A9%B6%E7%94%9F%E7%AC%AC%E4%B8%80%E5%AD%A6%E5%B9%B4%E5%A5%96%E5%AD%A6%E9%87%91%E8%AF%84%E5%AE%9A%E7%9A%84%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/11/27/Controllable%20text%20generation/" rel="next" title="">
+       <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%8F%AF%E7%94%A8%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="nav-number">1.</span> <span class="nav-text">大模型可用数据集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9E%82%E7%9B%B4%E9%A2%86%E5%9F%9F%E5%8F%AF%E7%94%A8%E6%95%B0%E6%8D%AE"><span class="nav-number">2.</span> <span class="nav-text">垂直领域可用数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AD%E6%96%87%E5%BE%AE%E8%B0%83%E6%8C%87%E4%BB%A4%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="nav-number">3.</span> <span class="nav-text">中文微调指令数据集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Harnessing-the-Power-of-LLMs-in-Practice-A-Survey-on-ChatGPT-and-Beyond-paper"><span class="nav-number">4.</span> <span class="nav-text">Harnessing the Power of LLMs in Practice: A Survey on ChatGPT and Beyond(paper)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%90%86%E8%A7%A3%E5%A4%A7%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B%E2%80%94%E2%80%9410%E7%AF%87%E8%AE%BA%E6%96%87%E7%9A%84%E7%AE%80%E6%98%8E%E6%B8%85%E5%8D%95"><span class="nav-number">5.</span> <span class="nav-text">理解大语言模型——10篇论文的简明清单</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#A-Survey-of-Large-Language-Models"><span class="nav-number">6.</span> <span class="nav-text">A Survey of Large Language Models</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E6%A8%A1%E5%9E%8B%E7%9B%B8%E5%85%B3%E6%8A%80%E6%9C%AF%E7%BB%BC%E8%BF%B0"><span class="nav-number">7.</span> <span class="nav-text">大模型相关技术综述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B%E8%B0%83%E7%A0%94%E6%B1%87%E6%80%BB"><span class="nav-number">8.</span> <span class="nav-text">大语言模型调研汇总</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A2%E7%B4%A2%E5%A4%A7%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B%E5%9E%82%E7%9B%B4%E5%8C%96%E8%AE%AD%E7%BB%83%E6%8A%80%E6%9C%AF%E5%92%8C%E5%BA%94%E7%94%A8"><span class="nav-number">9.</span> <span class="nav-text">探索大语言模型垂直化训练技术和应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9E%82%E7%B1%BB%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%8A%80%E6%9C%AF%E8%90%BD%E5%9C%B0"><span class="nav-number">10.</span> <span class="nav-text">垂类大模型技术落地</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%83%E2%80%9C%E5%9E%82%E2%80%9D%E7%99%BE%E7%82%BC%EF%BC%9A%E5%9E%82%E7%9B%B4%E9%A2%86%E5%9F%9F%E4%B8%8E%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B"><span class="nav-number">11.</span> <span class="nav-text">千“垂”百炼：垂直领域与语言模型</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">李治澎</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">李治澎</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="以下内容假定你的设备在同一局域网下，如果不在，你可以通过Tailscale组建虚拟网络。 传输文件不管以什么为服务端，都可以实现双向互传文件。 以电脑为服务端如果有Python，可以在文件夹内运行命令python -m http.server，其他设备浏览器输入电脑IP地址的8000端口即可访问，适合少量大文件的分发。 SMB文件共享：参阅Windows 文件共享一节的内容(内网无需安装Tails">
+<meta property="og:type" content="article">
+<meta property="og:title" content="随笔">
+<meta property="og:url" content="http://example.com/2024/03/22/%E7%94%B5%E8%84%91%E8%BF%9E%E6%8E%A5%E6%89%8B%E6%9C%BA%EF%BC%8C%E6%89%8B%E6%9C%BA%E7%BB%99%E7%94%B5%E8%84%91%E4%BC%A0%E6%96%87%E4%BB%B6/index.html">
+<meta property="og:site_name" content="随笔">
+<meta property="og:description" content="以下内容假定你的设备在同一局域网下，如果不在，你可以通过Tailscale组建虚拟网络。 传输文件不管以什么为服务端，都可以实现双向互传文件。 以电脑为服务端如果有Python，可以在文件夹内运行命令python -m http.server，其他设备浏览器输入电脑IP地址的8000端口即可访问，适合少量大文件的分发。 SMB文件共享：参阅Windows 文件共享一节的内容(内网无需安装Tails">
+<meta property="og:locale">
+<meta property="article:published_time" content="2024-03-22T02:17:07.764Z">
+<meta property="article:modified_time" content="2024-03-22T02:17:07.768Z">
+<meta property="article:author" content="李治澎">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2024/03/22/%E7%94%B5%E8%84%91%E8%BF%9E%E6%8E%A5%E6%89%8B%E6%9C%BA%EF%BC%8C%E6%89%8B%E6%9C%BA%E7%BB%99%E7%94%B5%E8%84%91%E4%BC%A0%E6%96%87%E4%BB%B6/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title> | 随笔</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">随笔</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/03/22/%E7%94%B5%E8%84%91%E8%BF%9E%E6%8E%A5%E6%89%8B%E6%9C%BA%EF%BC%8C%E6%89%8B%E6%9C%BA%E7%BB%99%E7%94%B5%E8%84%91%E4%BC%A0%E6%96%87%E4%BB%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李治澎">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="随笔">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-03-22 10:17:07" itemprop="dateCreated datePublished" datetime="2024-03-22T10:17:07+08:00">2024-03-22</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>以下内容假定你的设备在同一局域网下，如果不在，你可以<a target="_blank" rel="noopener" href="https://blog.zhilu.cyou/202310/tailscale-incomplete-guide/">通过Tailscale组建虚拟网络</a>。</p>
+<h2 id="传输文件"><a href="#传输文件" class="headerlink" title="传输文件"></a>传输文件</h2><p>不管以什么为服务端，都可以实现双向互传文件。</p>
+<h3 id="以电脑为服务端"><a href="#以电脑为服务端" class="headerlink" title="以电脑为服务端"></a>以电脑为服务端</h3><p>如果有Python，可以在文件夹内运行命令<code>python -m http.server</code>，其他设备浏览器输入电脑IP地址的8000端口即可访问，适合少量大文件的分发。</p>
+<p>SMB文件共享：参阅<a target="_blank" rel="noopener" href="https://blog.zhilu.cyou/202310/tailscale-incomplete-guide/#Windows-%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB">Windows 文件共享</a>一节的内容(内网无需安装Tailscale)，手机可以安装猫头鹰文件查看/下载。</p>
+<p>Windows就近共享：在手机上安装<a target="_blank" rel="noopener" href="https://nearshare.shortdev.de/">NearShare</a>或者<a target="_blank" rel="noopener" href="https://www.appinn.com/anddrop/">AndDrop</a>。</p>
+<p>macOS隔空投送：安卓手机可以安装<a target="_blank" rel="noopener" href="https://www.appinn.com/anddrop/">AndDrop</a>。</p>
+<p>ToDesk、向日葵具有传输文件的功能，QQ也有直接查看电脑文件的功能，但升级后砍了。</p>
+<h3 id="以手机为服务端"><a href="#以手机为服务端" class="headerlink" title="以手机为服务端"></a>以手机为服务端</h3><p>系统自带文件管理/互传APP：一般具有FTP/HTTP文件管理服务。</p>
+<p><a target="_blank" rel="noopener" href="https://skyhacker2.github.io/blog/index.html?projects/%E6%96%87%E4%BB%B6%E9%97%AA%E4%BC%A0.md">文件闪传</a>：通过网页管理手机文件。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/ismartcoding/plain-app/blob/main/README_zh_CN.md">简朴</a>：浏览器管理手机文件。</p>
+<p><a target="_blank" rel="noopener" href="https://www.skyjos.cn/owlfiles/">猫头鹰文件</a>：可访问FTP/SFTP/WebDAV/SMB服务器，也可以自建SMB服务器。</p>
+<p>Tailscale：右键，选设备，发送！参阅<a target="_blank" rel="noopener" href="https://blog.zhilu.cyou/202310/tailscale-incomplete-guide/#%E4%BC%A0%E9%80%81%E6%96%87%E4%BB%B6">传送文件</a>一节的内容。</p>
+<h3 id="对等传输"><a href="#对等传输" class="headerlink" title="对等传输"></a>对等传输</h3><p><a target="_blank" rel="noopener" href="https://kdeconnect.kde.org/">KDE Connect</a>：文件、链接、键鼠。</p>
+<p><a target="_blank" rel="noopener" href="https://localsend.org/">LocalSend</a>：全平台文件传输工具。</p>
+<h3 id="大道至简"><a href="#大道至简" class="headerlink" title="大道至简"></a>大道至简</h3><p>在设备终端命令行内安装OpenSSH(手机在Termux内操作，需要执行<code>termux-setup-storage</code>命令)，然后用<code>scp</code>命令完成这一切吧。</p>
+<h2 id="屏幕投影"><a href="#屏幕投影" class="headerlink" title="屏幕投影"></a>屏幕投影</h2><h3 id="电脑"><a href="#电脑" class="headerlink" title="电脑"></a>电脑</h3><p><a target="_blank" rel="noopener" href="https://www.videolan.org/vlc/">VLC</a>：选择“媒体&gt;流&gt;捕获模式&gt;桌面”，随后可以将画面串流成多种协议的内容。</p>
+<p><a target="_blank" rel="noopener" href="https://webcast.airdroid.com/home">AirDroid Cast 网页版</a>：通过浏览器的能力捕获画面，无线投屏到其他设备。</p>
+<h3 id="安卓手机"><a href="#安卓手机" class="headerlink" title="安卓手机"></a>安卓手机</h3><p><a target="_blank" rel="noopener" href="https://github.com/dkrivoruchko/ScreenStream">ScreenStream</a>：安卓设备投屏到网页。</p>
+<p>文件闪传也附带投屏功能。</p>
+<h3 id="终端共享Shell会话"><a href="#终端共享Shell会话" class="headerlink" title="终端共享Shell会话"></a>终端共享Shell会话</h3><p>使用screen开启共享会话，其他设备ssh连接上后执行<code>screen -x</code>即可共享输出。</p>
+<p>也可以使用gotty、tty-share等工具将shell会话投影到网页上。</p>
+<h2 id="远程控制"><a href="#远程控制" class="headerlink" title="远程控制"></a>远程控制</h2><h3 id="电脑-1"><a href="#电脑-1" class="headerlink" title="电脑"></a>电脑</h3><p>微软自带的远程桌面：家庭版不可使用（可以用<a target="_blank" rel="noopener" href="https://github.com/anhkgg/SuperRDP">SuperRDP2</a>解锁），使用时电脑会锁定。</p>
+<p>第三方商业软件：Todesk(内存泄漏)、向日葵远程控制(轻度广告)、RayLink。</p>
+<p>Moonlight：电脑端需要有Sunshine/NVIDIA SHIELD服务，可参考<a target="_blank" rel="noopener" href="https://blog.zhilu.cyou/202401/moonlight-streaming-guide/">这篇博文</a>。</p>
+<p><a target="_blank" rel="noopener" href="https://test.spacedesk.net/home">spacedesk</a>：作为电脑的扩展屏使用。</p>
+<h3 id="手机"><a href="#手机" class="headerlink" title="手机"></a>手机</h3><p>系统自带家人关怀远程协助应用：如果有的话。</p>
+<p><a target="_blank" rel="noopener" href="https://rustdesk.com/zh/">RustDesk</a>：全平台互相控制。</p>
+<p>AnLink：操作手机、播放手机音频、传输文件。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/Genymobile/scrcpy">Scrcpy</a>/<a target="_blank" rel="noopener" href="https://github.com/barry-ran/QtScrcpy">QtScrcpy</a>：基于USB调试/无限调试特性操作手机，前者需要安装配置Android Platform Tools(ADB)环境，为命令行程序，后者已集成好环境，具有图形化界面，还支持播放设备音频。</p>
+<h3 id="大道至简-1"><a href="#大道至简-1" class="headerlink" title="大道至简"></a>大道至简</h3><p>你需要OpenSSH。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/03/22/%E5%85%8D%E5%AF%86%E7%99%BB%E9%99%86ssh/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/03/23/How-to-retrieve-papers/" rel="next" title="">
+       <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%A0%E8%BE%93%E6%96%87%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">传输文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A5%E7%94%B5%E8%84%91%E4%B8%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF"><span class="nav-number">1.1.</span> <span class="nav-text">以电脑为服务端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A5%E6%89%8B%E6%9C%BA%E4%B8%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF"><span class="nav-number">1.2.</span> <span class="nav-text">以手机为服务端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E7%AD%89%E4%BC%A0%E8%BE%93"><span class="nav-number">1.3.</span> <span class="nav-text">对等传输</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%A7%E9%81%93%E8%87%B3%E7%AE%80"><span class="nav-number">1.4.</span> <span class="nav-text">大道至简</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B1%8F%E5%B9%95%E6%8A%95%E5%BD%B1"><span class="nav-number">2.</span> <span class="nav-text">屏幕投影</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%B5%E8%84%91"><span class="nav-number">2.1.</span> <span class="nav-text">电脑</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E5%8D%93%E6%89%8B%E6%9C%BA"><span class="nav-number">2.2.</span> <span class="nav-text">安卓手机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%88%E7%AB%AF%E5%85%B1%E4%BA%ABShell%E4%BC%9A%E8%AF%9D"><span class="nav-number">2.3.</span> <span class="nav-text">终端共享Shell会话</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9C%E7%A8%8B%E6%8E%A7%E5%88%B6"><span class="nav-number">3.</span> <span class="nav-text">远程控制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%B5%E8%84%91-1"><span class="nav-number">3.1.</span> <span class="nav-text">电脑</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%8B%E6%9C%BA"><span class="nav-number">3.2.</span> <span class="nav-text">手机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%A7%E9%81%93%E8%87%B3%E7%AE%80-1"><span class="nav-number">3.3.</span> <span class="nav-text">大道至简</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">李治澎</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">李治澎</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

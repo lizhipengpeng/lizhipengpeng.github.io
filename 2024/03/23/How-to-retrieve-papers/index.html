@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="How-to-retrieve-papers-XHU目录嗯，由于github的readme添加目录比较麻烦，所以这里就手动写个目录。Section 1是如何检索论文；Section 2是推荐阅读的论文与不推荐阅读的，其中包括如何检索论文分区（中科院JCR分区和CCF评级），期刊评级（CCF评级），以及中科院预警期刊；Section 3是关于我个人推荐的阅读论文的方式。 1 如何检索论文1.1 SC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="随笔">
+<meta property="og:url" content="http://example.com/2024/03/23/How-to-retrieve-papers/index.html">
+<meta property="og:site_name" content="随笔">
+<meta property="og:description" content="How-to-retrieve-papers-XHU目录嗯，由于github的readme添加目录比较麻烦，所以这里就手动写个目录。Section 1是如何检索论文；Section 2是推荐阅读的论文与不推荐阅读的，其中包括如何检索论文分区（中科院JCR分区和CCF评级），期刊评级（CCF评级），以及中科院预警期刊；Section 3是关于我个人推荐的阅读论文的方式。 1 如何检索论文1.1 SC">
+<meta property="og:locale">
+<meta property="og:image" content="https://user-images.githubusercontent.com/49380927/189884882-17178ec2-356a-4abd-88d9-582f404d3735.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/49380927/189884915-06b21f2c-973e-48ab-829e-0826b8fbe956.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/49380927/134506696-0d37a0de-3781-4747-a151-d3089a0cd4d0.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/49380927/134507438-1b78646b-fb56-441c-bcc2-19e3b6f7ea56.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/49380927/134508005-86ab26ff-e90b-43e8-9590-2dab21bc95f1.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/49380927/134508576-831b628c-b3fd-4ec7-ab7f-7289f1241a93.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/49380927/134508872-919f0067-5f22-4761-aaaa-1cb755b45f0b.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/49380927/134510196-7b382877-7757-41b5-bf8a-8253c0fd1d35.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/49380927/189885303-5ec4d286-72a5-4a91-a82b-78da0df87709.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/49380927/134511839-2809ae1a-8b34-49c8-9eac-a9e1926ff4b9.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/49380927/134514901-b838e657-4db4-420f-80b7-799c5ff560eb.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/49380927/134515212-e930428f-3a28-4789-8f5f-fd8849e37398.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/49380927/134515367-d2f9c32b-7398-48bc-9aca-039343eced24.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/49380927/134515479-3179e082-3c63-4f68-ad36-3fa95f8515ea.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/49380927/189885642-ad68b22c-272e-473a-82b1-dfe762d86525.jpg">
+<meta property="article:published_time" content="2024-03-23T13:51:12.071Z">
+<meta property="article:modified_time" content="2024-03-23T13:51:12.074Z">
+<meta property="article:author" content="李治澎">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/49380927/189884882-17178ec2-356a-4abd-88d9-582f404d3735.png">
+
+<link rel="canonical" href="http://example.com/2024/03/23/How-to-retrieve-papers/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title> | 随笔</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">随笔</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/03/23/How-to-retrieve-papers/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李治澎">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="随笔">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-03-23 21:51:12" itemprop="dateCreated datePublished" datetime="2024-03-23T21:51:12+08:00">2024-03-23</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="How-to-retrieve-papers-XHU"><a href="#How-to-retrieve-papers-XHU" class="headerlink" title="How-to-retrieve-papers-XHU"></a>How-to-retrieve-papers-XHU</h1><h1 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h1><p>嗯，由于github的<code>readme</code>添加目录比较麻烦，所以这里就手动写个目录。<code>Section 1</code>是如何检索论文；<code>Section 2</code>是推荐阅读的论文与不推荐阅读的，其中包括如何检索论文分区（中科院JCR分区和CCF评级），期刊评级（CCF评级），以及中科院预警期刊；<code>Section 3</code>是关于我个人推荐的阅读论文的方式。</p>
+<h1 id="1-如何检索论文"><a href="#1-如何检索论文" class="headerlink" title="1 如何检索论文"></a>1 如何检索论文</h1><h2 id="1-1-SCI-HUB"><a href="#1-1-SCI-HUB" class="headerlink" title="1.1 SCI-HUB"></a>1.1 SCI-HUB</h2><p>有的论文不是免费获取的（比如 springer 旗下的会议或者期刊），这个时候就需要使用 <code>doi</code> 去搜索论文。在比如 <code>Engineering village</code> 上搜索论文，找到论文的 <code>doi</code>，然后百度 <code>SCI-HUB</code> (因为 SCI-HUB 的链接经常换，所以这里就不贴链接了)，在 <code>SCI-HUB</code> 中搜索 <code>doi</code> 一般都能下载你想要的论文。</p>
+<p><img src="https://user-images.githubusercontent.com/49380927/189884882-17178ec2-356a-4abd-88d9-582f404d3735.png" alt="doi"></p>
+<p><img src="https://user-images.githubusercontent.com/49380927/189884915-06b21f2c-973e-48ab-829e-0826b8fbe956.png" alt="scihub"></p>
+<h2 id="1-2-dblp"><a href="#1-2-dblp" class="headerlink" title="1.2 dblp"></a>1.2 dblp</h2><p><code>dblp</code> 算是我平时最喜欢用的搜文献的工具。</p>
+<p>百度搜索<code>dblp</code>，第一个就是了。或者<code>dblp</code>网址：<a target="_blank" rel="noopener" href="https://dblp.org/">https://dblp.org/</a></p>
+<p>在检索栏就可以进行检索，包括<code>关键字</code>，<code>文章名</code>，<code>作者名</code>，<code>期刊名</code>，<code>会议名</code>等等，都可以检索。</p>
+<p><img src="https://user-images.githubusercontent.com/49380927/134506696-0d37a0de-3781-4747-a151-d3089a0cd4d0.png" alt="dblp-首页"></p>
+<p>在检索页中，其排序方式是按照年份进行排序的。可以看得到<code>作者名</code>，<code>论文名</code>，<code>发表刊物</code>。同时，在左侧会有颜色的标记，其中：</p>
+<ol>
+<li><code>红色：</code>期刊论文；</li>
+<li><code>蓝色：</code>会议论文；</li>
+<li><code>灰色：</code>未发表论文，比如arxiv，CoRR等；</li>
+<li><code>黄色：</code>书籍；</li>
+<li><code>其余颜色查看：</code><a target="_blank" rel="noopener" href="https://blog.csdn.net/DXY587542/article/details/114306545">https://blog.csdn.net/DXY587542/article/details/114306545</a></li>
+</ol>
+<p><img src="https://user-images.githubusercontent.com/49380927/134507438-1b78646b-fb56-441c-bcc2-19e3b6f7ea56.png" alt="dblp-检索页"></p>
+<p>至于在dblp上下载论文，把鼠标放置论文前这一坨上，选择<code>electronic edition via DOI</code>，如果论文可以免费下载，会有 <code>(open access)</code> 的字样。</p>
+<p><img src="https://user-images.githubusercontent.com/49380927/134508005-86ab26ff-e90b-43e8-9590-2dab21bc95f1.png" alt="dblp-下载论文"></p>
+<p>通过这个链接进入后，一般来说都可以下载论文，如果下载要钱，那么你可以在页面里面找到<code>DOI</code>，然后<code>SCI-HUB</code>，你懂我意思。（当然这个截图是个错误示范，<code>IEEE Access</code>尽管是个二区，但是是中科院预警期刊，就是属于那种审稿人看着你参考文献里面有个<code>Access</code>的论文估计都会看低你两眼的那种……食之无味，弃之可惜）。或者说你可以在<code>dblp</code>里面有没有相同的论文，只是说发表在<code>arxiv</code>或者<code>CoRR</code>里面的论文，那个就是免费下载的，就比如下图：</p>
+<p><img src="https://user-images.githubusercontent.com/49380927/134508576-831b628c-b3fd-4ec7-ab7f-7289f1241a93.png" alt="dblp-下载论文-2"></p>
+<p>dblp中还可以选择下载<code>RIS</code>，导入<code>EndNote</code>中做文献管理，<strong>但是 DBLP 中千万别下载会议论文的 RIS，因为 DBLP 上会议论文的 RIS 下载下来的类型是 Conference paper，而正常的会议论文类型为 Conference procedding，格式有问题，就会导致你导出论文引用时会有问题</strong>；也可以下载<code>BibTex</code>，从此不用再纠结于一个字一个字敲参考文献：</p>
+<p><img src="https://user-images.githubusercontent.com/49380927/134508872-919f0067-5f22-4761-aaaa-1cb755b45f0b.png" alt="dblp-RIS与BibTex"></p>
+<h2 id="1-3-arxiv"><a href="#1-3-arxiv" class="headerlink" title="1.3 arxiv"></a>1.3 arxiv</h2><p>百度搜索<code>arxiv</code>，第一个就是。或者<code>arxiv</code>网址：<a target="_blank" rel="noopener" href="https://arxiv.org/">https://arxiv.org/</a> 或者：<a target="_blank" rel="noopener" href="https://arxiv.org/corr">https://arxiv.org/corr</a> （后者就是计算机的了）</p>
+<p><img src="https://user-images.githubusercontent.com/49380927/134510196-7b382877-7757-41b5-bf8a-8253c0fd1d35.png" alt="arxiv-检索"></p>
+<p>写了论文怕被审稿人嫖走了，就可以投稿在<code>arxiv</code>上宣告主权。</p>
+<h2 id="1-4-ReadPaper"><a href="#1-4-ReadPaper" class="headerlink" title="1.4 ReadPaper"></a>1.4 ReadPaper</h2><p><code>ReadPaper</code> 是沈向洋博士创办的一个论文社区，网址为：<a target="_blank" rel="noopener" href="https://readpaper.com/%E3%80%82">https://readpaper.com/。</a></p>
+<p><code>ReadPaper</code> 是国内的网站，所以检索速度很快，并且每篇论文你都可以直观的看到<code>分区</code>、<code>CCF 评分</code>、<code>是否有PDF</code>、<code>引用量</code>等。同时，<code>ReadPaper</code> 每篇论文都有个讨论社区，能够讨论论文中的一些问题。关于 <code>ReadPaper</code> 的详细介绍可以看我之前写的一篇评测博客：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_35357274/article/details/126627945%E3%80%82">https://blog.csdn.net/qq_35357274/article/details/126627945。</a></p>
+<p><img src="https://user-images.githubusercontent.com/49380927/189885303-5ec4d286-72a5-4a91-a82b-78da0df87709.png" alt="ReadPaper"></p>
+<h2 id="1-5-Papers-with-code"><a href="#1-5-Papers-with-code" class="headerlink" title="1.5 Papers with code"></a>1.5 Papers with code</h2><p>百度搜索<code>Paperswithcode</code>，第一个就是，或者<code>Paperswithcode</code>网址：<a target="_blank" rel="noopener" href="https://paperswithcode.com/">https://paperswithcode.com/</a></p>
+<p>这里面可以搜索到想要的论文，以及其在<code>github</code>上公开的代码：</p>
+<p><img src="https://user-images.githubusercontent.com/49380927/134511839-2809ae1a-8b34-49c8-9eac-a9e1926ff4b9.png" alt="paperswithcode"></p>
+<h1 id="2-论文哪些可读，哪些不可读？"><a href="#2-论文哪些可读，哪些不可读？" class="headerlink" title="2 论文哪些可读，哪些不可读？"></a>2 论文哪些可读，哪些不可读？</h1><p>最直白的查看论文可不可读的方法，就是搜索论文的分区。这里推荐的期刊查询的是<code>letpub</code>，网址在这里：<a target="_blank" rel="noopener" href="https://www.letpub.com.cn/">https://www.letpub.com.cn/</a> （虽然该网站广告就像小网站一样，但是确实不错）</p>
+<p>进入页面后，选择<code>智库资源</code>中的<code>最新SCI期刊信息查询系统</code>：</p>
+<p><img src="https://user-images.githubusercontent.com/49380927/134514901-b838e657-4db4-420f-80b7-799c5ff560eb.png" alt="letpub-首页"></p>
+<p>输入要检索的期刊，就可以查看到简略信息，也可以点击进入查看详细信息：</p>
+<p><img src="https://user-images.githubusercontent.com/49380927/134515212-e930428f-3a28-4789-8f5f-fd8849e37398.png" alt="letpub-检索页"></p>
+<p>其中有两个分区信息，第一个是美国那边的评级（没啥参考价值）：</p>
+<p><img src="https://user-images.githubusercontent.com/49380927/134515367-d2f9c32b-7398-48bc-9aca-039343eced24.png" alt="letpub-分区一"></p>
+<p>第二个就是中科院的JCR分区：</p>
+<p><img src="https://user-images.githubusercontent.com/49380927/134515479-3179e082-3c63-4f68-ad36-3fa95f8515ea.png" alt="letpub-分区二"></p>
+<p>当然，上面还可以看到论文审稿速度啊巴拉巴拉的，可以自行探索。</p>
+<p>这里推荐的呢，对于期刊论文，就是中科院分区一区二区的论文。当然，对于有些学校申请博士可能看的是CCF上的内容，这个的搜索方式就是上CCF官网进行检索：<a target="_blank" rel="noopener" href="https://www.ccf.org.cn/">https://www.ccf.org.cn/</a> ，网站上最新版的CCF推荐的国际期刊和会议的网址如下：<a target="_blank" rel="noopener" href="https://www.ccf.org.cn/Focus/2019-04-25/663625.shtml">https://www.ccf.org.cn/Focus/2019-04-25/663625.shtml</a></p>
+<p>同样，还有中科院预警期刊。这个就百度<code>中科院预警期刊</code>即可查看到预警期刊，比如20年底发布的：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/437284270">https://www.zhihu.com/question/437284270</a></p>
+<p>最后呢，就是经验之谈啦，因为我的了解的面不够，所以我这里就谈谈我自己觉得可以的和不可以的：</p>
+<ol>
+<li><strong>可以的</strong>：AAAI，ACL，EMNLP，SIGIR，NLPCC，KBS，information science，neurocomputing，ICLR，IEEE trans…</li>
+<li><strong>不行的</strong>：再次鞭尸<code>IEEE Access</code>，食之无味，弃之可惜。</li>
+</ol>
+<h1 id="3-如何阅读论文？"><a href="#3-如何阅读论文？" class="headerlink" title="3 如何阅读论文？"></a>3 如何阅读论文？</h1><p>对于一个做科研的人来说，读论文就像是吃饭喝水一样，是每个科研人都绕不开的坎，所以这里我就分享下我这两年读论文的经验。</p>
+<h2 id="3-1-前期工作"><a href="#3-1-前期工作" class="headerlink" title="3.1 前期工作"></a>3.1 前期工作</h2><p>实际上做科研这件事情，是一件需要赶时间的工作，也许你想到了一个点，但是你做的比别人慢了，你刚收笔，就发现别人论文发出来了，都是很正常的一件事。但是在这种情况下，就更不应该一来就上手读论文，而是应该先做前期准备工作，正所谓<strong>工欲善其事，必先利其器</strong>。以下是我觉得应该花 3 - 6 个月做的工作：</p>
+<h3 id="3-1-1-数学"><a href="#3-1-1-数学" class="headerlink" title="3.1.1 数学"></a>3.1.1 数学</h3><p>数学永远是工科生绕不开的一个坎，以我们实验室的研究方向来说，如果你做社会网络，矩阵你得会吧，概率论你得会吧，图论你得会吧；如果你做深度学习，那你天天看的都是 $y=\sigma(Wx+b)$。那么数学应该看什么？应该怎么看？</p>
+<blockquote>
+<p>其实数学这东西，你过段时间没看也就忘了，这些都不是关键，最重要的是，当你看论文，看到某个数学符号，你得知道这个符号是什么，然后再去回忆或者百度。同时我们工科生对于数学而言不是说要会做题，那些都是交给计算机去做的，我们要的只是知道这个是什么，怎么用就行了，就比如矩阵你只用知道是一种映射关系就好。</p>
+</blockquote>
+<ul>
+<li><code>线性代数</code>：或者叫矩阵论也行，这是怎么都绕不开的东西，无论是论文里面的公式，还是你写的代码，都是矩阵（用矩阵写代码能够有效提高代码的并行计算效率）。当然，你用的同济大学线性代数教材可以丢了，用来擦屁股都嫌纸硬的，考研的东西也没必要，就是八股文。线代我最推荐的是 <code>3Blue1Brown</code> 的课程，打开你新世界的大门。链接：【【官方双语/合集】线性代数的本质 - 系列合集】 <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1ys411472E?share_source=copy_web&amp;vd_source=be19fd8057d8c92fcca5f91666f9b006">https://www.bilibili.com/video/BV1ys411472E?share_source=copy_web&amp;vd_source=be19fd8057d8c92fcca5f91666f9b006</a> 。不过这个是初级课程，里面没有涉及到 <code>谱</code> 这些内容，要中高级的内容，可以看 <code>《程序员的数学》</code>。</li>
+<li><code>概率论</code>：概率论和矩阵论一样，都是随时用到的东西。比如经典的 <code>PageRank</code> 或者 <code>传染病模型</code> 都是随机游走模型。概率论实际上浙江大学版的概率论就很可以的，不过还是比较晦涩，全是公式，要简明版的，也可以看 <code>《程序员的数学》</code>。</li>
+</ul>
+<p>数学的话，差不多就要花费3个月左右的时间，先看数学能够有效提升你论文公式阅读的速度（虽然你论文看多了就会发现公式都是大同小异的，尤其是深度学习），同时你还能够在以后写论文的时候提升你自圆其说的能力。</p>
+<h3 id="3-1-2-代码"><a href="#3-1-2-代码" class="headerlink" title="3.1.2 代码"></a>3.1.2 代码</h3><p>如果说数学是你看懂论文的基础，那么代码就是你实现论文的地基。你有再多的想法，不会写代码一样白搭。代码的话，用 <code>Python</code> 就够了，不过在 <code>Python</code> 的基础上，还有你要看的东西。</p>
+<ul>
+<li><code>Python</code>：如果你没学过 <code>Python</code>，先去 Github 上搜一下 <code>Python</code> 的编程风格，每学一个语言先学这个语言的编程风格是个好习惯，这个差不多半天看得完。<code>Python</code> 的语法与自然语言很像，所以学起来很快，如果你有编程基础，并且也做过许多项目，那么看 <code>Python</code> 半天就够了，就看看 <code>if</code>、<code>for</code>、<code>while</code> 语句，再看看 <code>Python</code> 中最重要的三个数据结构 <code>元组 (tuple)</code>、<code>列表 (list)</code>、<code>字典 (dict)</code>，最后看看<code>文件操作</code>，差不多半天时间可以搞定（当然有空可以看看魔术方法，很酷炫，但是你不会也不影响，因为我也不会）。如果你一点代码基础都没有（别骗自己，没有就是没有），那么最多一个月也怎么都学得会。</li>
+<li><code>Anaconda</code>：<code>Anaconda</code> 是用于 <code>Python</code> 的环境管理，简单来说你一个项目是用 <code>python 2</code> 写的，下一个项目你要用 <code>python 3</code>，如果在电脑上又装 <code>python 2</code>，又装 <code>python 3</code>，可能会有冲突。<code>Anaconda</code> 就是用来管理环境的，比如有的环境用来管理 <code>python 2</code>，有的环境用来管理 <code>python 3</code>，有的用来管理 <code>django</code>，有的用来管理 <code>torch</code>。这个很简单，但是很重要，如果你不会 <code>anaconda</code>，哪天把师兄师姐服务器环境搞炸了我估计他会一波带走你的。具体的配置可以看我以前的博客：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_35357274/article/details/118582625">https://blog.csdn.net/qq_35357274/article/details/118582625</a> 。这个也差不多半天可以搞定。</li>
+<li><code>Pytorch</code>：如果你不选择用深度学习，那么这个你可以跳过。如果你选择用深度学习，那么这里我强烈建议用 <code>torch</code>。根据 22 年 6 月发表的报告，工业界 80% 的企业已经放弃使用 <code>Tensorflow</code> 改用 <code>torch</code> 了，就足以见得现在 <code>Tensorflow</code> 有多垃圾。<code>Torch</code> 一定要在你学会 <code>python</code> 的基础上再学，别想着一口能吃成胖子。同时你也一定要先学完 <code>torch</code> 后再去看别人的代码，不然你会一直在一些弱智问题上纠结浪费自己的时间，这样反而才是效率最低下的做法。<code>Torch</code> 的话推荐看 <code>Dive-into-Deeplearning</code> 这本电子书，链接为：<a target="_blank" rel="noopener" href="https://tangshusen.me/Dive-into-DL-PyTorch/#/">https://tangshusen.me/Dive-into-DL-PyTorch/#/</a> （不过这个链接经常打不开，不知道怎么回事）。<code>Torch</code> 要学差不多 20 - 40 天。<strong>注：这个时间是必须先花的，别想着省！！！如果你连 forward 在什么时候会被调用都不知道，那你是怎么敢省这个时间的？</strong></li>
+<li><code>numpy</code>, <code>scikit</code> 等其他库：这些库不需要专门的学习，因为经常会用得上，所以遇到的时候再百度再学就够用了。</li>
+</ul>
+<p>简而言之，代码这一块最需要花时间的还是在框架上，其余的都是遇到的时候再百度都来得及。代码不用纠结于你写的好不好看，是不是一个完整的程序，能跑通就行了，毕竟刚刚也说了，发论文就是个争分夺秒的事情，如果你太过于纠结写得好不好看反而是舍本逐末的事情。同时，学习代码的时候一定要学会看官方文档和看源码，像 <code>torch</code> 和 <code>transformers</code> 这些库的文档和源码比网上搜的博客清晰的多。</p>
+<h2 id="3-2-一篇论文该怎么读？"><a href="#3-2-一篇论文该怎么读？" class="headerlink" title="3.2 一篇论文该怎么读？"></a>3.2 一篇论文该怎么读？</h2><p>许多人，包括我，在最开始看论文的时候，都是从头到尾一句话一句话的翻译，这个也没错，但是这样反而会效率不高。我这里就从科研的读论文的顺序和读论文该用什么方式来写。</p>
+<h3 id="3-2-1-科研阶段读论文顺序"><a href="#3-2-1-科研阶段读论文顺序" class="headerlink" title="3.2.1 科研阶段读论文顺序"></a>3.2.1 科研阶段读论文顺序</h3><p>对于刚开始做科研的同学，最大的困惑就是不知道该读什么论文。通常都是导师丢一啪啦论文下来，或者直接找师兄师姐要一啪啦论文下来看，但是实际上这样我个人觉得是有问题的，因为很多论文，尤其是会议论文，都是建立在你是从事了这个行业一段时间的，如果你上来就硬看，可能看完一篇论文最大的收获就是学会了几个专有名词。这里关于论文的阅读顺序我整理如下：</p>
+<ul>
+<li>初学者先问清导师团队的研究方向有哪些，然后搜相关的综述论文（一定要搜最新的那一篇，因为这一篇里面肯定会引用老的综述论文）。对于看论文还不熟练的同学可能看英语会很吃力，看专业名词看的头痛，很多百度都还百度不到的。这也没事，可以搜近两年这个方向清北的博士毕业论文来看，他们的毕业论文可以只用关注于第二章，即<strong>国内外研究现状</strong>，这一部分就是一篇顶级的中文综述，先了解下这个方向有哪些方法，然后再看看相关的基础知识。就比如你做自然语言处理的话，词嵌入你得知道吧，传统方法里面最经典的 <code>Word2Vec</code> 得知道吧，这两年最热门的 <code>transformer</code> 得知道吧。</li>
+<li>当有了方向的直观认识后，一定要尽快确定自己的研究方向，不然开题前换方向的话等于你之前的工作都白做了。这个阶段我推荐最多研一上期结束的时候就要确定。当确定了方向后，就去看看这个领域经典的论文，比如自然语言处理里面的 <code>Word2Vec</code>，<code>GloVe</code>，<code>Transformer</code>，<code>BERT</code> 这些。</li>
+<li>当上述的工作做完后，就可以开始看实际的论文了，这个阶段我推荐先从一区的论文开始看，一区以下的论文不太推荐，二区以下的碰都别碰，当然，二区的 <code>IEEE ACCESS</code> 也要避坑。这个时候你可能正好研一上期快结束了，但是实际上基础还是处于相对薄弱的阶段，所以这个时候看 <code>SCI</code> 是个很好的过程。SCI 写的会很详细，有的时候你都会看到一句话翻来覆去写个几遍的。同时 SCI 会将模型的每个模块写的很详细，比如每篇跟 <code>LSTM</code> 相关的论文，一定会有一套 <code>LSTM</code> 相关的公式，这个阶段可以做到查漏补缺，不仅可以锻炼阅读论文的能力，也可以补充一下自己的基础知识。不过我个人不建议太过于纠结期刊论文的思想，因为一般也没有什么思想。</li>
+<li>当看了一两个月的一区论文后，就可以进入到最后一个阶段了。这个阶段就只读顶会论文（除非你的研究方向只有 SCI，像我的研究方向顶会就只有个位数）。为什么说只读顶会论文，我这里借用 <strong>MIT AI LAB</strong> 他们的师兄给师弟师妹写的原话：<strong>你几乎无法在期刊论文里面找到任何有新意的东西</strong>。当然这句话是有局限性的，因为我发现这句话仅适用于部分计算机的领域，当然，人工智能属于这句话的范畴。实际上你仔细想一下自己领域所有著名的模型、方法，你会发现好像一篇出自期刊的论文都找不出来（nature science 不算）。我看过许多顶会论文，坦白的说，就算是 CCF-C 的会议论文的创新性，都能碾压大多数一区的论文了，虽然这些论文方法可能很简单。这类论文会很有趣，但是也会很晦涩。因为会议论文会有篇幅限制，所以大家都是能不写的东西就不写，比如你写期刊论文的时候，写 BERT 都可以写个四五页的，但是你写会议论文的时候，一句话加一个公式 $h = {\rm BERT}(x)$ 就结束了。所以对于基础不好的同学在看会议论文的时候会很煎熬，因为你没有扎实的知识储备。</li>
+<li>当你会议论文看的最够多了后，就会有许多创意了。实际上如果你只看当年会议里最热门的话题（比如 18 年的 <code>BERT</code>、 <code>GNN</code>；20 年的对比学习；21 年的提示学习），随便改一改，都是篇一区论文的质量了，所以我一直说<strong>发论文有手就行</strong>。</li>
+<li>在这中间还有一个很重要的过程，就是<strong>学术报告</strong>，包括但不限于实验室的组会。<ul>
+<li>对于实验室的组会来说，这是个很好的阶段，能够让你在一小时内简单了解一篇论文，然后看你有没有需要，如果有需要，就找那个同学要原文来看。</li>
+<li>还有就是<strong>一定一定一定</strong>要多参加国内外的会议，就算是国内的，不在 CCF 表上的会议（虽然我一直都认为 CCKS 要升 CCF-C 了，所以现在发个 CCKS 我觉得会很赚），都会请到许多行业大佬（比如你可以随时随地看到刘知远和黄明烈两个老师的名字）来做汇报，这些汇报就是他们最新的研究成果，并且由论文作者直接分享，比你自己去咬文嚼字看论文效果要好得多。同时在会议上老师们还会给你提供许多他们认为未来的可研究话题，这些对自己的选题都能有很好的帮助。</li>
+<li>同时可以 B 站上关注一下 <a target="_blank" rel="noopener" href="https://space.bilibili.com/1706874133/">ReadPaper论文阅读</a>，这里会不定期的请许多论文一作来分享他们的工作，所以也可以快速阅读一篇论文的思想。</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-2-2-看论文该怎么看？"><a href="#3-2-2-看论文该怎么看？" class="headerlink" title="3.2.2 看论文该怎么看？"></a>3.2.2 看论文该怎么看？</h3><p>我看过许多师弟师妹看论文都是一句话一句话的看，有的还是翻译成中文打印下来看，更有甚者不仅要一句话一句话翻译，还要用笔去一句话一句话抄……亚雷吗，是硕士三年太长了么……</p>
+<p><img src="https://user-images.githubusercontent.com/49380927/189885642-ad68b22c-272e-473a-82b1-dfe762d86525.jpg" alt="麻了"></p>
+<p>首先这是个最大的误区，就是你论文一句话一句话的看。还是引用 <strong>MIT AI LAB</strong> 的话：你不可能写论文的时候每一句都写的很完美。那么同理，不是每一句话都是有必要去阅读的。</p>
+<p>首先，<strong>一定要看英文原文！一定要看英文原文！一定要看英文原文！</strong> 这个有两个原因：</p>
+<ul>
+<li>如果你看博客，假设搜的到的话，这个是别人 N 次咀嚼后的结果，可能第一个看论文的人看完后，得出错误的结论，第二个人看了这个错误的结论，然后以讹传讹下来，你看的博客不知道错了多少。</li>
+<li>如果你全文翻译，有的句子翻译出来都不是原文表达的意思了，比如你输入一个长难句进翻译软件你看出来会不会有问题。</li>
+</ul>
+<p>其次，阅读论文要分为 <strong>略读</strong> 和 <strong>精读</strong>。同时，看论文的顺序也不应该是自顶而下的看，根据我观察的来自 <code>新加坡国立</code>，<code>电子科大</code>，<code>西南交大国家重点实验室</code>，<code>贝壳找房</code> 等诸位大佬的论文阅读习惯，再结合上我看论文的习惯而言，我将看论文的顺序总结为：<code>摘要</code>，<code>总结</code>，<code>模型图</code>，<code>实验结果的表和图</code>，<code>引言</code>，<code>其他</code>。</p>
+<ul>
+<li>当你开始看一篇论文时，不能够确定这篇论文要精读还是要略读，所以就按照我之前总结的顺序来阅读。如果你确定这篇论文你是要精读的，那么就可以直接自顶而下阅读（不过对于没经验的人来说，很难能够确定论文是不是要精度的，所以没经验之前最好按照我给的顺序来阅读）。</li>
+<li>通常看完摘要，看完总结，看完模型图后，你就能大概把握这篇论文是不是要略读了。最简单的判断办法就是你看模型图是不是 <strong>叠层数</strong> 或者 <strong>缝合怪</strong>，叠层数就是比如 <strong>LSTM 上加了个 ATT</strong>，缝合怪就是比如 <strong>LSTM + CNN</strong>。如果是这样的，那么稍稍看看实验结果就行了（这类论文的实验结果一般也是编的，一个敢编，一个敢收），然后这篇论文就到此为止了。</li>
+<li>当你判断这篇论文不是属于略读的范畴的时候，那么就是精读。精读的话可以选择我刚刚的那个顺序来读，也可以选择从头开始读，核心目的就是看懂这篇论文。</li>
+</ul>
+<p>当然，在阅读论文的时候，也不是要每一句话都读。通常一篇优秀的论文都是 <strong>总-分-总</strong> 结构，在看的过程中，你可以跳着看，比如每一段只看第一句，看下他这段话的中心思想是什么。同时，在遇到很多公式的时候（我相信大部分人都被这个难到了），实际上你只需要推导一两篇论文的公式，大部分论文的公式都是大同小异的，之后遇到都可以跳过了。比如我就从来不会看 <code>LSTM</code> 的公式，那一大坨我会直接跳过 （除非他这篇论文就是改进的 LSTM）。同时，一篇优秀的论文，你不看文字介绍，你只看图表以及它们的标题都可以看懂这个图表的内容，所以关于图表介绍的那一大坨文字也可以选择性跳过。</p>
+<h3 id="3-2-3-看论文主要看什么？"><a href="#3-2-3-看论文主要看什么？" class="headerlink" title="3.2.3 看论文主要看什么？"></a>3.2.3 看论文主要看什么？</h3><p>这里我就引用一下沈向洋博士和华刚博士提出的 <strong>论文十问</strong>：</p>
+<ul>
+<li><strong>**</strong> 论文试图解决什么问题？</li>
+<li>这是否是一个新的问题？</li>
+<li><strong>*</strong> 这篇文章要验证一个什么科学假设？</li>
+<li>有哪些相关研究？如何归类？谁是这一课题在领域内值得关注的研究员？</li>
+<li><strong>*</strong> 论文中提到的解决方案之关键是什么？</li>
+<li><strong>*</strong> 论文中的实验是如何设计的？</li>
+<li><strong>*</strong> 用于定量评估的数据集是什么？代码有没有开源？</li>
+<li><strong>*</strong> 论文中的实验及结果有没有很好地支持需要验证的科学假设？</li>
+<li><strong>*</strong> 这篇论文到底有什么贡献？</li>
+<li>下一步呢？有什么工作可以继续深入？</li>
+</ul>
+<blockquote>
+<p>* 代表了我认为最重要的问题。</p>
+</blockquote>
+<p>看论文我认为首先要看的是这篇论文的 <code>motivation</code>。每篇论文的模型，实验全是围绕着这个 <code>motivation</code> 而展开的。<code>motivation</code> 会出没在 <code>introduction</code> 中。通常 <code>introduction</code> 里面第一段是背景介绍（一般是废话，当然看作者水平），第二段或者第三段会提出一个问题（这里通常会有例子，包括但不限于文字、图、表），再下一段会说明为了解决这个问题，他们怎么怎么做的，而这个问题与解决方案就是这篇论文的 <code>motivation</code>，抓住了这个 <code>motivation</code> 才能准确把握住作者后面写的东西。</p>
+<p>当知道作者的 <code>motivation</code> 后，可以看下模型图中，他们提出了什么新的模块，来解决他们发现的问题，这也就是对应了 <strong>论文中提到的解决方案之关键是什么？</strong> 通常一篇好的论文，你可以直接从 <code>motivation</code> 和 <code>模型框架图</code> 知道这篇论文 80% 的内容。</p>
+<p>接着就是实验部分，你得分析下作者用了什么实验来验证他们的解决思路。实验通常会有几个板块，一个主试验（即对比实验），和别人的模型对比，看下自己创新的模块是否带来了提升。如果性能上的提升只有一点点，那么你就得开始怀疑究竟是这个数据集太难了，还是说这个模型本身就不能够解决这个问题，只是某一组跑出来的效果好了那么一点点。通常还得有一个消融实验，将模型创新的部分给删掉，看下性能上会损失多少，以此来说明这个模块是对模型性能有帮助的。这也就是 <strong>论文中的实验是如何设计的？</strong> 当你论文看得多了，自然也就知道自己该做什么实验了。</p>
+<h3 id="3-2-4-论文的实验要不要复现？"><a href="#3-2-4-论文的实验要不要复现？" class="headerlink" title="3.2.4 论文的实验要不要复现？"></a>3.2.4 论文的实验要不要复现？</h3><p>这个问题我秉持着怀疑的态度，我在这个问题上没有很好的方法论，因为我也没怎么复现过别人的实验。从我个人的角度上讲，我是特别不想复现别人的实验的，因为你会发现很多论文是不公布代码的；或者只公布一点点代码；或者关键代码不公布；或者公布出来你跑出来实验结果差了很多；或者你照着他的模型、参数给跑一遍，然后发现连基线模型都比不过。都是有可能的。</p>
+<p>所以在这个问题上，我只会选择看他们模型的代码（即 models 文件夹下的内容），然后我只跑通这一个模块的内容。我不会选择去把他们的实验给实现，因为这个过程是个很费时费力的过程，而且有可能还跑不通。由于我用别人的模型的时候，一般都是放在新数据集上运行（如果你是在这篇论文的数据集上做实验，那么一般就是直接用别人论文里面的结果，不用自己跑），所以我只用关注于把别人的 model 给运行正常即可。</p>
+<h3 id="3-2-5-看论文方法流"><a href="#3-2-5-看论文方法流" class="headerlink" title="3.2.5 看论文方法流"></a>3.2.5 看论文方法流</h3><p>自问自答式读论文，自己提出一个问题，自己从论文或者各种渠道去找到答案，然后再更根据上一个问题的答案再提出另一个问题，直到没有问题可以提问，注意提问题时应该以一个纯小白的角度提出问题，而且通常的第一个问题是这篇论文想干什么，也就是<code>motivation</code></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/03/22/%E7%94%B5%E8%84%91%E8%BF%9E%E6%8E%A5%E6%89%8B%E6%9C%BA%EF%BC%8C%E6%89%8B%E6%9C%BA%E7%BB%99%E7%94%B5%E8%84%91%E4%BC%A0%E6%96%87%E4%BB%B6/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/03/24/good%20paper/" rel="next" title="">
+       <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#How-to-retrieve-papers-XHU"><span class="nav-number">1.</span> <span class="nav-text">How-to-retrieve-papers-XHU</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95"><span class="nav-number">2.</span> <span class="nav-text">目录</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E5%A6%82%E4%BD%95%E6%A3%80%E7%B4%A2%E8%AE%BA%E6%96%87"><span class="nav-number">3.</span> <span class="nav-text">1 如何检索论文</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-SCI-HUB"><span class="nav-number">3.1.</span> <span class="nav-text">1.1 SCI-HUB</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-dblp"><span class="nav-number">3.2.</span> <span class="nav-text">1.2 dblp</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-arxiv"><span class="nav-number">3.3.</span> <span class="nav-text">1.3 arxiv</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-ReadPaper"><span class="nav-number">3.4.</span> <span class="nav-text">1.4 ReadPaper</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-5-Papers-with-code"><span class="nav-number">3.5.</span> <span class="nav-text">1.5 Papers with code</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E8%AE%BA%E6%96%87%E5%93%AA%E4%BA%9B%E5%8F%AF%E8%AF%BB%EF%BC%8C%E5%93%AA%E4%BA%9B%E4%B8%8D%E5%8F%AF%E8%AF%BB%EF%BC%9F"><span class="nav-number">4.</span> <span class="nav-text">2 论文哪些可读，哪些不可读？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E5%A6%82%E4%BD%95%E9%98%85%E8%AF%BB%E8%AE%BA%E6%96%87%EF%BC%9F"><span class="nav-number">5.</span> <span class="nav-text">3 如何阅读论文？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-%E5%89%8D%E6%9C%9F%E5%B7%A5%E4%BD%9C"><span class="nav-number">5.1.</span> <span class="nav-text">3.1 前期工作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-1-%E6%95%B0%E5%AD%A6"><span class="nav-number">5.1.1.</span> <span class="nav-text">3.1.1 数学</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-2-%E4%BB%A3%E7%A0%81"><span class="nav-number">5.1.2.</span> <span class="nav-text">3.1.2 代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-%E4%B8%80%E7%AF%87%E8%AE%BA%E6%96%87%E8%AF%A5%E6%80%8E%E4%B9%88%E8%AF%BB%EF%BC%9F"><span class="nav-number">5.2.</span> <span class="nav-text">3.2 一篇论文该怎么读？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-1-%E7%A7%91%E7%A0%94%E9%98%B6%E6%AE%B5%E8%AF%BB%E8%AE%BA%E6%96%87%E9%A1%BA%E5%BA%8F"><span class="nav-number">5.2.1.</span> <span class="nav-text">3.2.1 科研阶段读论文顺序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-2-%E7%9C%8B%E8%AE%BA%E6%96%87%E8%AF%A5%E6%80%8E%E4%B9%88%E7%9C%8B%EF%BC%9F"><span class="nav-number">5.2.2.</span> <span class="nav-text">3.2.2 看论文该怎么看？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-3-%E7%9C%8B%E8%AE%BA%E6%96%87%E4%B8%BB%E8%A6%81%E7%9C%8B%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">5.2.3.</span> <span class="nav-text">3.2.3 看论文主要看什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-4-%E8%AE%BA%E6%96%87%E7%9A%84%E5%AE%9E%E9%AA%8C%E8%A6%81%E4%B8%8D%E8%A6%81%E5%A4%8D%E7%8E%B0%EF%BC%9F"><span class="nav-number">5.2.4.</span> <span class="nav-text">3.2.4 论文的实验要不要复现？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-5-%E7%9C%8B%E8%AE%BA%E6%96%87%E6%96%B9%E6%B3%95%E6%B5%81"><span class="nav-number">5.2.5.</span> <span class="nav-text">3.2.5 看论文方法流</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">李治澎</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">李治澎</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

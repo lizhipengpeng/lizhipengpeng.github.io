@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="title:好文收集AI 新时代，大模型该如何“绞尽脑汁”？ 本文主要讲述增强大模型推理思考的技术手段  开源大模型部署及推理所需显卡成本必读：也看大模型参数与显卡大小的大致映射策略开源大模型部署及推理所需显卡成本必读：也看大模型参数与显卡大小的大致映射策略 主要讲述关于大模型显卡内存的一些常识  人工神经网络实验的新理论：大脑可能通过评估记忆的有效性来指导其存储位置 大脑中不同的记忆处于不同的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="随笔">
+<meta property="og:url" content="http://example.com/2023/12/08/%E5%A5%BD%E6%96%87/index.html">
+<meta property="og:site_name" content="随笔">
+<meta property="og:description" content="title:好文收集AI 新时代，大模型该如何“绞尽脑汁”？ 本文主要讲述增强大模型推理思考的技术手段  开源大模型部署及推理所需显卡成本必读：也看大模型参数与显卡大小的大致映射策略开源大模型部署及推理所需显卡成本必读：也看大模型参数与显卡大小的大致映射策略 主要讲述关于大模型显卡内存的一些常识  人工神经网络实验的新理论：大脑可能通过评估记忆的有效性来指导其存储位置 大脑中不同的记忆处于不同的">
+<meta property="og:locale">
+<meta property="article:published_time" content="2023-12-08T03:14:23.243Z">
+<meta property="article:modified_time" content="2023-12-08T03:14:23.273Z">
+<meta property="article:author" content="李治澎">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2023/12/08/%E5%A5%BD%E6%96%87/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title> | 随笔</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">随笔</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/12/08/%E5%A5%BD%E6%96%87/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李治澎">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="随笔">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-12-08 11:14:23" itemprop="dateCreated datePublished" datetime="2023-12-08T11:14:23+08:00">2023-12-08</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <hr>
+<h2 id="title-好文收集"><a href="#title-好文收集" class="headerlink" title="title:好文收集"></a>title:好文收集</h2><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzI4MDcxNTY2MQ==&mid=2247518622&idx=1&sn=15668ebc323a037ca6f123ede0acdc85&chksm=ebb6817cdcc1086a36dc7208933a71dacdb99815097d576993249a1e0dcf5511b5b02bc19c00&scene=0&xtrack=1">AI 新时代，大模型该如何“绞尽脑汁”？</a></p>
+<p>本文主要讲述增强大模型推理思考的技术手段</p>
+<hr>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzAxMjc3MjkyMg==&mid=2648402819&idx=2&sn=6ee6db4554f915f1b677c04576fcb21a&chksm=838378d6b4f4f1c0a0ed7fbf1841cbe22574d17a2825d1628d2c6f3ff78d09fc1dd4d7cff579&scene=0&xtrack=1">开源大模型部署及推理所需显卡成本必读：也看大模型参数与显卡大小的大致映射策略</a><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzAxMjc3MjkyMg==&mid=2648402819&idx=2&sn=6ee6db4554f915f1b677c04576fcb21a&chksm=838378d6b4f4f1c0a0ed7fbf1841cbe22574d17a2825d1628d2c6f3ff78d09fc1dd4d7cff579&scene=0&xtrack=1">开源大模型部署及推理所需显卡成本必读：也看大模型参数与显卡大小的大致映射策略</a></p>
+<p>主要讲述关于大模型显卡内存的一些常识</p>
+<hr>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/UwQMrGhc84FGtueefhxXCg">人工神经网络实验的新理论：大脑可能通过评估记忆的有效性来指导其存储位置</a></p>
+<p>大脑中不同的记忆处于不同的大脑位置中，大脑在进行记忆的储存时会根据记忆对未来的重要性而储存在不同的大脑位置中</p>
+<blockquote>
+<p>每次回忆一次经历时，网络的连接权重都会发生变化，导致记忆元素更加平均。</p>
+</blockquote>
+<p>神经网络是否也需要具备这样的特性，在每次单纯的输入也会造成网络参数的变化</p>
+<blockquote>
+<p>大脑有两个相互关联、互补的学习系统：快速编码新信息的海马体和逐渐整合新信息以进行长期存储的新皮质。</p>
+</blockquote>
+<p>对神经网络的启示？</p>
+<hr>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/OUuxjgH2wWBrLjbJuQXqPQ">ETH等提出思维图(GoT)超越思维链(CoT): 用LLMs解决复杂问题</a></p>
+<p>GoT的关键思想和主要优势是能够将LLM生成的信息建模为任意图，其中信息单元（“LLM思维”）是顶点，边对应于这些顶点之间的依赖关系</p>
+<hr>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/bi_y82ryjuFG972h0f5nvg">通过大语言模型和人工智能的力量改变军事规划</a></p>
+<p>本文探讨了 LLMs 在军事规划革命中的潜力，并强调了它们带来的挑战和机遇。</p>
+<hr>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650889393&idx=4&sn=8bcc5208aec08f4a9dc603abb2ee6584&chksm=84e498cfb39311d9380b28f5a477e4624ba400fce1c904585817990943d646d36a8e8e39359f&scene=0&xtrack=1&sessionid=1693810380&subscene=0&ascene=0&fasttmpl_type=0&fasttmpl_fullversion=6837651-zh_CN-zip&fasttmpl_flag=0&realreporttime=1693810766336&clicktime=1693810766&enterid=1693810766#rd">听我说，Transformer他就是个向量机</a></p>
+<p>一篇来自宾夕法尼亚大学、加州大学河滨分校的论文试图研究大模型基础 Transformer 结构的原理，其在注意力层的优化几何与将最优输入 token 与非最优 token 分开的硬边界 SVM 问题之间建立了形式等价。</p>
+<hr>
+<p><a target="_blank" rel="noopener" href="https://mostlypython.substack.com/p/reading-code?nthPub=581">How to read code</a></p>
+<ol>
+<li>忽略函数</li>
+<li>简化重复代码</li>
+</ol>
+<hr>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg5NzgyNTU2Mg==&mid=2247517847&idx=2&sn=bc4c733f73ff099e270aac08e4e4b74f&chksm=c06928e2f71ea1f4167a3a989ebb5eabf3485092c549b2e45291907969202ad9b83a9a0147eb&scene=0&xtrack=1">从零开始，大模型训练教程</a></p>
+<hr>
+<p><a target="_blank" rel="noopener" href="https://blog.tjdata.site/posts/25867ec7.html">transformers 总结和解释</a></p>
+<hr>
+<p><a target="_blank" rel="noopener" href="https://arthurchiao.art/blog/gpt-as-a-finite-state-markov-chain-zh/">GPT 是如何工作的：200 行 Python 代码实现一个极简 GPT</a></p>
+<p>本文实际上是基于 PyTorch，并不是完全只用基础 Python 包实现一个 GPT。 主要目的是为了能让大家对 GPT 这样一个复杂系统的（不那么底层的）内部工作机制有个直观理解。</p>
+<hr>
+<p><a target="_blank" rel="noopener" href="http://arthurchiao.art/blog/transformers-from-scratch-zh/#%E6%91%98%E8%A6%81">Transformer 是如何工作的</a></p>
+<p>对Transformer讲的很详细，很好的文章</p>
+<hr>
+<p><a target="_blank" rel="noopener" href="https://hub.baai.ac.cn/view/32218">GPU架构和入门介绍</a></p>
+<hr>
+<p><a target="_blank" rel="noopener" href="https://transformers.run/">Transformers入门</a></p>
+<hr>
+<p><a target="_blank" rel="noopener" href="https://hub.baai.ac.cn/view/33278"> 4GB 显存单卡居然能跑 70B 大模型了</a></p>
+<p>介绍了低显存允许大模型和微调大模型的两种方法</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/12/04/%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85python%E7%9A%84%E5%BA%93%E5%8F%8A%E4%BE%9D%E8%B5%96%E5%BA%93/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/12/13/%E8%AE%BA%E6%96%87%E5%86%99%E4%BD%9Cprompt/" rel="next" title="">
+       <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#title-%E5%A5%BD%E6%96%87%E6%94%B6%E9%9B%86"><span class="nav-number">1.</span> <span class="nav-text">title:好文收集</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">李治澎</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">李治澎</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="目录    1. LaTeX的tikz库   2. ConvNetDraw   3. Visio   4. Inkscape-自由绘图   5. Omnigraffle   6. draw_convnet   7. PlotNeuralNet   8. NN-SVG   9. Python + Graphviz   10. Graphviz - dot   11. Keras   12、Netsc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="随笔">
+<meta property="og:url" content="http://example.com/2023/11/30/%E8%AE%BA%E6%96%87%E4%B8%AD%E7%BB%98%E5%88%B6%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%B7%A5%E5%85%B7%E6%B1%87%E6%80%BB/index.html">
+<meta property="og:site_name" content="随笔">
+<meta property="og:description" content="目录    1. LaTeX的tikz库   2. ConvNetDraw   3. Visio   4. Inkscape-自由绘图   5. Omnigraffle   6. draw_convnet   7. PlotNeuralNet   8. NN-SVG   9. Python + Graphviz   10. Graphviz - dot   11. Keras   12、Netsc">
+<meta property="og:locale">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190222202144480.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190222202543351.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190222203906377.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2019022220453623.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190222204636416.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190222220113542.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2019022221071977.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190222210936166.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190222211810780.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190222212248848.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190222212417267.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190222213012164.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190222213100918.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190222213700605.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2019022221402545.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190222222708390.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190222215519765.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190222220000120.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190222220736802.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190222224313814.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190222224709108.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190222225212153.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190223103647150.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="article:published_time" content="2023-11-30T08:32:04.597Z">
+<meta property="article:modified_time" content="2023-11-30T08:32:04.657Z">
+<meta property="article:author" content="李治澎">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190222202144480.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center">
+
+<link rel="canonical" href="http://example.com/2023/11/30/%E8%AE%BA%E6%96%87%E4%B8%AD%E7%BB%98%E5%88%B6%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%B7%A5%E5%85%B7%E6%B1%87%E6%80%BB/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title> | 随笔</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">随笔</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/11/30/%E8%AE%BA%E6%96%87%E4%B8%AD%E7%BB%98%E5%88%B6%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%B7%A5%E5%85%B7%E6%B1%87%E6%80%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李治澎">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="随笔">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-11-30 16:32:04" itemprop="dateCreated datePublished" datetime="2023-11-30T16:32:04+08:00">2023-11-30</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h4 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h4><ul>
+<li><ul>
+<li>  <a href="#1_LaTeXtikz_3">1. LaTeX的tikz库</a></li>
+<li>  <a href="#2_ConvNetDraw_11">2. ConvNetDraw</a></li>
+<li>  <a href="#3_Visio_17">3. Visio</a></li>
+<li>  <a href="#4_Inkscape_22">4. Inkscape-自由绘图</a></li>
+<li>  <a href="#5_Omnigraffle_28">5. Omnigraffle</a></li>
+<li>  <a href="#6_draw_convnet_32">6. draw_convnet</a></li>
+<li>  <a href="#7_PlotNeuralNet_37">7. PlotNeuralNet</a></li>
+<li>  <a href="#8_NNSVG_43">8. NN-SVG</a></li>
+<li>  <a href="#9_Python__Graphviz_50">9. Python + Graphviz</a></li>
+<li>  <a href="#10_Graphviz__dot_54">10. Graphviz - dot</a></li>
+<li>  <a href="#11_Keras_59">11. Keras</a></li>
+<li>  <a href="#12Netscope_74">12、Netscope</a></li>
+<li>  <a href="#13_Caffe_82">13. Caffe自带绘图工具</a></li>
+<li>  <a href="#14_TensorBoard_85">14. TensorBoard</a></li>
+<li>  <a href="#15_NetworkX_90">15. NetworkX</a></li>
+<li>  <a href="#16_Bokeh_116">16. Bokeh</a></li>
+<li>  <a href="#17_DAFT_122">17. DAFT</a></li>
+<li>  <a href="#18_Netron_128">18. Netron</a></li>
+<li>  <a href="#_137">注意事项</a></li>
+<li>  <a href="#_144">参考资料</a></li>
+</ul>
+</li>
+</ul>
+<p>作为一名科研人员，也许你经常会在不同类型的论文中看到各种令人称赞的算法框图或者神经网络框图，作为一名AI从业者，你经常需要在你的论文、Poster或者Slide中添加一些神经网络框图，作为新手的我也经常遇到这个问题，但是一直并没有找到一个好的工具，很多大佬们都说利用PPT或者Visio等就能绘制成功，我的想法是这样的，尽管很多工具都能完成同样的一项工作，但是它们的效果和效率肯定是不一样的，你用Visio需要2个小时的一张图或者利用另外的一个工具仅仅需要花费20分钟，这可能就是所谓的区别，如果你感觉你的时间很多，浪费一点无所谓，请高手们绕过这篇博文。我花费了一点时间在网上找了很多有用的工具，在这里总结汇总一下，朋友们各取所好！</p>
+<h3 id="1-LaTeX的tikz库"><a href="#1-LaTeX的tikz库" class="headerlink" title="1. LaTeX的tikz库"></a>1. LaTeX的tikz库</h3><p>作为科研人员，你可能经常需要用Latex写一些论文，那么其中有一款支持LaTex的工具tikz可以用来绘制各种各样的图，这可能是最方便的工具了。下面是有关该库的一些学习资料。<br>1、TikZ的官网-<a target="_blank" rel="noopener" href="http://www.texample.net/tikz/">http://www.texample.net/tikz/</a><br>2、LateX在线编辑工具-<a target="_blank" rel="noopener" href="https://www.overleaf.com/">https://www.overleaf.com</a><br>3、TikZ快速入门文档-<a target="_blank" rel="noopener" href="http://cremeronline.com/LaTeX/minimaltikz.pdf">http://cremeronline.com/LaTeX/minimaltikz.pdf</a><br><img src="https://img-blog.csdnimg.cn/20190222202144480.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center" alt="tikz样例1"><br><img src="https://img-blog.csdnimg.cn/20190222202543351.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center" alt="tikz样例2"></p>
+<h3 id="2-ConvNetDraw"><a href="#2-ConvNetDraw" class="headerlink" title="2. ConvNetDraw"></a>2. ConvNetDraw</h3><p>这个工具可能很多人都不知道，不过如果你知道神经网络的结构，而且你能很快的写出基本的代码，那么这款软件再方便不过啦，重要的是它的绘制结果是3D，比较好看，缺点是卷积层的颜色等比较固定，不适合进行设计。以下是有关该工具的几个有用链接。<br>1、ConvNetDraw的github-<a target="_blank" rel="noopener" href="https://github.com/cbovar/ConvNetDraw">https://github.com/cbovar/ConvNetDraw</a><br>2、ConvNetDraw在线绘图网址-<a target="_blank" rel="noopener" href="https://cbovar.github.io/ConvNetDraw/">https://cbovar.github.io/ConvNetDraw/</a><br><img src="https://img-blog.csdnimg.cn/20190222203906377.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center" alt="ConvNetDraw样例1"></p>
+<h3 id="3-Visio"><a href="#3-Visio" class="headerlink" title="3. Visio"></a>3. Visio</h3><p>这个软件可能很多人都使用过，我以前所有的图基本上都是用它完成的，它的确很强大，值得去推荐，但是我总想去寻找一个更优的工具。以下是使用Visio绘制的几张神经网络图。这个软件可能很多人都使用过，我以前所有的图基本上都是用它完成的，它的确很强大，值得去推荐，但是我总想去寻找一个更优的工具。以下是使用Visio绘制的几张神经网络图。<br><img src="https://img-blog.csdnimg.cn/2019022220453623.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center" alt="Visio样例1"><br><img src="https://img-blog.csdnimg.cn/20190222204636416.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center" alt="Visio样例2"></p>
+<h3 id="4-Inkscape-自由绘图"><a href="#4-Inkscape-自由绘图" class="headerlink" title="4. Inkscape-自由绘图"></a>4. Inkscape-自由绘图</h3><p>这个软件是一个类似Visio的软件，功能比较齐全，可以完成各种各样的图，不过我一直没有去尝试过。下面是有关该软件的一些有用链接。这个软件是一个雷士Visio的软件，功能比较齐全，可以完成各种各样的图，不过我一直没有去尝试过。下面是有关该软件的一些有用链接。<br>1、Inkscape官网-<a target="_blank" rel="noopener" href="https://inkscape.org/zh/">https://inkscape.org/zh/</a><br>2、Inkscape教程-<a target="_blank" rel="noopener" href="https://inkscape.org/zh/learn/tutorials/">https://inkscape.org/zh/learn/tutorials/</a><br><img src="https://img-blog.csdnimg.cn/20190222220113542.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<h3 id="5-Omnigraffle"><a href="#5-Omnigraffle" class="headerlink" title="5. Omnigraffle"></a>5. Omnigraffle</h3><p>它是由The Omni Group制作的一款绘图软件，<strong>其只能于运行在Mac OS X和iPad平台之上</strong>，添加公式可以配合latexit使用。可以用来绘制图表，流程图，组织结构图以及插图，也可以用来组织头脑中思考的信息，组织头脑风暴的结果，绘制心智图，作为样式管理器，或设计网页或PDF文档的原型。嵌入在论文里导出成pdf，嵌入在网页里导出成svg。十分方便。由The Omni Group制作的一款绘图软件，其只能于运行在Mac OS X和iPad平台之上，添加公式可以配合latexit使用。可以用来绘制图表，流程图，组织结构图以及插图，也可以用来组织头脑中思考的信息，组织头脑风暴的结果，绘制心智图，作为样式管理器，或设计网页或PDF文档的原型。嵌入在论文里导出成pdf，嵌入在网页里导出成svg，十分方便。<img src="https://img-blog.csdnimg.cn/2019022221071977.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20190222210936166.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<h3 id="6-draw-convnet"><a href="#6-draw-convnet" class="headerlink" title="6. draw_convnet"></a>6. draw_convnet</h3><p>这是一个Python工具，可以将代码转换为网络图显示出来。有关该工具的有用链接如下所示：<br>1、raw_convnet的github链接-<a target="_blank" rel="noopener" href="https://github.com/gwding/draw/_convnet">https://github.com/gwding/draw\_convnet</a><br><img src="https://img-blog.csdnimg.cn/20190222211810780.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<h3 id="7-PlotNeuralNet"><a href="#7-PlotNeuralNet" class="headerlink" title="7. PlotNeuralNet"></a>7. PlotNeuralNet</h3><p>这是我偶然间寻找到的工具，基于Latex，话不多说，直接看效果你就决定要不要使用它啦。其相关链接如下所示：<br>1、PlotNeuralNet的github链接-<a target="_blank" rel="noopener" href="https://github.com/HarisIqbal88/PlotNeuralNet">https://github.com/HarisIqbal88/PlotNeuralNet</a><br><img src="https://img-blog.csdnimg.cn/20190222212248848.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center" alt="PlotNeuralNet"><br><img src="https://img-blog.csdnimg.cn/20190222212417267.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<h3 id="8-NN-SVG"><a href="#8-NN-SVG" class="headerlink" title="8. NN-SVG"></a>8. NN-SVG</h3><p>有关该软件的有用链接如下所示：<br>1、N-SVG的github链接-<a target="_blank" rel="noopener" href="https://github.com/zfrenchee/NN-SVG">https://github.com/zfrenchee/NN-SVG</a><br>2、N-SVG的在线界面-<a target="_blank" rel="noopener" href="http://alexlenail.me/NN-SVG/LeNet.html">http://alexlenail.me/NN-SVG/LeNet.html</a><br><img src="https://img-blog.csdnimg.cn/20190222213012164.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20190222213100918.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<h3 id="9-Python-Graphviz"><a href="#9-Python-Graphviz" class="headerlink" title="9. Python + Graphviz"></a>9. Python + Graphviz</h3><p>针对节点较多的网络，不可避免需要投入大量尽量来写重复的脚本代码。用python编写了一个简单的dot脚本生成工具（MakeNN），可以很方便的输入参数生成nn结构图。<br><img src="https://img-blog.csdnimg.cn/20190222213700605.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<h3 id="10-Graphviz-dot"><a href="#10-Graphviz-dot" class="headerlink" title="10. Graphviz - dot"></a>10. Graphviz - dot</h3><p>在dot里面label的玩法比较多，在上面看到的每个节点都是简单的一段文字，如果想要比较复杂的结构怎么办？那就通过编写代码生成吧。其对应的代码和结果如下所示。其相关的资源如下所示：<br>1、Graphviz的官方链接-<a target="_blank" rel="noopener" href="https://www.graphviz.org/![%E5%9C%A8%E8%BF%99%E9%87%8C%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87%E6%8F%8F%E8%BF%B0](https://img-blog.csdnimg.cn/20190222213956794.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center)">https://www.graphviz.org/![在这里插入图片描述](https://img-blog.csdnimg.cn/20190222213956794.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center)</a><br><img src="https://img-blog.csdnimg.cn/2019022221402545.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<h3 id="11-Keras"><a href="#11-Keras" class="headerlink" title="11. Keras"></a>11. Keras</h3><p>使用Keras框架（后端可选tensorflow或者theano），可以画出卷积神经网络的结构图。其相关资源如下所示：<br>1、keras英文文档-<a target="_blank" rel="noopener" href="https://keras.io/">https://keras.io/</a><br>2、keras中文文档-<a target="_blank" rel="noopener" href="https://keras.io/zh/">https://keras.io/zh/</a><br>3、keras的github链接-<a target="_blank" rel="noopener" href="https://github.com/keras-team/keras">https://github.com/keras-team/keras</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from keras.layers import Input, Convolution2D, Flatten, Dense, Activationfrom keras.models import Sequentialfrom keras.optimizers import SGD , Adamfrom keras.initializations import normalfrom keras.utils.visualize_util import plot# apply a 3x3 convolution with 64 output filters on a 256x256 image:model = Sequential()</span><br><span class="line">model.add(Convolution2D(64, 3, 3, border_mode=&#x27;same&#x27;, dim_ordering=&#x27;th&#x27;,input_shape=(3, 256, 256)))# now model.output_shape == (None, 64, 256, 256)# add a 3x3 convolution on top, with 32 output filters:model.add(Convolution2D(32, 3, 3, border_mode=&#x27;same&#x27;, dim_ordering=&#x27;th&#x27;))# now model.output_shape == (None, 32, 256, 256)adam = Adam(lr=1e-6)</span><br><span class="line">model.compile(loss=&#x27;mse&#x27;,optimizer=adam)</span><br><span class="line">print(&quot;We finish building the model&quot;)</span><br><span class="line"></span><br><span class="line">plot(model, to_file=&#x27;model1.png&#x27;, show_shapes=True) </span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20190222222708390.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<h3 id="12、Netscope"><a href="#12、Netscope" class="headerlink" title="12、Netscope"></a>12、Netscope</h3><p>Netscope是个支持prototxt格式描述的神经网络结构的在线可视工具，<strong>专门针对神经网络框架caffe而言</strong>。该工具的有用资源如下所示：<br>1、Netscope文档链接- <a target="_blank" rel="noopener" href="https://ethereon.github.io/netscope/quickstart.html">https://ethereon.github.io/netscope/quickstart.html</a><br>2、Netscope的github链接-<a target="_blank" rel="noopener" href="https://github.com/ethereon/netscope">https://github.com/ethereon/netscope</a><br>3、Netscope在线链接-<a target="_blank" rel="noopener" href="http://ethereon.github.io/netscope/#/editor">http://ethereon.github.io/netscope/#/editor</a><br>使用说明：直接打开相应的.prototxt文件复制到左边的黑色区域，然后按下Shift+Enter即可获得可视化结果。<br><img src="https://img-blog.csdnimg.cn/20190222215519765.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<h3 id="13-Caffe自带绘图工具"><a href="#13-Caffe自带绘图工具" class="headerlink" title="13. Caffe自带绘图工具"></a>13. Caffe自带绘图工具</h3><p>caffe源码中的tools文件夹下面有个draw_net.py文件。Python/draw_net.py, 这个文件，就是用来绘制网络模型的。也就是将网络模型由prototxt变成一张图片。 <img src="https://img-blog.csdnimg.cn/20190222220000120.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<h3 id="14-TensorBoard"><a href="#14-TensorBoard" class="headerlink" title="14. TensorBoard"></a>14. TensorBoard</h3><p>这个工具也好用于，可以保存好多在训练网络过程中的中间结果，同时也可以可视化整个网络的架构。其相关的有用资源如下所示：<br>1、tensorboard文档-<a target="_blank" rel="noopener" href="https://www.tensorflow.org/guide/summaries/_and/_tensorboard">https://www.tensorflow.org/guide/summaries\_and\_tensorboard</a><br>2、tensorboardgithub-<a target="_blank" rel="noopener" href="https://github.com/tensorflow/tensorboard">https://github.com/tensorflow/tensorboard</a> <img src="https://img-blog.csdnimg.cn/20190222220736802.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<h3 id="15-NetworkX"><a href="#15-NetworkX" class="headerlink" title="15. NetworkX"></a>15. NetworkX</h3><p>一个可以用来绘制神经网络的python包，其相应的资源如下所示：<br>1、NetworkX文档-<a target="_blank" rel="noopener" href="https://networkx.github.io/documentation/latest/tutorial.html">https://networkx.github.io/documentation/latest/tutorial.html</a><br>2、NetworkX的github-<a target="_blank" rel="noopener" href="https://github.com/networkx">https://github.com/networkx</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; options = &#123;</span><br><span class="line">...     &#x27;node_color&#x27;: &#x27;black&#x27;,</span><br><span class="line">...     &#x27;node_size&#x27;: 100,</span><br><span class="line">...     &#x27;width&#x27;: 3,</span><br><span class="line">... &#125;</span><br><span class="line">&gt;&gt;&gt; plt.subplot(221)</span><br><span class="line">&lt;matplotlib.axes._subplots.AxesSubplot object at ...&gt;</span><br><span class="line">&gt;&gt;&gt; nx.draw_random(G, **options)</span><br><span class="line">&gt;&gt;&gt; plt.subplot(222)</span><br><span class="line">&lt;matplotlib.axes._subplots.AxesSubplot object at ...&gt;</span><br><span class="line">&gt;&gt;&gt; nx.draw_circular(G, **options)</span><br><span class="line">&gt;&gt;&gt; plt.subplot(223)</span><br><span class="line">&lt;matplotlib.axes._subplots.AxesSubplot object at ...&gt;</span><br><span class="line">&gt;&gt;&gt; nx.draw_spectral(G, **options)</span><br><span class="line">&gt;&gt;&gt; plt.subplot(224)</span><br><span class="line">&lt;matplotlib.axes._subplots.AxesSubplot object at ...&gt;</span><br><span class="line">&gt;&gt;&gt; nx.draw_shell(G, nlist=[range(5,10), range(5)], **options)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20190222224313814.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<h3 id="16-Bokeh"><a href="#16-Bokeh" class="headerlink" title="16. Bokeh"></a>16. Bokeh</h3><p>Bokeh是一个交互式可视化库，面向现代Web浏览器进行演示。 它的目标是提供优雅，简洁的多功能图形构造，并通过非常大或流数据集的高性能交互来扩展此功能。 Bokeh可以帮助任何想要快速轻松地创建交互式图表，仪表板和数据应用程序的人。其相关资源链接如下所示：<br>1、Bokeh官网-<a target="_blank" rel="noopener" href="https://bokeh.pydata.org/en/latest/">https://bokeh.pydata.org/en/latest/</a><br>2、Bokeh文档-<a target="_blank" rel="noopener" href="https://bokeh.pydata.org/en/latest/docs/user/_guide.html#userguide">https://bokeh.pydata.org/en/latest/docs/user\_guide.html#userguide</a><br><img src="https://img-blog.csdnimg.cn/20190222224709108.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<h3 id="17-DAFT"><a href="#17-DAFT" class="headerlink" title="17. DAFT"></a>17. DAFT</h3><p>Daft是一个Python包，它使用matplotlib渲染像素完美的概率图形模型，以便在期刊或互联网上发布。 使用简短的Python脚本和直观的模型构建语法，您可以设计定向（贝叶斯网络，有向无环图）和无向（马尔可夫随机场）模型，并将它们保存为matplotlib支持的任何格式（包括PDF，PNG，EPS和SVG））。其相关资源如下所示：<br>1、daft官网链接-<a target="_blank" rel="noopener" href="http://daft-pgm.org/">http://daft-pgm.org/</a><br>2、daft的github链接-<a target="_blank" rel="noopener" href="https://github.com/dfm/daft">https://github.com/dfm/daft</a><br><img src="https://img-blog.csdnimg.cn/20190222225212153.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<h3 id="18-Netron"><a href="#18-Netron" class="headerlink" title="18. Netron"></a>18. Netron</h3><p>这是一款模型可视化神器，Netron supports ONNX (.onnx, .pb, .pbtxt), Keras (.h5, .keras), CoreML (.mlmodel), Caffe2(predict_net.pb, predict_net.pbtxt), MXNet (.model, -symbol.json) and TensorFlow Lite (.tflite). Netron has experimental support for Caffe (.caffemodel, .prototxt), PyTorch (.pth), Torch (.t7), CNTK(.model, .cntk), PaddlePaddle (<strong>model</strong>), Darknet (.cfg), scikit-learn (.pkl), TensorFlow.js(model.json, .pb) and TensorFlow (.pb, .meta, .pbtxt).你应该很惊讶吧，它就是这么厉害。有关资源如下所示：<br>1、Netron官网-<a target="_blank" rel="noopener" href="https://electronjs.org/apps/netron">https://electronjs.org/apps/netron</a><br>2、Netron的github-<a target="_blank" rel="noopener" href="https://github.com/lutzroeder/netron">https://github.com/lutzroeder/netron</a><br>3、Netron的在线界面-<a target="_blank" rel="noopener" href="https://lutzroeder.github.io/netron/">https://lutzroeder.github.io/netron/</a><br><img src="https://img-blog.csdnimg.cn/20190223103647150.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p>1、<a target="_blank" rel="noopener" href="https://datascience.stackexchange.com/questions/12851/how-do-you-visualize-neural-network-architectures">https://datascience.stackexchange.com/questions/12851/how-do-you-visualize-neural-network-architectures</a><br>2、<a target="_blank" rel="noopener" href="https://datascience.stackexchange.com/questions/14899/how-to-draw-deep-learning-network-architecture-diagrams">https://datascience.stackexchange.com/questions/14899/how-to-draw-deep-learning-network-architecture-diagrams</a><br>3、<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/31920000">https://zhuanlan.zhihu.com/p/31920000</a><br>4、<a target="_blank" rel="noopener" href="https://www.quora.com/What-tools-are-good-for-drawing-neural-network-architecture-diagrams">https://www.quora.com/What-tools-are-good-for-drawing-neural-network-architecture-diagrams</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/11/30/%E7%BE%8E%E5%86%9B%E7%94%B5%E7%A3%81%E4%BD%9C%E6%88%98/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/12/01/cloudfare%20warp%20VPN/" rel="next" title="">
+       <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95"><span class="nav-number">1.</span> <span class="nav-text">目录</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-LaTeX%E7%9A%84tikz%E5%BA%93"><span class="nav-number"></span> <span class="nav-text">1. LaTeX的tikz库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-ConvNetDraw"><span class="nav-number"></span> <span class="nav-text">2. ConvNetDraw</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Visio"><span class="nav-number"></span> <span class="nav-text">3. Visio</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-Inkscape-%E8%87%AA%E7%94%B1%E7%BB%98%E5%9B%BE"><span class="nav-number"></span> <span class="nav-text">4. Inkscape-自由绘图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-Omnigraffle"><span class="nav-number"></span> <span class="nav-text">5. Omnigraffle</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-draw-convnet"><span class="nav-number"></span> <span class="nav-text">6. draw_convnet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-PlotNeuralNet"><span class="nav-number"></span> <span class="nav-text">7. PlotNeuralNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-NN-SVG"><span class="nav-number"></span> <span class="nav-text">8. NN-SVG</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-Python-Graphviz"><span class="nav-number"></span> <span class="nav-text">9. Python + Graphviz</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-Graphviz-dot"><span class="nav-number"></span> <span class="nav-text">10. Graphviz - dot</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11-Keras"><span class="nav-number"></span> <span class="nav-text">11. Keras</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12%E3%80%81Netscope"><span class="nav-number"></span> <span class="nav-text">12、Netscope</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13-Caffe%E8%87%AA%E5%B8%A6%E7%BB%98%E5%9B%BE%E5%B7%A5%E5%85%B7"><span class="nav-number"></span> <span class="nav-text">13. Caffe自带绘图工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#14-TensorBoard"><span class="nav-number"></span> <span class="nav-text">14. TensorBoard</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#15-NetworkX"><span class="nav-number"></span> <span class="nav-text">15. NetworkX</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#16-Bokeh"><span class="nav-number"></span> <span class="nav-text">16. Bokeh</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#17-DAFT"><span class="nav-number"></span> <span class="nav-text">17. DAFT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#18-Netron"><span class="nav-number"></span> <span class="nav-text">18. Netron</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number"></span> <span class="nav-text">参考资料</span></a></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">李治澎</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">李治澎</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

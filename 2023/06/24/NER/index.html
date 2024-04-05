@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="层级分类模型三类方法：   展平方法：就是不考虑标签的层级结构，直接把层级标签当成普通多标签文本分类来建模。有时候，展平方法是把所有的层级标签都展平，有时候是把最后一层的标签展平。（展平方法对HMTC的效果是有瓶颈的。）  局部方法：局部方法指的是，为层级标签的每个节点都设置一个分类器，这种分类器一般是机器学习的分类器，如SVM等。（这样的效果也做不到最好。）  全局方法：用单个分类器并且更显式地">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关系抽取和层次分类">
+<meta property="og:url" content="http://example.com/2023/06/24/NER/index.html">
+<meta property="og:site_name" content="随笔">
+<meta property="og:description" content="层级分类模型三类方法：   展平方法：就是不考虑标签的层级结构，直接把层级标签当成普通多标签文本分类来建模。有时候，展平方法是把所有的层级标签都展平，有时候是把最后一层的标签展平。（展平方法对HMTC的效果是有瓶颈的。）  局部方法：局部方法指的是，为层级标签的每个节点都设置一个分类器，这种分类器一般是机器学习的分类器，如SVM等。（这样的效果也做不到最好。）  全局方法：用单个分类器并且更显式地">
+<meta property="og:locale">
+<meta property="og:image" content="http://example.com/home/killer/Gitee/blog/source/_posts/assets/image-20230824090239110.png">
+<meta property="og:image" content="http://example.com/home/killer/Gitee/blog/source/_posts/assets/image-20230905214447386.png">
+<meta property="article:published_time" content="2023-06-24T02:21:36.078Z">
+<meta property="article:modified_time" content="2023-09-28T06:52:01.524Z">
+<meta property="article:author" content="李治澎">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/home/killer/Gitee/blog/source/_posts/assets/image-20230824090239110.png">
+
+<link rel="canonical" href="http://example.com/2023/06/24/NER/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>关系抽取和层次分类 | 随笔</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">随笔</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/06/24/NER/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李治澎">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="随笔">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          关系抽取和层次分类
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-06-24 10:21:36" itemprop="dateCreated datePublished" datetime="2023-06-24T10:21:36+08:00">2023-06-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-09-28 14:52:01" itemprop="dateModified" datetime="2023-09-28T14:52:01+08:00">2023-09-28</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="层级分类模型"><a href="#层级分类模型" class="headerlink" title="层级分类模型"></a>层级分类模型</h3><p>三类方法：</p>
+<ol>
+<li><p> 展平方法：就是不考虑标签的层级结构，直接把层级标签当成普通多标签文本分类来建模。有时候，展平方法是把所有的层级标签都展平，有时候是把最后一层的标签展平。（展平方法对HMTC的效果是有瓶颈的。）</p>
+</li>
+<li><p>局部方法：局部方法指的是，为层级标签的每个节点都设置一个分类器，这种分类器一般是机器学习的分类器，如SVM等。（这样的效果也做不到最好。）</p>
+</li>
+<li><p>全局方法：用单个分类器并且更显式地对标签层次结构进行建模，模型通常采用端到端的方式训练并且对所有标签进行一次性地预测。（全局方法旨在更好的利用标签信息、标签的层次结构信息。）</p>
+</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://github.com/Tencent/NeuralNLP-NeuralClassifier">NeuralNLP-NeuralClassifier</a></p>
+<p>此项目是腾讯开发的一个多层多分类应用工具，支持的任务包括，文本分类中的二分类、多分类、多标签，以及层次多标签分类。支持的文本编码模型包括 FastText, TextCNN, TextRNN, <a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=RCNN&spm=1001.2101.3001.7020">RCNN</a>, VDCNN等。这篇博客将介绍如何使用这个项目实现文本的多标签多分类任务。此项目是腾讯开发的一个多层多分类应用工具，支持的任务包括，文本分类中的二分类、多分类、多标签，以及层次多标签分类。支持的文本编码模型包括 FastText, TextCNN, TextRNN, <a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=RCNN&spm=1001.2101.3001.7020">RCNN</a>, VDCNN等。这篇博客将介绍如何使用这个项目实现文本的多标签多分类任务。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/PaddlePaddle/PaddleNLP/tree/develop/applications/text_classification/hierarchical#readme">PaddleNLP</a></p>
+<p>预训练+微调、可以使用doccano标注数据</p>
+<blockquote>
+<hr>
+<p>进行层次分类，分类包括</p>
+<p>组织##国家##亚洲<br>组织##国家##欧洲<br>组织##国家##大洋洲<br>组织##国家##北美洲<br>组织##国家##南美洲<br>组织##国际组织##政治性组织<br>组织##国际组织##经济性组织<br>组织##国际组织##军事性组织<br>组织##国际组织##文化性组织<br>组织##国家机构<br>军事行动##战争<br>军事行动##战役<br>军事行动##战斗<br>军事行动##军事演习<br>人物##政府职位##国家级正职<br>人物##政府职位##国家级副职<br>人物##政府职位##省部级正职<br>人物##政府职位##省部级副职<br>人物##政府职位##厅局（地）正职<br>人物##政府职位##厅局（地）副职<br>人物##政府职位##县处级正职<br>人物##政府职位##县处级副职<br>人物##政府职位##乡科级正职<br>人物##政府职位##乡科级副职<br>人物##军衔##将官##上将<br>人物##军衔##将官##中将<br>人物##军衔##将官##少将<br>人物##军衔##校官##上校<br>人物##军衔##校官##中校<br>人物##军衔##校官##少校<br>人物##军衔##尉官##上尉<br>人物##军衔##尉官##中尉<br>人物##军衔##尉官##少尉<br>人物##军衔##军士##一级军士长<br>人物##军衔##军士##二级军士长<br>人物##军衔##军士##三级军士长<br>人物##军衔##军士##一级上士<br>人物##军衔##军士##二级上士<br>人物##军衔##军士##中士<br>人物##军衔##军士##下士<br>人物##军衔##义务兵##上等兵<br>人物##军衔##义务兵##列兵<br>作战环境##水文##潮汐与潮流<br>作战环境##水文##海流<br>作战环境##水文##海浪<br>作战环境##水文##温度、盐度、密度<br>作战环境##水文##水色和透明度<br>作战环境##水文##水层<br>作战环境##气象##云量<br>作战环境##气象##风速<br>作战环境##气象##降水量<br>作战环境##气象##温度<br>作战环境##气象##能见度<br>作战环境##气象##雷暴<br>作战环境##地理##岛<br>作战环境##地理##洲<br>作战环境##地理##礁<br>作战环境##地理##沙<br>作战环境##地理##滩<br>地点<br>军事设施##指挥工程<br>军事设施##作战工程<br>军事设施##军用机场<br>军事设施##港口<br>军事设施##码头<br>军事设施##营区<br>军事设施##训练场<br>军事设施##试验场<br>军事设施##军用洞库<br>军事设施##军用通信、侦察、导航、观测台站<br>军事设施##测量、导航、助航标志<br>军事设施##军用公路<br>军事设施##铁路专线<br>军事设施##军用通信<br>军事设施##输电线路<br>军事设施##军用输油<br>军事设施##输水管道<br>军事设施##基地<br>武器装备##飞行器##航空器##战斗机<br>武器装备##飞行器##航空器##攻击机<br>武器装备##飞行器##航空器##轰炸机<br>武器装备##飞行器##航空器##教练机<br>武器装备##飞行器##航空器##预警机<br>武器装备##飞行器##航空器##侦察机<br>武器装备##飞行器##航空器##反潜机<br>武器装备##飞行器##航空器##电子战机<br>武器装备##飞行器##航空器##无人机<br>武器装备##飞行器##航空器##运输机<br>武器装备##飞行器##航空器##飞艇<br>武器装备##飞行器##航空器##试验机<br>武器装备##飞行器##航空器##加油机<br>武器装备##飞行器##航天器<br>武器装备##舰船舰艇##航空母舰<br>武器装备##舰船舰艇##战列舰<br>武器装备##舰船舰艇##巡洋舰<br>武器装备##舰船舰艇##驱逐舰<br>武器装备##舰船舰艇##护卫舰<br>武器装备##舰船舰艇##两栖做战舰<br>武器装备##舰船舰艇##核潜舰<br>武器装备##舰船舰艇##常规潜艇<br>武器装备##舰船舰艇##水雷战舰<br>武器装备##舰船舰艇##导弹舰<br>武器装备##舰船舰艇##巡航舰<br>武器装备##舰船舰艇##巡逻舰<br>武器装备##枪械与单兵武器##非自动步枪<br>武器装备##枪械与单兵武器##自动步枪<br>武器装备##枪械与单兵武器##冲锋枪<br>武器装备##枪械与单兵武器##狙击枪<br>武器装备##枪械与单兵武器##手枪<br>武器装备##枪械与单兵武器##机枪<br>武器装备##枪械与单兵武器##霰弹枪<br>武器装备##枪械与单兵武器##火箭筒<br>武器装备##枪械与单兵武器##榴弹发射器<br>武器装备##枪械与单兵武器##刀具<br>武器装备##坦克装甲##步兵战车<br>武器装备##坦克装甲##主战坦克<br>武器装备##坦克装甲##特种坦克<br>武器装备##坦克装甲##装甲运兵<br>武器装备##坦克装甲##装甲侦察<br>武器装备##坦克装甲##装甲指挥<br>武器装备##坦克装甲##工程抢修车<br>武器装备##坦克装甲##布雷<br>武器装备##坦克装甲##扫雷车<br>武器装备##火炮##榴弹炮<br>武器装备##火炮##加农炮<br>武器装备##火炮##加农榴弹<br>武器装备##火炮##追击炮<br>武器装备##火炮##火箭炮<br>武器装备##火炮##高射炮<br>武器装备##火炮##坦克炮<br>武器装备##火炮##反坦克炮<br>武器装备##火炮##无后坐炮<br>武器装备##火炮##装甲车载炮<br>武器装备##火炮##舰炮<br>武器装备##火炮##航空炮<br>武器装备##火炮##自行火炮<br>武器装备##火炮##弹炮结合<br>武器装备##导弹武器##反弹导弹<br>武器装备##导弹武器##潜艇导弹<br>武器装备##导弹武器##空舰导弹<br>武器装备##导弹武器##岸舰导弹<br>武器装备##导弹武器##舰舰导弹<br>武器装备##导弹武器##空空导弹<br>武器装备##导弹武器##地空导弹<br>武器装备##导弹武器##舰空导弹<br>武器装备##导弹武器##地地导弹<br>武器装备##导弹武器##舰地导弹<br>武器装备##导弹武器##空地导弹<br>武器装备##导弹武器##潜地导弹<br>武器装备##导弹武器##反辐射导弹<br>武器装备##导弹武器##反坦克导弹<br>武器装备##爆炸物##地雷<br>武器装备##爆炸物##水雷<br>武器装备##爆炸物##手榴弹<br>武器装备##爆炸物##炮弹<br>武器装备##爆炸物##炸弹<br>武器装备##爆炸物##鱼雷<br>武器装备##爆炸物##火箭弹<br>武器装备##爆炸物##原子弹<br>武器装备##爆炸物##氢弹<br>武器装备##爆炸物##中子弹<br>武器装备##通信电子<br>武器装备##软件类设备<br>军队##海军##舰艇部队<br>军队##海军##潜艇部队<br>军队##海军##海军陆战队<br>军队##海军##海军航空兵<br>军队##海军##海军岸防<br>军队##海军##其他<br>军队##陆军##步兵<br>军队##陆军##装甲兵<br>军队##陆军##炮兵<br>军队##陆军##陆军防空兵<br>军队##陆军##陆军航空兵<br>军队##陆军##电子对抗兵<br>军队##陆军##工程兵<br>军队##陆军##通信兵<br>军队##陆军##防化兵<br>军队##陆军##侦察部队<br>军队##陆军##气象部队<br>军队##陆军##测绘部队<br>军队##陆军##其他<br>军队##空军##航空兵<br>军队##空军##地空导弹<br>军队##空军##高射炮兵<br>军队##空军##空降兵<br>军队##空军##雷达兵<br>军队##防空兵##高射炮兵<br>军队##防空兵##雷达兵<br>军队##防空兵##探照兵<br>军队##防空兵##对空情报兵<br>军队##其他<br>人物##其他，例如</p>
+<p>输入：076型两栖攻击舰</p>
+<p>输出：武器装备##舰船舰艇##两栖做战舰</p>
+<p>输入：无人机</p>
+<p>输出：</p>
+</blockquote>
+<p>使用文心一言API进行层次分类数据标注结果：</p>
+<blockquote>
+<p>076型—-武器装备##舰船舰艇##两栖做战舰<br>076型两栖攻击舰—-武器装备##舰船舰艇##两栖做战舰<br>075型两栖攻击舰4号舰—-武器装备##舰船舰艇##两栖做战舰<br>075型两栖攻击舰—-武器装备##舰船舰艇##两栖做战舰<br>无人机—-武器装备##飞行器##航空器##无人机<br>多功能弹药—-武器装备##爆炸物##炸弹<br>“毒刺”肩扛式防空导弹—-武器装备##导弹武器##地空导弹<br>MK-48重型鱼雷—-武器装备##爆炸物##水雷<br>MS-110侦察吊舱—-武器装备##枪械与单兵武器##侦察机载吊舱<br>“毒刺”防空导弹—-武器装备##导弹武器##地空导弹<br>“拖二A”—-武器装备##舰船舰艇##两栖做战舰<br>歼-16—-武器装备##飞行器##航空器##战斗机<br>歼-15—-武器装备##飞行器##航空器##战斗机<br>MK-48鱼雷—-武器装备##爆炸物##鱼雷<br>“火山”布雷系统—-武器装备##爆炸物##水雷<br>军舰—-武器装备##舰船舰艇##军舰<br>运9通信对抗机—-武器装备##飞行器##航空器##侦察机<br>台湾“潜舰自造”原型舰—-武器装备##舰船舰艇##潜艇舰<br>台造潜舰原型舰—-武器装备##舰船舰艇##潜艇<br>055大驱—-武器装备##舰船舰艇##驱逐舰<br>“剑龙级”潜舰—-武器装备##舰船舰艇##潜艇<br>海军航空兵—-军队##海军##海军航空兵<br>“歼-20”隐形战斗机—-武器装备##飞行器##航空器##战斗机<br>多用途弹—-武器装备##弹炮结合<br>增程型“雄风三”反舰导弹—-武器装备##导弹武器##反坦克导弹<br>轻型巡防舰原型舰—-武器装备##舰船舰艇##巡洋舰<br>山东舰—-武器装备##舰船舰艇##航空母舰<br>“天弓”导弹—-武器装备##导弹武器##空舰导弹<br>052D驱逐舰—-武器装备##舰船舰艇##驱逐舰<br>056护卫舰—-武器装备##舰船舰艇##护卫舰<br>美海岸警卫队“斯特拉顿”号炮舰—-武器装备##舰船舰艇##巡逻舰<br>中国海军航空母舰山东舰—-武器装备##飞行器##航空器##航空母舰<br>航空母舰山东舰编队—-武器装备##舰船舰艇##航空母舰<br>飞行U-2侦察机—-武器装备##飞行器##航空器##侦察机<br>反潜直升机—-武器装备##飞行器##航空器##反潜机<br>卡-28反潜直升机—-武器装备##飞行器##航空器##直升机<br>战斗机—-武器装备##飞行器##航空器##战斗机<br>战机—-武器装备##飞行器##航空器##战斗机<br>096型核潜艇—-武器装备##舰船舰艇##核潜舰<br>“蒙特利尔”号护卫舰—-武器装备##舰船舰艇##护卫舰<br>F-16—-武器装备##飞行器##航空器##战斗机<br>F/A-18战机—-武器装备##飞行器##航空器##战斗机<br>F-35C舰载机—-武器装备##飞行器##航空器##战斗机<br>“毒刺”肩扛便携式防空导弹—-武器装备##导弹武器##地空导弹<br>“天弓三型”导弹—-武器装备##导弹武器##地空导弹<br>FIM-92肩射式毒刺防空导弹—-武器装备##导弹武器##地空导弹<br>航空母舰—-武器装备##舰船舰艇##航空母舰<br>新型F-16V战机—-武器装备##飞行器##航空器##战斗机<br>“刺针”导弹—-武器装备##导弹武器##反坦克导弹<br>微山湖舰—-武器装备##舰船舰艇##两栖做战舰<br>电力发电车—-武器装备##车辆##电动汽车<br>AK47步枪—-武器装备##枪械与单兵武器##自动步枪<br>F-16V型战机—-武器装备##飞行器##航空器##战斗机</p>
+</blockquote>
+<h3 id="关系抽取大模型"><a href="#关系抽取大模型" class="headerlink" title="关系抽取大模型"></a>关系抽取大模型</h3><p><a target="_blank" rel="noopener" href="https://github.com/zjunlp/KnowLM">KnowLM</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/neukg/TechGPT">TechGPT</a></p>
+<img src="/home/killer/Gitee/blog/source/_posts/assets/image-20230824090239110.png" alt="image-20230824090239110" style="zoom: 50%;" />
+
+<p>!!!Note:</p>
+<blockquote>
+<ol>
+<li>标签可以直接导入</li>
+<li>实体-关系-实体 三个一组，要对应，不能少也不能多</li>
+<li>在上次实体类别标注基础上进行二次标注类别实体之间的关系</li>
+</ol>
+</blockquote>
+<h3 id="关系抽取"><a href="#关系抽取" class="headerlink" title="关系抽取"></a>关系抽取</h3><p>找一个关系抽取模型 进行 关系抽取 </p>
+<blockquote>
+<ol>
+<li><p>大模型标注实验</p>
+<blockquote>
+<ol>
+<li>目前使用文心一言API效果良好</li>
+<li><strong>使用其他可微调大模型进行进一步实验</strong></li>
+</ol>
+</blockquote>
+</li>
+<li><p><strong>人物_军事关系 这种提前预设关系 UIE 一对一 一条数据只有一句话 做多实体识别微调</strong></p>
+<blockquote>
+<ol>
+<li>段落分成句子</li>
+<li>用UIE 句子，实体1, 实体2</li>
+<li>使用大模型进行数据标注实验</li>
+<li><strong>==使用大模型标注的数据 进行 UIE 多实体抽取 代替 关系抽取==</strong></li>
+</ol>
+</blockquote>
+</li>
+</ol>
+</blockquote>
+<blockquote>
+<p>进行关系抽取，例如<br>                     输入：在句子’近日有消息传出,大陆某造船厂内疑似出现了075型两栖攻击舰4号舰的舰体分段。’中,实体’大陆某造船厂’和实体’075型两栖攻击舰’的关系是<br>                     输出：’出现’<br>                     输入：在句子{}中,实体’{}’和实体’{}’的关系是<br>                     输出：</p>
+</blockquote>
+<p>使用文心一言进行关系抽取自动标注结果</p>
+<blockquote>
+<p>据国防部官网消息，国防部新闻发言人吴谦5月24日就中俄联合空中战略巡航答记者问 吴谦—国防部—答记者问<br>有记者问，5月24日，中俄两国空军举行了联合空中战略巡航，有媒体称，此次行动与乌克兰局势有关 空军—空军—行动关系<br>吴谦回应表示，5月24日，中俄两国空军实施2022年度例行性联合空中战略巡航 吴谦—空军—回应、表示<br>这是自2019年以来两国空军联合实施的第四次战略巡航，目的是检验提升两国空军协作水平，推进两军战略互信和务实合作 空军—战略巡航—进行战略巡航<br>另据东部战区微信公众号5月25日发布消息，标题为《东部战区在台岛周边海空域组织多军兵种联合战备警巡和实战化演练》，东部战区新闻发言人施毅陆军大校表示，近日，中国人民解放军东部战区在台岛周边海空域组织多军兵种联合战备警巡和实战化演练 施毅—中国人民解放军—陆军大校表示<br>这是对近期美台勾连活动的严正警告 台—美—勾连活动的警告<br>施毅指出，美方在台湾问题上说一套做一套，频频给“台独”势力壮胆打气，这是虚伪的、徒劳的，只会把局势引向危险境地，自身也将面临严重后果 施毅—台湾—指出。<br>而5月9日，东部战区微信公众号也以《东部战区组织兵力在台岛以东和西南海空域进行实兵演练》为题，发布了一则仅有60多字的消息，内容是，5月6日至8日，中国人民解放军东部战区组织海、空、常导等兵力，在台岛以东和西南海空域进行实兵演练，进一步检验提升多军兵种联合作战能力 中国人民解放军—常—组织兵力<br>半个多月内，东部战区已经两次主动发布中国人民解放军在台岛周边演练的消息 中国人民解放军—台岛—出现、演练<br>据台湾《联合报》5月24日消息，美军印太司令部少将情报处长史达曼（Michael William Studeman）被外媒披露近期曾抵台访问，对此，台防务部门今天（25日）回应称，“不予评论” 史达曼—美军印太司令部—访问。<br>台湾“联合新闻网”报道截图 《联合报》援引英国《金融时报》消息称，美印太司令部军官史达曼近期曾到访台北，访台期间与台安全官员会晤 史达曼—台北—会晤<br>美印太司令部军官史达曼（资料图） 史达曼—美印太司令部—出现<br>在句子在惠州水口码头附近,粤港澳大湾区内地九市(惠州、东莞、深圳、广州、中山、珠海、江门、肇庆、汕尾)的青年志愿者,将举行一场名为“共筑美好湾区,助力青春梦想”的启动仪式。粤港澳大湾区内地九市—惠州—附近<br>图自台媒 《联合报》称，史达曼并非首次访台，前年曾陪同美政军访问团赴台，当时据传是为巡视与美有关的情报资产，例如“乐山远程预警雷达”“空军神 鸥基地”等 史达曼—联合报—关系：访问<br>报道称，根据他的美印太司令部联二（J2）情报处长身份分析，赴台参与台防务部门举办的“台美情报交换会议”可能性较高 美印太司令部联二（J2）—台—赴台参加会议<br>《联合报》介绍，台防务部门主办的“台美情报交换会议”，由台防务部门“联二情报次长室情研中心”主办，与其对接就是美军印太司令部联二（J2）的“JIOC联合情报中心”，这是台美两军主要对接部门 联二情报次长室情研中心—联合报—主办关系<br>至于台美军种情报交换，台军方面为“陆海空三军司令部军情处”，美方的对接部门分别是美印太陆军司令部情报处、太平洋舰队情报处以及太平洋空军情报 处，对接部门层级并不高，美军情报处长亲自来台的情况较为少见 太平洋空军情报处—太平洋舰队情报处—对接部门<br>《联合报》提到，台美间的“情报交换会议”双方交替举行，没有固定时间，分为陆、海、空与政经组，由精通中文的华裔或美国人士，与台各军情报部门代 表交流 台—美—交替举行<br>针对美台军事勾连，外交部发言人汪文斌曾表示，我们坚决反对美方同台湾地区进行任何形式的官方往来和军事联系，反对美方干涉中国内政 汪文斌—外 交部—发言人<br>国台办发言人朱凤莲也曾表示，我们坚决反对美国向中国台湾地区出售武器，反对美同台进行军事联系等任何形式的官方往来 朱凤莲—国台办—关于这个问题，我没有相关信息，您可以尝试问我其它问题，我会尽力为您解答~<br>民进党当局妄图勾连外部势力“以武谋独”，只会将台湾推向灾难 民进党—民进党—妄图勾连外部势力“以武谋独”<br>此外，据中国人民解放军东部战区官方微博5月25日发布消息，东部战区新闻发言人施毅陆军大校表示，近日，中国人民解放军东部战区在台岛周边海空域组织多军兵种联合战备警巡和实战化演练 施毅—中国人民解放军—陆军大校表示<br>这是对近期美台勾连活动的严正警告 台—美—勾连活动的警告<br>美方在台湾问题上说一套做一套，频频给“台独”势力壮胆打气，这是虚伪的、徒劳的，只会把局势引向危险境地，自身也将面临严重后果 台湾—台独—关系：分裂<br>据台湾《联合报》报道，美军印太司令部少将情报处长史达曼(Michael William Studeman)被外电披露近期曾抵台访问，台防务主管部门5月24日则表示，援例不予评论 史达曼—美军印太司令部—访问过<br>《联合报》援引英国《金融时报》的报道称，美军印太司令部军官史达曼近期曾访问台北，访台期间会晤台湾的安全官员 史达曼—台北—会晤<br>史达曼并非首次访台，前年即曾传陪同政军访问团赴台，当时传为巡视与美有关情报资产，以其印太司令部联二(J2)情报处长身分研判，赴台参与台防务主 管部门举办的“台美情报交换会议”可能性高 史达曼—印太司令部联二(J2)情报处—访问团<br>据报道，台美两军情报交换，区分为台防务主管部门与各军种层级 台—美—层级区分为台防务主管部门与各军种层级<br>台防务主管部门主办的台美“情报交换会议”，由其联二情报次长室情研中心主办，对口就是印太司令部联二的联合情报中心(JIOC) JIOC—联二情报次长室 情研中心—主办方<br>至于台美军种情报交换，台方是陆海空三军司令部军情处，美方对口分别是印太陆军司令部情报处(G2)、太平洋舰队情报处(N2)及太平洋空军情报处(A2)， 对口层级并不高，少见美军情报处长赴台亲督的现象 太平洋舰队情报处—太平洋空军情报处—对口<br>台美间的“情报交换会议”在“双边”交替举行，通常1年在台、1年在美，没有固定时间，区分陆、海、空与政经组，由精通中文的华裔或美国人士，与台各军 情报部门代表交流 台—美—举行“情报交换会议”<br>此外，位于华盛顿的美国国防情报局(DIA)，也会不定期与台防务主管部门进行“情报交换会议”，中央情报局(CIA)也会与台安全事务主管部门有情报合作 中央情报局—CIA—出现<br>《商业银行监管评级办法》第四条规定，评级指标包括风险管理能力、资本充足状况、资产质量、公司治理与合规 状况、盈利能力、业务发展五大类，每一类指标再分为若干项进行评估。其中风险管理能力指标分为二十五项，资本充足状况指标分为十七项，资产质量指 标分为十五项，公司治理与合规状况指标分为十四项，盈利能力指标分为十七项，业务发展指标分为十八项。二十五项—十七项—包括<br>针对美台军事勾连，我外交部发言人曾表示，美国应充分认清涉台问题的高度敏感性和有关问题的严重危害性，恪守一个中国原则和中美三个联合公报规定 ，停止售台武器和美台军事联系，以免严重损害中美关系和台海和平稳定 外交部—台海—美台军事勾连<br>敦促美方恪守一个中国原则和中美三个联合公报有关规定，不要向“台独”势力发出错误信号，否则只会给台海和平稳定带来进一步损害 台海—台独—制造麻烦<br>参考消息网5月23日报道 据台湾中时新闻网5月23日报道，军售是台美关系的关键指标，向来稳定，台湾买什么武器，美方要卖什么装备，都是双方先谈好，再建案编预算；然而，这个平顺的运作模式最近起了重大变化，波澜迭起 中时新闻网—台湾—报道关系<br>报道说，据了解，美方接连以不符合“不对称作战”为由，拒售M109A6自行火炮车、反潜直升机与E-2D空中预警机，涵盖陆海空军规划的建案，军方内部颇有 议论，认为台美军售政策有必要好好坐下来谈 陆海空军—M109A6自行火炮车—被军方接连拒售<br>报道称，据可靠消息指出，台当局领导人蔡英文对“国安会”与美方的军售沟通协商也有微词，认为过于让步 蔡英文—国安会—对有微词<br>台美双方去年针对防卫作战需求，共同完成“不对称作战”原则之定义，所谓不对称作战，系指作战形态与方式，在于打乱敌方作战的节奏与速战速决企图， 非个别武器装备选项 台—美—共同完成<br>军方官员指出，既是无关武器选项，而且是刚谈定的，为何美方会拒售台军建案的武器，这需要美台“国安”高层在会谈中厘清 台军—国安—出现厘清<br>” 据日本《日经亚洲》杂志网站5月19日报道，据三名消息人士说，美国国会正在考虑向台湾提供数十亿美元的资金，支持其采购武器 国会—台湾—关于 这个问题，我没有相关信息，您可以尝试问我其它问题，我会尽力为您解答~<br>消息人士说，国会正在考虑一个名为“对外军事援助”的国务院框架，根据该框架，美国可以提供援助和贷款，以便台湾购买美国武器并进行军事演习 国会—国务院—关于这个问题，我没有相关信息，您可以尝试问我其它问题，我会尽力为您解答~<br>报道称，去年11月，参议院外交关系委员会资深共和党参议员吉姆·里施吉姆·里施和另外5名共和党人提出了“台湾威慑法案”，要求为台湾的武器采购提供资金支持 吉姆·里施—参议院外交关系委员会—提出关系<br>众议院外交关系委员成员、俄亥俄州众议员史蒂文·沙博说：“乌克兰(冲突)应起到警示作用，让我们齐心协力，把台湾武装到牙齿 史蒂文·沙博—众议院外交关系委员—说关系<br>” 他说：“我们与台北没有定期的防务对话，就像我们与日本、韩国和北约的对话那样 北约—台北—关系：防务对话<br>” 肯塔基州共和党众议员安迪·巴尔称，向台湾推迟交付F-16战机、“艾布拉姆斯”主战坦克、“帕拉丁”自行榴弹炮和其他导弹防御系统“是不可接受的” 安迪·巴尔—肯塔基州共和党—称谓关系<br>针对美国对台军售，此前中国外交部发言人曾指出：“美国领导人多次表示不支持‘台独’，同时美方又持续对台出售武器、开展对台官方交往，向‘台独’分裂势力发出错误信号 中国外交部—台—指出<br>2023年5月17日，位于湖北省宜昌市夷陵区的三峡工程迎来了一件大事，有“江底铁三角”之称的三峡输变电工程0号 隧道，终于顺利贯通。三峡工程—0号隧道—贯通</p>
+</blockquote>
+<h3 id="层次分类"><a href="#层次分类" class="headerlink" title="层次分类"></a>层次分类</h3><p>使用大模型ernie进行精调</p>
+<blockquote>
+<p>在示例数据集上已跑通</p>
+<p>已经把finished数据筛选出来了</p>
+<p>使用doccano,py 进行数据转换</p>
+<p>然后使用ernie模型进行微调</p>
+<blockquote>
+<img src="/home/killer/Gitee/blog/source/_posts/assets/image-20230905214447386.png" alt="image-20230905214447386" style="zoom: 50%;" />
+
+<p>过早停止？ || 因为参数设置了 early_stop</p>
+</blockquote>
+<p>有个问题：训练数据没有覆盖全部标签，模型就没有学习到没有标签标注的信息</p>
+<blockquote>
+<p>python analysis/evaluate.py –device “gpu” –max_seq_length 128 –batch_size 32 –bad_case_file “bad_case.txt” –dataset_dir “data” –params_path “./checkpoint”</p>
+<p>对每个类别分别进行评估，并输出预测错误样本（bad case）</p>
+</blockquote>
+<p>看看效果,测试效果</p>
+<blockquote>
+<p>data文件夹中bad_case是预测错的</p>
+</blockquote>
+<blockquote>
+<p>效果差的原因：</p>
+</blockquote>
+<blockquote>
+<ol>
+<li>数据少 —–&gt; 再找一些标注比较少的数据</li>
+<li>数据不平衡</li>
+<li>训练次数少</li>
+</ol>
+</blockquote>
+<p>如果效果不好，<a target="_blank" rel="noopener" href="https://github.com/PaddlePaddle/PaddleNLP/blob/develop/applications/text_classification/hierarchical/analysis/README.md">进行数据稀疏性处理和脏数据处理</a></p>
+<ol>
+<li><p>微调模型</p>
+<blockquote>
+<p>目前效果不错，已完成</p>
+</blockquote>
+</li>
+</ol>
+</blockquote>
+<h3 id="MD-画图练习"><a href="#MD-画图练习" class="headerlink" title="MD 画图练习"></a>MD 画图练习</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Alice-&gt;Bob: Hello Bob, how are you?</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">st=&gt;start: Start</span><br><span class="line">op=&gt;operation: Your Operation</span><br><span class="line">cond=&gt;condition: Yes or No?</span><br><span class="line">e=&gt;end</span><br><span class="line"></span><br><span class="line">st-&gt;op-&gt;cond</span><br><span class="line">cond(yes)-&gt;e</span><br><span class="line">cond(no)-&gt;op</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line">A[Hard edge] --&gt;B(Round edge)</span><br><span class="line">    B --&gt; C&#123;Decision&#125;</span><br><span class="line">    C --&gt;|One| D[Result one]</span><br><span class="line">    C --&gt;|Two| E[Result two]</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">classDiagram</span><br><span class="line">      Animal &lt;|-- Duck</span><br><span class="line">      Animal &lt;|-- Fish</span><br><span class="line">      Animal &lt;|-- Zebra</span><br><span class="line">      Animal : +int age</span><br><span class="line">      Animal : +String gender</span><br><span class="line">      Animal: +isMammal()</span><br><span class="line">      Animal: +mate()</span><br><span class="line">      class Duck&#123;</span><br><span class="line">          +String beakColor</span><br><span class="line">          +swim()</span><br><span class="line">          +quack()</span><br><span class="line">      &#125;</span><br><span class="line">      class Fish&#123;</span><br><span class="line">          -int sizeInFeet</span><br><span class="line">          -canEat()</span><br><span class="line">      &#125;</span><br><span class="line">      class Zebra&#123;</span><br><span class="line">          +bool is_wild</span><br><span class="line">          +run()</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">mindmap</span><br><span class="line">  root((mindmap))</span><br><span class="line">    Origins</span><br><span class="line">      Long history</span><br><span class="line">      ::icon(fa fa-book)</span><br><span class="line">      Popularisation</span><br><span class="line">        British popular psychology author Tony Buzan</span><br><span class="line">    Research</span><br><span class="line">      On effectiveness&lt;br/&gt;and features</span><br><span class="line">      On Automatic creation</span><br><span class="line">        Uses</span><br><span class="line">            Creative techniques</span><br><span class="line">            Strategic planning</span><br><span class="line">            Argument mapping</span><br><span class="line">    Tools</span><br><span class="line">      Pen and paper</span><br><span class="line">      Mermaid</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/06/15/%E9%A9%AC%E5%85%8B%E6%80%9D%E6%80%9D%E6%83%B3/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/07/04/%E4%BC%BC%E7%84%B6%E5%92%8C%E6%9E%81%E5%A4%A7%E4%BC%BC%E7%84%B6/" rel="next" title="">
+       <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B1%82%E7%BA%A7%E5%88%86%E7%B1%BB%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">层级分类模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E7%B3%BB%E6%8A%BD%E5%8F%96%E5%A4%A7%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.</span> <span class="nav-text">关系抽取大模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E7%B3%BB%E6%8A%BD%E5%8F%96"><span class="nav-number">3.</span> <span class="nav-text">关系抽取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B1%82%E6%AC%A1%E5%88%86%E7%B1%BB"><span class="nav-number">4.</span> <span class="nav-text">层次分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MD-%E7%94%BB%E5%9B%BE%E7%BB%83%E4%B9%A0"><span class="nav-number">5.</span> <span class="nav-text">MD 画图练习</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">李治澎</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">李治澎</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

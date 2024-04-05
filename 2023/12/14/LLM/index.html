@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="主要学习如何对大模型进行预训练工作，如果我们要使用一个已经经过一部分预训练的模型的话，实际上我们就可以得到这个预训练模型的预训练代码 1. 什么是大模型参数量很大（十几亿，几百亿）的深度神经网络模型 1.1 基座模型选择开源领域 ChatGLM，LLAMA，RWKV 主要就是这 3 种模型， 中文好一点就是 ChatGLM，潜力最好的就是 LLAMA，RNN 架构决定 RWKV 有很好的推理效率（">
+<meta property="og:type" content="article">
+<meta property="og:title" content="大语言模型的预训练、微调等技术">
+<meta property="og:url" content="http://example.com/2023/12/14/LLM/index.html">
+<meta property="og:site_name" content="随笔">
+<meta property="og:description" content="主要学习如何对大模型进行预训练工作，如果我们要使用一个已经经过一部分预训练的模型的话，实际上我们就可以得到这个预训练模型的预训练代码 1. 什么是大模型参数量很大（十几亿，几百亿）的深度神经网络模型 1.1 基座模型选择开源领域 ChatGLM，LLAMA，RWKV 主要就是这 3 种模型， 中文好一点就是 ChatGLM，潜力最好的就是 LLAMA，RNN 架构决定 RWKV 有很好的推理效率（">
+<meta property="og:locale">
+<meta property="og:image" content="http://example.com/2023/12/14/LLM/assets/2023-06-07_19-48.png">
+<meta property="og:image" content="http://example.com/2023/12/14/LLM/assets/2023-07-13_08-53.jpg">
+<meta property="og:image" content="http://example.com/2023/12/14/LLM/assets/image-20230713105751597.png">
+<meta property="og:image" content="http://example.com/2023/12/14/LLM/assets/image-20230713151118243.png">
+<meta property="og:image" content="http://example.com/2023/12/14/LLM/assets/2023-06-15_08-59.png">
+<meta property="og:image" content="http://example.com/2023/12/14/LLM/assets/image-20231004153011481.png">
+<meta property="og:image" content="http://example.com/2023/12/14/LLM/assets/image-20231028094229464.png">
+<meta property="article:published_time" content="2023-12-14T09:12:51.556Z">
+<meta property="article:modified_time" content="2023-12-14T09:12:51.589Z">
+<meta property="article:author" content="李治澎">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2023/12/14/LLM/assets/2023-06-07_19-48.png">
+
+<link rel="canonical" href="http://example.com/2023/12/14/LLM/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>大语言模型的预训练、微调等技术 | 随笔</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">随笔</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/12/14/LLM/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李治澎">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="随笔">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          大语言模型的预训练、微调等技术
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-12-14 17:12:51" itemprop="dateCreated datePublished" datetime="2023-12-14T17:12:51+08:00">2023-12-14</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>主要学习如何对大模型进行预训练工作，如果我们要使用一个已经经过一部分预训练的模型的话，实际上我们就可以得到这个预训练模型的预训练代码</p>
+<h2 id="1-什么是大模型"><a href="#1-什么是大模型" class="headerlink" title="1. 什么是大模型"></a>1. 什么是大模型</h2><p>参数量很大（十几亿，几百亿）的深度神经网络模型</p>
+<h3 id="1-1-基座模型选择"><a href="#1-1-基座模型选择" class="headerlink" title="1.1 基座模型选择"></a>1.1 基座模型选择</h3><p>开源领域 ChatGLM，LLAMA，RWKV 主要就是这 3 种模型， 中文好一点就是 ChatGLM，潜力最好的就是 LLAMA，RNN 架构决定 RWKV 有很好的推理效率（随输入长度内存占比线性自增，而 LLAMA 则是指数增加） 和 Length Extrapolation （关于长度外推性，可以参考苏神的文章 <a target="_blank" rel="noopener" href="https://kexue.fm/archives/9431">[4]</a>）</p>
+<h3 id="1-2-模型参数大小选择"><a href="#1-2-模型参数大小选择" class="headerlink" title="1.2 模型参数大小选择"></a>1.2 模型参数大小选择</h3><p>当然对于模型参数的选择，往往是参数越大效果越好。如果资源充足，当然是推荐 30B 以上的模型。不管是 6B, 7B 和 13B 同样的训练数据，同样训练参数，模型参数量大效果则优于低参数的模型。那么根据模型参数，如何预估我们的训练所需的内存开销，这里有一个简单的方法 比如 6B 模型，60 亿规模参数，根据以下公式计算： </p>
+<p>模型参数 + 梯度参数 + 优化器参数 = 6B * 1bytes + 6GB + 2*6GB = 24GB </p>
+<h3 id="1-3-数据处理"><a href="#1-3-数据处理" class="headerlink" title="1.3 数据处理"></a>1.3 数据处理</h3><p>对于 LLM 训练，数据质量很重要。预训练时，我们可以将数据先进行预处理，比如对数据进行一定规则的筛选，数据去重，去除一些低质量的数据。同时，我们可能面临各种类型的数据，PDF，Word，HTML，代码文件等等，对于这种不同类型的数据我们需要都处理成文本，同时还过滤掉一些干扰项或乱码的数据。</p>
+<p>当然，我们也可以利用一些工具去处理，比如 justext <a target="_blank" rel="noopener" href="https://github.com/miso-belica/jusText">[7]</a>，trafilatura <a target="_blank" rel="noopener" href="https://github.com/adbar/trafilatura">[8]</a>，来提取文档主要内容，减少数据的噪音。对于空的文档或文档长度低于 100 进行过滤，进一步减少噪音。</p>
+<p>对于一些机器生成的文本或 OCR 识别错误的文本，质量不高，由没有什么逻辑性，虽然比较难以检测，但是还是会有一些工具能做这样的事情，比如 ctrl-detector <a target="_blank" rel="noopener" href="https://github.com/salesforce/ctrl-detector">[9]</a>。当然对于一些有毒的或带有偏见的数据，可以采用 PerspectiveAPI <a target="_blank" rel="noopener" href="https://perspectiveapi.com/">[10]</a> 或垃圾邮件检测的办法来过滤。</p>
+<p>我们还不得不考虑数据的一些隐私风险，也需要考虑，比如身份证号，银行卡等信息，比如 presidio 和 pii-codex 等工具提供了检测、分析和处理文本数据中的个人身份信息的能力。</p>
+<p>指令微调数据，我们可以使用 PromptSource <a target="_blank" rel="noopener" href="https://github.com/bigscience-workshop/promptsource">[11]</a> 来创建微调数据。当然我们还可以让 GPT4 给我们标注一些数据，这样蒸馏知识，可以让数据质量进一步提升。这里我分享一个我使用的 Prompt 工程：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">first_prompt = &quot;&quot;&quot;</span><br><span class="line">作为一位专业的xxxx，您的任务是从给定的上下文回答问题。</span><br><span class="line">给定的上下文：</span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">last_prompt = &quot;&quot;&quot;</span><br><span class="line">请综合上述信息，你给出的回复需要包含以下三个字段：</span><br><span class="line">1.questions: 基于上下文内容，提出与这个内容相关的问题，至少两个以上。</span><br><span class="line">2.answers: 然后根据问题，分别给出每个问题的答案，请用 markdown 格式。</span><br><span class="line">3.instruction: 给出上下文内容的总结，尽量精简，用 markdown 格式。</span><br><span class="line">请按照以下JSON格式来回答：</span><br><span class="line">前括号</span><br><span class="line">      &quot;questions&quot;: [</span><br><span class="line">          &quot;&lt;内容相关问题1&gt;&quot;,</span><br><span class="line">          &quot;&lt;内容相关问题2&gt;&quot;</span><br><span class="line">      ],</span><br><span class="line">      &quot;answers&quot;: [</span><br><span class="line">           &quot;&lt;内容相关问题1的答案&gt;&quot;,</span><br><span class="line">           &quot;&lt;内容相关问题2的答案&gt;&quot;</span><br><span class="line">      ],</span><br><span class="line">      instruction: &quot;&lt;总结性的内容&gt;&quot;</span><br><span class="line">后括号</span><br><span class="line">注意：如果碰到上下文内容信息不够，无法回答问题的情况，answers和questions可以返回空。</span><br><span class="line">最后强调一下：你的回复将直接用于javascript的JSON.parse解析，所以注意一定要以标准的JSON格式做回答，不要包含任何其他非JSON内容，否则你将被扣分！！！</span><br><span class="line">&quot;&quot;&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-4-大模型内在原理"><a href="#1-4-大模型内在原理" class="headerlink" title="1.4 大模型内在原理"></a>1.4 大模型内在原理</h3><h4 id="大模型不存在涌现能力"><a href="#大模型不存在涌现能力" class="headerlink" title="大模型不存在涌现能力"></a><a target="_blank" rel="noopener" href="https://twitter.com/i/web/status/1654386086746132481">大模型不存在涌现能力</a></h4><p>目前人们所看到的涌现能力实质上是人们构建的指标是非线性指标所造成的,指标的非线性指的是指标只能代表0或1,所以模型在指标上表现出了从0到1的涌现性,而如果将指标换为线性指标,这篇论文发现模型的能力随着算力和模型参数规模在线性增加,也就是说,模型只是在做减小loss的行为,而没有发生涌现行为,是一种涌现错觉</p>
+<blockquote>
+<p>emergent abilities may be creations of the researcher’s choices, not a fundamental property of the model family on the specific task（“涌现”能力的出现是人为刻意标准下的筛选，而不是模型自己的真实能力）</p>
+</blockquote>
+<p>从这个看法来讲,我们应该重新正视大模型的发展,不是期望大模型能够利用其”涌现”造就神话故事,而是一步一步的推动模型的增长h</p>
+<h2 id="2-预训练是什么意思"><a href="#2-预训练是什么意思" class="headerlink" title="2. 预训练是什么意思"></a>2. 预训练是什么意思</h2><p>预训练这个词并不是一个很新的词，之前就有，我理解的预训练就是大模型在某一个任务上进行模型训练，训练完成的模型参数就是预训练模型，预训练模型就意味着把人类的语言知识，先学了一个东西，然后再代入到某个具体任务，就顺手了，就是这么一个简单的道理。</p>
+<p>预训练思想的本质：</p>
+<ol>
+<li>模型参数不再是随机初始化，而是通过一些任务（如语言模型）进行预训练</li>
+<li>将训练任务拆解成共性学习和特性学习两个步骤</li>
+</ol>
+<h2 id="3-预训练有哪些技术"><a href="#3-预训练有哪些技术" class="headerlink" title="3. 预训练有哪些技术"></a>3. 预训练有哪些技术</h2><p>那么预训练应该具体怎么做？</p>
+<p>大致流程：自监督的大规模预训练 + 微调，本文重点关注自监督预训练如何实现</p>
+<p>预训练本质上是迁移学习的一种应用，利用几乎无限的文本，学习输入句子的每一个成员的上下文相关的表示，它隐式地学习到了通用的语法语义知识，预训练通过自监督学习从大规模数据中获得与具体任务无关的预训练模型。体现某一个词在一个特定上下文中的语义表征。</p>
+<h3 id="3-1-网络"><a href="#3-1-网络" class="headerlink" title="3.1 网络"></a>3.1 网络</h3><p>transformer模型，是预训练的核心网络，因为有个非常好的优点，就是可以跑得很快，并且做的很深。</p>
+<h3 id="3-2-预训练任务"><a href="#3-2-预训练任务" class="headerlink" title="3.2 预训练任务"></a>3.2 预训练任务</h3><p><img src="./assets/2023-06-07_19-48.png"></p>
+<p>预训练任务的分类架构通常可以分为两类，一类是基于自监督学习的预训练 任务，另一类是基于监督学习的预训练任务。具体而言，可以将预训练任务分成以下几类：</p>
+<ol>
+<li><p>基于自监督学习的预训练任务：这种预训练任务要求模型通过自监督方式来学习数据中的模式和结构，而不需要人工标注的标签。这种方法通常包括自回归预测和掩码语言模型等任务，模型通过对输入文本的预测来学习文本的语言结构和语义信息。</p>
+<ol>
+<li><p>自回归预测</p>
+<ul>
+<li>给出前几个单词，预测后一个单词的概率</li>
+<li>从左向右做预测，再从右往左做预测</li>
+</ul>
+</li>
+<li><p>掩码语言模型</p>
+<ul>
+<li><p>将句子中的一个词语掩盖掉，预测该词</p>
+</li>
+<li><p>动态mask（RoBERTa）</p>
+</li>
+<li><p>SpanBERT：Random Contiguous Words Masking and Span Boundary Objective (SBO) 随机掩盖一段连续的词、模型在预测掩盖词的同时，还需要预测出掩盖词所在的连续片段的开始位置和结束位置。</p>
+</li>
+<li><p>StructBERT ：Span Order Recovery task 模型在输入的文本中找到两个连续的实体，并预测它们在原始文本中的顺序</p>
+</li>
+<li><p>TLM：XLM 双语对齐 将源语言句子和目标语言句子拼接，模型需要预测这个拼接后的句子中缺失的一些词汇或者短语。</p>
+</li>
+<li><p>Seq2Seq MLM</p>
+<blockquote>
+<p>对于句子”The quick brown fox jumps over the lazy dog.”，Seq2Seq MLM任务可能会将其掩码为”The quick [MASK] fox jumps [MASK] the lazy dog.”，然后让模型预测掩码位置上的词汇。在预测第一个掩码位置时，模型可能会将其预测为”brown”，然后将”brown”作为下一个掩码位置的输入，继续预测下一个掩码位置上的词汇。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>PLM：Permuted Language Modeling模型输入一个随机排列的词序列，并预测这些词在原始序列中的正确顺序。</p>
+</li>
+<li><p>对比学习Contrastive Learning，没有被替换的句子得分比被替换的句子得分高</p>
+</li>
+<li><p>DAE：Denoising Autoencoder：输入一句有噪音的句子，输入没有噪音的句子</p>
+<blockquote>
+<ol>
+<li>随机mask</li>
+<li>随机删除token</li>
+<li>随机去除n个token</li>
+<li>句子随机排序</li>
+<li>文档旋转</li>
+</ol>
+</blockquote>
+</li>
+</ol>
+</li>
+<li><p>基于监督学习的预训练任务：这种预训练任务要求模型通过有标注的数据来学习任务特定的语言处理技能。这些任务通常包括情感分析、命名实体识别、文本分类等任务，模型通过对标注数据的学习来提高在特定任务上的表现。==NLP领域，没有足够多的带标签的数据==</p>
+</li>
+<li><p>基于弱监督学习的预训练任务：这种预训练任务要求模型通过仅有部分标注数据或者弱标注数据来学习任务特定的语言处理技能。这些任务通常包括半监督学习、多任务学习等方法，模型通过对标注数据和非标注数据的学习来提高在特定任务上的表现。</p>
+</li>
+</ol>
+<h4 id="1-GPT3"><a href="#1-GPT3" class="headerlink" title="1. GPT3"></a>1. GPT3</h4><p>输入是单词序列，输出是对最有可能放在这个序列结尾的单词的预测。</p>
+<p>输入采用固定长度为2048个token的序列。不足2048个token的短序列，用空值填充。GPT-3同时对输入序列的下一个token进行预测，但是通常只取输入序列中最后一个位置的预测token，并将其加入输入序列的末尾，进行下一个位置的预测。</p>
+<h4 id="2-OPT"><a href="#2-OPT" class="headerlink" title="2. OPT"></a>2. OPT</h4><p>预训练任务与GPT3相同</p>
+<h4 id="3-BLOOM"><a href="#3-BLOOM" class="headerlink" title="3. BLOOM"></a>3. BLOOM</h4><p>预训练任务与GPT3相同</p>
+<h4 id="4-GLM-130B"><a href="#4-GLM-130B" class="headerlink" title="4. GLM-130B"></a>4. GLM-130B</h4><p>设计了两个预训练目标，包含自监督空白填充和多任务instruction预训练（Multi-Task Instruction Pre-Training，MIP）。</p>
+<p>自监督空白填充（95% tokens）</p>
+<p>为了同时支持理解和生成，设计了两种掩码方式。[MASK]：句子中的短空格，其长度被添加至输入的某一个部分； [gMASK]：句尾随机长度的长空格，并提供前缀上下文；具体来说，[MASK]训练目标占比30%。[gMASK]训练目标占比70%。</p>
+<p>MIP（5% tokens）</p>
+<p>收集了一个由自然语言理解、生成和信息抽取等组成的instruction prompted数据集，并在上面对模型进行预训练而不是微调，以防止破坏模型的生成能力。这个任务的目的是改善模型zero-shot任务的迁移能力。</p>
+<h4 id="5-PaLM"><a href="#5-PaLM" class="headerlink" title="5. PaLM"></a>5. PaLM</h4><ul>
+<li>编码器首先被训练成双向自动编码器，从损坏的上下文重建原始文本，随机token被采样，并根据BERT的实践用[MASK]符号替换。该训练优化了编码器输出与原始上下文之间的交叉重构损失，如BERT中的掩码语言建模(MLM)。通过预测上下文中被屏蔽的实际令牌，PALM迫使编码器理解未掩码token和整个上下文的含义。</li>
+<li>然后将编码器和解码器联合训练，以从编码器的上下文表示形式自回归地生成文本输出。训练最大限度地提高了文本的loglikelihood in ground truth从解码器的输出:</li>
+</ul>
+<h4 id="6-Chinese-LLaMA"><a href="#6-Chinese-LLaMA" class="headerlink" title="6. Chinese LLaMA"></a>6. Chinese LLaMA</h4><p>自回归，给定序列，预测下一个token</p>
+<p>以上是从头开始训练一个模型，如果要在一个已经预训练过的模型上再次进行训练，那就会面临<strong>灾难性遗忘</strong>的问题，以下是如何应对灾难性遗忘的方法，也被称为<strong>增量学习</strong>，与在线学习也有点关系：</p>
+<ol>
+<li>intelligent synapse（冻结权重）</li>
+<li>replay</li>
+<li>meta learning</li>
+</ol>
+<h3 id="3-2-预训练任务-另一种划分"><a href="#3-2-预训练任务-另一种划分" class="headerlink" title="3.2 预训练任务 另一种划分"></a>3.2 <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2107.13586.pdf">预训练任务 另一种划分</a></h3><p>• <strong>Next Sentence Prediction (NSP)</strong> (Devlin et al., 2019): A binary classification loss predicting whether two<br>segments appear consecutively within a larger document, or are random unrelated sentences.<br>• <strong>Sentence Order Prediction (SOP)</strong> (Lan et al., 2020): A binary classification loss for predicting whether two<br>sentences are in a natural or swapped order.<br>• <strong>Capital Word Prediction (CWP)</strong> (Liu et al., 2020b): A binary classification objective calculated over each<br>word, predicting whether whether each word is capitalized or not.<br>• <strong>Sentence Deshuffling (SDS)</strong> (Liu et al., 2020b): A multi-class classification task to reorganize permuted<br>segments.<br>• <strong>Sentence distance prediction (SDP)</strong> (Liu et al., 2020b) : A three-class classification task, predicting the<br>positional relationship between two sentences (adjacent in the same document, not adjacent but in the same document, in different documents).<br>• <strong>Masked Column Prediction (MCP)</strong> (Yin et al., 2020): Given a table, recover the names and data types of<br>masked columns.<br>• <strong>Linguistic-Visual Alignment (LVA)</strong> (Lu et al., 2019): A binary classification to Predict whether the text content can be aligned to visual content.<br>• <strong>Image Region prediction (IRP)</strong> (Su et al., 2020): Given an image whose partial features are masked (zeroed out), predict the masked regions.<br>• <strong>Replaced Token Detection (RTD)</strong> (Xiao et al., 2021): A binary classification loss predicting whether each token in corrupted input was replaced by a generative sample or not.<br>• <strong>Discourse Relation Prediction (DRP)</strong> (Sun et al., 2020): Predict the semantic or rhetorical relation between two sentences.<br>• <strong>Translation Language Modeling (TLM)</strong> (Lample and Conneau, 2019): Consider parallel sentences and mask words randomly in both source and target sentences.<br>• <strong>Information Retrieval Relevance (IRR)</strong> (Sun et al., 2020): Predict the information retrieval relevance of two sentences.<br>• <strong>Token-Passage Prediction (TPP)</strong> (Liu et al., 2020b): Identify the keywords of a passage appearing in the<br>segment.<br>• <strong>Universal Knowledge-Text Prediction (UKTP)</strong> (Sun et al., 2021): Incorporate knowledge into one pre-trained language model.<br>• <strong>Machine Translation (MT)</strong> (Chi et al., 2021a) : Translate a sentence from the source language into the target language.<br>• <strong>Translation Pair Span Corruption (TPSC)</strong> (Chi et al., 2021a) : Predict the masked spans from a translatio pair.<br>• <strong>Translation Span Corruption (TSC)</strong> (Chi et al., 2021a) : Unlike TPSC, TSC only masks and predicts the spans in one language</p>
+<p>• <strong>Multilingual Replaced Token Detection (MRTD)</strong> (Chi et al., 2021b): Distinguish real input tokens from corrupted multilingual sentences by a Generative Adversarial Network, where both the generator and the<br>discriminator are shared across languages.<br>• <strong>Translation Replaced Token Detection (TRTD)</strong> (Chi et al., 2021b): Distinguish the real tokens and masked tokens in the translation pair by the Generative Adversarial Network.<br>• <strong>Knowledge Embedding (KE)</strong> (Wang et al., 2021): Encode entities and relations in knowledge graphs (KGs) as distributed representations<br>• <strong>Image-to-text transfer (ITT)</strong> (Wang et al., 2021): Is similar to the image caption that generates a corresponding description for the input image.<br>• <strong>Multimodality-to-text transfer (MTT)</strong> (Wang et al., 2021): Generate the target text based on both the visual information and the noised linguistic information.</p>
+<h3 id="3-3-预训练数据"><a href="#3-3-预训练数据" class="headerlink" title="3.3 预训练数据"></a>3.3 预训练数据</h3><ol>
+<li>训练数据中使用代码数据可以很好地提升LLM的推理逻辑能力</li>
+</ol>
+<h3 id="3-4-如何避免灾难性遗忘"><a href="#3-4-如何避免灾难性遗忘" class="headerlink" title="3.4 如何避免灾难性遗忘"></a>3.4 如何避免灾难性遗忘</h3><p>通常我们有以下方式，可以减少或避免灾难性遗忘问题</p>
+<ul>
+<li>将重要的权重冻结 - 像 Lora 就是采用的这种方案，只学习部分网络权重。但这里 Lora 的配置其实是要注意一下，如果你是用 Lora 做预训练，lora 训练模块可以配上 q_proj,v_proj,k_proj,o_proj 如果是微调则只需要训练 q_proj,v_proj lora_rank 的设置也有讲究，初始设 lora_ran 为 8，训练存在遗忘时，可以将 lora_rank 改为 64（原因是与原模型数据领域相差较大的话，需要更大的秩，原论文有说明）。</li>
+<li>复习 - 跟人一样，在预训练或微调时，回看之前训练的数据。还可以专门把特征图存起来，量化以后放在一个类似于记忆库的地方，之后在新任务上训练的时候从这个记忆库里重构出记忆和新数据一起训练。感兴趣可以看这篇论文 <a target="_blank" rel="noopener" href="https://arxiv.org/abs/1910.02509">[16]</a>。 </li>
+<li>MoE - 稀疏门控制的专家混合层，最近爆出 GPT4 是由 8 个 220B 的模型组合。关于 Moe 相关资料 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/542465517">[17]</a> 大家自行了解。</li>
+</ul>
+<h3 id="3-4-大模型预训练与知识图谱结合"><a href="#3-4-大模型预训练与知识图谱结合" class="headerlink" title="3.4 大模型预训练与知识图谱结合"></a>3.4 大模型预训练与知识图谱结合</h3><p><img src="./assets/2023-07-13_08-53.jpg"></p>
+<h4 id="3-4-1-KGs-增强-LLM"><a href="#3-4-1-KGs-增强-LLM" class="headerlink" title="3.4.1 KGs 增强 LLM"></a>3.4.1 KGs 增强 LLM</h4><h5 id="1-KG增强的LLM预训练"><a href="#1-KG增强的LLM预训练" class="headerlink" title="1. KG增强的LLM预训练"></a>1. KG增强的LLM预训练</h5><ol>
+<li><p>将KGs整合到训练目标中</p>
+<p>利用KGs中蕴含的实体信息作为监督信号，让LLM来通过某种方式预测得到KGs中的实体信息</p>
+</li>
+<li><p>将KGs整合到LLM输入中</p>
+<p>将KGs中的知识形成文本作为大模型的输入</p>
+</li>
+<li><p>通过额外的融合模块整合KGs</p>
+<img src="./assets/image-20230713105751597.png" alt="image-20230713105751597" style="zoom:67%;" /></li>
+</ol>
+<h5 id="2-KG增强LLM推理"><a href="#2-KG增强LLM推理" class="headerlink" title="2. KG增强LLM推理"></a>2. KG增强LLM推理</h5><ol>
+<li><p>动态知识融合</p>
+<p>将知识图谱编码，与输入编码融合，使用问答数据微调</p>
+</li>
+<li><p>==检索增强的知识融合==</p>
+<p>对于问题，先在KG上查找相关信息作为变量z, 然后将z作为附加上下文信息和问题一起输入到LLM中</p>
+</li>
+</ol>
+<h5 id="3-KG增强的LLM可解释性"><a href="#3-KG增强的LLM可解释性" class="headerlink" title="3. KG增强的LLM可解释性"></a>3. KG增强的LLM可解释性</h5><ol>
+<li><p>用于LLMs探测的KGs</p>
+<p>使用LLM来回答KG中的知识问题</p>
+</li>
+<li><p>用于LLMs分析的KGs</p>
+<p>采用语言模型来生成知识图</p>
+</li>
+</ol>
+<h4 id="3-4-2-LLM增强-KGs"><a href="#3-4-2-LLM增强-KGs" class="headerlink" title="3.4.2 LLM增强 KGs"></a>3.4.2 LLM增强 KGs</h4><h4 id="3-4-3-LLM-与-KGs-协同"><a href="#3-4-3-LLM-与-KGs-协同" class="headerlink" title="3.4.3 LLM 与 KGs 协同"></a>3.4.3 LLM 与 KGs 协同</h4><ol>
+<li><p>知识表示</p>
+<img src="./assets/image-20230713151118243.png" alt="image-20230713151118243" style="zoom:50%;" /></li>
+<li><p>推理</p>
+<p>在问答任务中，QA-GNN[117]首先利用LLM来处理文本问题，并指导推理步骤。通过这种方式，它可以弥合文本和结构信息之间的差距，从而为推理过程提供可解释性。在知识图谱推理任务中，LARK[45]提出了一种LLM引导的逻辑推理方法。它首先将传统的逻辑规则转换为语言序列，然后要求LLM对最终输出进行推理。此外，siyuan等人[46]将结构推理和语言模式预训练统一在一个统一的框架中。给定文本输入，他们采用LLM来生成逻辑查询，该查询在KGs上执行以获得结构上下文。最后，将结构上下文与文本信息融合以生成最终输出。RecInDial[243]结合知识图谱和LLM，在对话系统中提供个性化推荐。KnowledgeDA[244]提出了一个统一的领域语言模型开发pipeline，以增强具有领域知识图谱的任务特定训练过程。</p>
+</li>
+</ol>
+<h2 id="4-监督式微调"><a href="#4-监督式微调" class="headerlink" title="4  监督式微调"></a>4  监督式微调</h2><h3 id="1-ChatGLM-p-tuning-v2"><a href="#1-ChatGLM-p-tuning-v2" class="headerlink" title="1. ChatGLM: p-tuning v2"></a>1. ChatGLM: p-tuning v2</h3><p>soft prompt tuning</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- prompt_learning:带女朋友去了一家餐厅，她吃的很开心，这家餐厅太__了！</span><br><span class="line">- Instruction_tuning:判断这句话的情感：带女朋友去了一家餐厅，她吃的很开心。选项：A=好，B=一般，C=差</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-hybrid-tuning"><a href="#2-hybrid-tuning" class="headerlink" title="2. hybrid-tuning"></a>2. hybrid-tuning</h3><p>deal with the catastrophic forgetting</p>
+<img src="./assets/2023-06-15_08-59.png" style="zoom: 50%;" />
+
+<h3 id="3-MOSS-fine-tuning-in-instruction-data"><a href="#3-MOSS-fine-tuning-in-instruction-data" class="headerlink" title="3. MOSS: fine-tuning in instruction data"></a>3. MOSS: fine-tuning in instruction data</h3><h3 id="4-Chinese-LLaMA-Alpaca-pre-trained-1-pre-trained-2-instruction-tuning"><a href="#4-Chinese-LLaMA-Alpaca-pre-trained-1-pre-trained-2-instruction-tuning" class="headerlink" title="4. Chinese-LLaMA-Alpaca: pre-trained 1 + pre-trained 2 + instruction_tuning"></a>4. Chinese-LLaMA-Alpaca: pre-trained 1 + pre-trained 2 + instruction_tuning</h3><h3 id="5-QLoRA"><a href="#5-QLoRA" class="headerlink" title="5. QLoRA"></a>5. QLoRA</h3><p>QLoRA通过冻结的、4比特量化的预训练语言模型来做 LoRA，进行反向传播梯度。</p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2305.14314.pdf">https://arxiv.org/pdf/2305.14314.pdf</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/632229856">https://zhuanlan.zhihu.com/p/632229856</a></p>
+<p><strong>如果你受限于GPU内存，QLoRA可能是值得考虑的选择。它可以节省33%的内存，但运行时间将增加39%</strong></p>
+<h3 id="6-LORA"><a href="#6-LORA" class="headerlink" title="6. LORA"></a>6. LORA</h3><img src="./assets/image-20231004153011481.png" alt="image-20231004153011481" style="zoom:50%;" />
+
+<p>LORA实战小技巧:</p>
+<ol>
+<li><strong>调整LoRA的秩（rank）并选择合适的alpha值至关重要。将alpha值设定为rank值的两倍是一个明智的选择</strong></li>
+<li><strong>如果你正在使用LoRA，应将其应用于所有层（而不是仅仅应用于Key和Value矩阵），以最大化模型性能</strong></li>
+<li><strong>我们可以在14GB RAM的单个GPU上，在几小时内有效微调70亿参数的模型。使用静态数据集优化一个LLM，让其完美胜任所有基准任务难以实现。要解决这个问题，需要使用多样化的数据源，或许LoRA并不是理想的工具</strong></li>
+<li><strong>对指令微调进行多轮训练作用不大，可能会导致结果恶化。我在1000个示例的LIMA数据集上也观察到了同样的情况。这种性能下降可能是由过拟合导致的，这需要进一步的研究</strong></li>
+<li><strong>LoRA让我们能够在单个GPU上微调7B参数的LLM。在这种特殊情况下，使用最佳设置（r=256、alpha=512）的QLoRA，在A100上，使用AdamW进行50000个训练示例（Alpaca数据集）的训练，占用了17.86 GB的内存，大约需要3小时。</strong></li>
+</ol>
+<h3 id="7-Adapter-Tuning"><a href="#7-Adapter-Tuning" class="headerlink" title="7. Adapter Tuning"></a>7. Adapter Tuning</h3><h3 id="8-Prefix-Tuning"><a href="#8-Prefix-Tuning" class="headerlink" title="8. Prefix  Tuning"></a>8. Prefix  Tuning</h3><h3 id="9-AdaLoRA"><a href="#9-AdaLoRA" class="headerlink" title="9. AdaLoRA"></a>9. AdaLoRA</h3><h2 id="5-对齐"><a href="#5-对齐" class="headerlink" title="5.对齐"></a>5.对齐</h2><h3 id="1-RLHF"><a href="#1-RLHF" class="headerlink" title="1. RLHF"></a>1. RLHF</h3><h2 id="6-模型使用"><a href="#6-模型使用" class="headerlink" title="6. 模型使用"></a>6. 模型使用</h2><h3 id="1-上下文提示"><a href="#1-上下文提示" class="headerlink" title="1. 上下文提示"></a>1. 上下文提示</h3><h3 id="2-思维链提示"><a href="#2-思维链提示" class="headerlink" title="2. 思维链提示"></a>2. 思维链提示</h3><p>鼓励大语言模型解释其推理过程。思维链的主要思想是通过向大语言模型展示一些少量的 exapmles，在样例中解释推理过程，大语言模型在回答提示时也会显示推理过程。这种推理的解释往往会引导出更准确的结果。</p>
+<p><strong>CoT prompting：</strong>输出由原来的answer 变为 reason + answer</p>
+<p><strong>Zero-shot-CoT：</strong>是一个 pipeline。使用“Let’s think step by step”让LLM 生成一些思考过程 a，然后将生成的 a（理由） 和 question 拼在一起，再加一个answer 指向的 prompt 如“The answer is ”来激励模型生成答案。</p>
+<p><strong><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2203.11171">自洽性（Self-consistency）</a>：</strong>生成多个思路链，然后取多数答案作为最终答案</p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2205.10625"><strong>Least to Most prompting, LtM</strong></a>：首先将问题分解为子问题，然后逐个解决。</p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2307.05300">Multi-Persona Self-Collaboration</a>：这个有点类似之前提到的 AutoGen，让多个代理相互对话来解决问题，只不过 AutoGen 是从工程层面真正做到了多 Agents 交互，而这里提到的，是让 ChatGPT 扮演多重人格/角色，例如：</p>
+<p>“你可以扮演任何角色，针对我给出的问题，请提供三个最相关的角色，对问题进行两轮讨论，然后你综合讨论结果总结最佳方案。请打印三个角色的讨论过程以及最后的方案。</p>
+<p><strong>思维树：</strong></p>
+<blockquote>
+<p>举例：假设三位不同的专家来回答这个问题。所有专家都写下他们思考这个问题的第一个步骤，然后与大家分享。然后，所有专家都写下他们思考的下一个骤并分享。以此类推，直到所有专家写完他们思考的所有步骤。只要大家发现有专家的步骤出错了，就让这位专家离开。请问…</p>
+</blockquote>
+<h3 id="3-推理加速"><a href="#3-推理加速" class="headerlink" title="3. 推理加速"></a>3. <strong>推理加速</strong></h3><p>对于推理，一般我们采用量化方案，这里有两个办法。第一个则是采用 ggml 工具，比如 llama.cpp <a target="_blank" rel="noopener" href="https://github.com/ggerganov/llama.cpp">[18]</a> 针对 llama 模型，将模型量化运行在 cpu 或 gpu 上，也可以 cpu 和 gpu 一起跑，内存则大大减少，推理速度有极大的提高。 </p>
+<p>这里如果将 llama.cpp 运行在 gpu 上， 编译时一定要加 LLAMA_CUBLAS=1，同时推理的时候，指定 –gpu-layers|-ngl 来分配运行在 gpu 上的层数，当然越大，占用 gpu 的内存会越多。</p>
+<p>如果是 RWKV 模型，则考虑采用 rwkv.cpp <a target="_blank" rel="noopener" href="https://github.com/saharNooby/rwkv.cpp">[19]</a>，此方法与 llama.cpp 类似，使用方式也是类似的。</p>
+<p>还有 Llama 模型还可以考虑使用 exllama <a target="_blank" rel="noopener" href="https://github.com/turboderp/exllama">[20]</a> 纯 GPU 的加速，虽然还不够完善，但也可以值得一试。</p>
+<p>另一个，采用 LLM Accelerator <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2304.04487.pdf">[21]</a>，LLM 存在大量的相似性推理，基于此，可以做一些优化加速推理，具体请看论文。最后采用架构上的调整，faster transformer <a target="_blank" rel="noopener" href="https://github.com/NVIDIA/FasterTransformer">[22]</a> 要优于传统的 transformer 架构。</p>
+<h2 id="7-实践环节"><a href="#7-实践环节" class="headerlink" title="7. 实践环节"></a>7. 实践环节</h2><p>总结一下，目前的大模型范式基本上都是预训练+微调</p>
+<p>预训练分为两种情况：</p>
+<ol>
+<li><p>从头开始预训练</p>
+<p>那就是要构造训练任务，主要用自回归任务和自编码任务两种主流训练方法</p>
+</li>
+<li><p>对已经预训练过的模型进行再次预训练</p>
+<p>这种情况可以当作增量学习的问题来看</p>
+</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://github.com/ymcui/Chinese-LLaMA-Alpaca-2">LLaMA chinese  微调 跑通</a></p>
+<blockquote>
+<ol>
+<li><p>尝试langchain</p>
+</li>
+<li><p>构造微调数据（目前质量堪忧）使用通用指令数据混合wiki数据</p>
+</li>
+<li><p>微调llama（1. 微调预训练过的模型 2.微调原模型）</p>
+<blockquote>
+<p><strong>问题：微调和与预训练之后都丧失了模型的对话能力？？？ 本质上是过拟合</strong></p>
+</blockquote>
+</li>
+</ol>
+</blockquote>
+<h2 id="基础优化手段"><a href="#基础优化手段" class="headerlink" title="基础优化手段"></a>基础优化手段</h2><p>- Zero-shot：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2109.01652">arxiv.org</a><br>- Few-shot：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2005.14165">arxiv.org</a><br>- CoT：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2201.11903">arxiv.org</a><br>- ToT：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2305.10601">arxiv.org</a><br>- GoT：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2308.09687">arxiv.org</a><br>- SC：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2203.11171">arxiv.org</a><br>- Multi Persona：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2307.05300">arxiv.org</a><br>- Least to Most：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2205.10625">arxiv.org</a><br>- Step Back：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2310.06117">arxiv.org</a><br>- ART：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2303.09014">arxiv.org</a><br>- ReAct：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2210.03629">arxiv.org</a><br>- Reflection：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2303.11366">arxiv.org</a><br>- RAG：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2005.11401">arxiv.org</a></p>
+<h2 id="8-检测是否是AI生成的方法"><a href="#8-检测是否是AI生成的方法" class="headerlink" title="8.检测是否是AI生成的方法"></a>8.检测是否是AI生成的方法</h2><p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2301.11305.pdf">一个zero-shot检测文本是否由AI生成的方法</a>：</p>
+<ol>
+<li>选定一段新的文本，用LLM计算这段文本的对数概率</li>
+<li>对文本进行少量的词汇替换（例如mask几个词然后rewrite）</li>
+<li>对重新生成的文本再次计算文本的对数概率</li>
+<li>重复几次，将这些对数概率画成曲线</li>
+</ol>
+<p>如果这篇文本是由AI写的，那么所得曲线更像红色曲线，原始文本会处于平缓区域的最大值</p>
+<p>如果这篇文本是真人写的，那么所得曲线更像绿色曲线，重写文本的对数概率可能高于/低于原文本</p>
+<img src="./assets/image-20231028094229464.png" alt="image-20231028094229464" style="zoom: 33%;" />
+
+<h2 id="9-大模型测评"><a href="#9-大模型测评" class="headerlink" title="9. 大模型测评"></a>9. 大模型测评</h2><p><a target="_blank" rel="noopener" href="https://github.com/GPT-Fathom/GPT-Fathom">GPT-Fathom</a></p>
+<p>GPT-Fathom是一个开源和可复制的LLM评估套件，在对齐设置下对10多个领先的开源和闭源LLM以及OpenAI的早期模型进行基准测试。</p>
+<h2 id="10-总结原则"><a href="#10-总结原则" class="headerlink" title="10. 总结原则"></a>10. 总结原则</h2><p>最后总结几条原则： </p>
+<ul>
+<li>参数多量化低的模型要优于参数低量化高的模型 </li>
+<li>模型质量与训练数据质量是存在相关性的 </li>
+<li>扩充中文词表有助于提高推理效率 </li>
+<li>微调推荐采用 Lora QLora 方案 </li>
+<li>模型加速必然需要对模型进行量化</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/12/13/%E8%AE%BA%E6%96%87%E5%86%99%E4%BD%9Cprompt/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/12/23/RAG/" rel="next" title="">
+       <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AF%E5%A4%A7%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">1. 什么是大模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E5%9F%BA%E5%BA%A7%E6%A8%A1%E5%9E%8B%E9%80%89%E6%8B%A9"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 基座模型选择</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E6%A8%A1%E5%9E%8B%E5%8F%82%E6%95%B0%E5%A4%A7%E5%B0%8F%E9%80%89%E6%8B%A9"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 模型参数大小选择</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 数据处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%86%85%E5%9C%A8%E5%8E%9F%E7%90%86"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 大模型内在原理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%A7%E6%A8%A1%E5%9E%8B%E4%B8%8D%E5%AD%98%E5%9C%A8%E6%B6%8C%E7%8E%B0%E8%83%BD%E5%8A%9B"><span class="nav-number">1.4.1.</span> <span class="nav-text">大模型不存在涌现能力</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E9%A2%84%E8%AE%AD%E7%BB%83%E6%98%AF%E4%BB%80%E4%B9%88%E6%84%8F%E6%80%9D"><span class="nav-number">2.</span> <span class="nav-text">2. 预训练是什么意思</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E9%A2%84%E8%AE%AD%E7%BB%83%E6%9C%89%E5%93%AA%E4%BA%9B%E6%8A%80%E6%9C%AF"><span class="nav-number">3.</span> <span class="nav-text">3. 预训练有哪些技术</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E7%BD%91%E7%BB%9C"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E9%A2%84%E8%AE%AD%E7%BB%83%E4%BB%BB%E5%8A%A1"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 预训练任务</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-GPT3"><span class="nav-number">3.2.1.</span> <span class="nav-text">1. GPT3</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-OPT"><span class="nav-number">3.2.2.</span> <span class="nav-text">2. OPT</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-BLOOM"><span class="nav-number">3.2.3.</span> <span class="nav-text">3. BLOOM</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-GLM-130B"><span class="nav-number">3.2.4.</span> <span class="nav-text">4. GLM-130B</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-PaLM"><span class="nav-number">3.2.5.</span> <span class="nav-text">5. PaLM</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-Chinese-LLaMA"><span class="nav-number">3.2.6.</span> <span class="nav-text">6. Chinese LLaMA</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E9%A2%84%E8%AE%AD%E7%BB%83%E4%BB%BB%E5%8A%A1-%E5%8F%A6%E4%B8%80%E7%A7%8D%E5%88%92%E5%88%86"><span class="nav-number">3.3.</span> <span class="nav-text">3.2 预训练任务 另一种划分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-%E9%A2%84%E8%AE%AD%E7%BB%83%E6%95%B0%E6%8D%AE"><span class="nav-number">3.4.</span> <span class="nav-text">3.3 预训练数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%E7%81%BE%E9%9A%BE%E6%80%A7%E9%81%97%E5%BF%98"><span class="nav-number">3.5.</span> <span class="nav-text">3.4 如何避免灾难性遗忘</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-%E5%A4%A7%E6%A8%A1%E5%9E%8B%E9%A2%84%E8%AE%AD%E7%BB%83%E4%B8%8E%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E7%BB%93%E5%90%88"><span class="nav-number">3.6.</span> <span class="nav-text">3.4 大模型预训练与知识图谱结合</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-1-KGs-%E5%A2%9E%E5%BC%BA-LLM"><span class="nav-number">3.6.1.</span> <span class="nav-text">3.4.1 KGs 增强 LLM</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-KG%E5%A2%9E%E5%BC%BA%E7%9A%84LLM%E9%A2%84%E8%AE%AD%E7%BB%83"><span class="nav-number">3.6.1.1.</span> <span class="nav-text">1. KG增强的LLM预训练</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-KG%E5%A2%9E%E5%BC%BALLM%E6%8E%A8%E7%90%86"><span class="nav-number">3.6.1.2.</span> <span class="nav-text">2. KG增强LLM推理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-KG%E5%A2%9E%E5%BC%BA%E7%9A%84LLM%E5%8F%AF%E8%A7%A3%E9%87%8A%E6%80%A7"><span class="nav-number">3.6.1.3.</span> <span class="nav-text">3. KG增强的LLM可解释性</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-2-LLM%E5%A2%9E%E5%BC%BA-KGs"><span class="nav-number">3.6.2.</span> <span class="nav-text">3.4.2 LLM增强 KGs</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-3-LLM-%E4%B8%8E-KGs-%E5%8D%8F%E5%90%8C"><span class="nav-number">3.6.3.</span> <span class="nav-text">3.4.3 LLM 与 KGs 协同</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E7%9B%91%E7%9D%A3%E5%BC%8F%E5%BE%AE%E8%B0%83"><span class="nav-number">4.</span> <span class="nav-text">4  监督式微调</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-ChatGLM-p-tuning-v2"><span class="nav-number">4.1.</span> <span class="nav-text">1. ChatGLM: p-tuning v2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-hybrid-tuning"><span class="nav-number">4.2.</span> <span class="nav-text">2. hybrid-tuning</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-MOSS-fine-tuning-in-instruction-data"><span class="nav-number">4.3.</span> <span class="nav-text">3. MOSS: fine-tuning in instruction data</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-Chinese-LLaMA-Alpaca-pre-trained-1-pre-trained-2-instruction-tuning"><span class="nav-number">4.4.</span> <span class="nav-text">4. Chinese-LLaMA-Alpaca: pre-trained 1 + pre-trained 2 + instruction_tuning</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-QLoRA"><span class="nav-number">4.5.</span> <span class="nav-text">5. QLoRA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-LORA"><span class="nav-number">4.6.</span> <span class="nav-text">6. LORA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-Adapter-Tuning"><span class="nav-number">4.7.</span> <span class="nav-text">7. Adapter Tuning</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-Prefix-Tuning"><span class="nav-number">4.8.</span> <span class="nav-text">8. Prefix  Tuning</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-AdaLoRA"><span class="nav-number">4.9.</span> <span class="nav-text">9. AdaLoRA</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E5%AF%B9%E9%BD%90"><span class="nav-number">5.</span> <span class="nav-text">5.对齐</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-RLHF"><span class="nav-number">5.1.</span> <span class="nav-text">1. RLHF</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E6%A8%A1%E5%9E%8B%E4%BD%BF%E7%94%A8"><span class="nav-number">6.</span> <span class="nav-text">6. 模型使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E4%B8%8A%E4%B8%8B%E6%96%87%E6%8F%90%E7%A4%BA"><span class="nav-number">6.1.</span> <span class="nav-text">1. 上下文提示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%80%9D%E7%BB%B4%E9%93%BE%E6%8F%90%E7%A4%BA"><span class="nav-number">6.2.</span> <span class="nav-text">2. 思维链提示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%8E%A8%E7%90%86%E5%8A%A0%E9%80%9F"><span class="nav-number">6.3.</span> <span class="nav-text">3. 推理加速</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-%E5%AE%9E%E8%B7%B5%E7%8E%AF%E8%8A%82"><span class="nav-number">7.</span> <span class="nav-text">7. 实践环节</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E4%BC%98%E5%8C%96%E6%89%8B%E6%AE%B5"><span class="nav-number">8.</span> <span class="nav-text">基础优化手段</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-%E6%A3%80%E6%B5%8B%E6%98%AF%E5%90%A6%E6%98%AFAI%E7%94%9F%E6%88%90%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">9.</span> <span class="nav-text">8.检测是否是AI生成的方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%B5%8B%E8%AF%84"><span class="nav-number">10.</span> <span class="nav-text">9. 大模型测评</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-%E6%80%BB%E7%BB%93%E5%8E%9F%E5%88%99"><span class="nav-number">11.</span> <span class="nav-text">10. 总结原则</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">李治澎</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">李治澎</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="寒武纪平台使用(先进研究院-李治澎)使用自带的镜像创建新环境目前有的镜像包括pytorch和tensorflow   业务管理-&gt;开发环境-&gt;创建   创建完之后等待平台拉取镜像后，会出现一个正在运行的环境  点击查看能够看到新创建的环境的ssh连接，如下     也可以直接点击环境名称进入在线的jupyter界面   环境使用（以pytorch_python3.6镜像为例）在进入到容">
+<meta property="og:type" content="article">
+<meta property="og:title" content="随笔">
+<meta property="og:url" content="http://example.com/2024/02/28/%E5%AF%92%E6%AD%A6%E7%BA%AA%E5%B9%B3%E5%8F%B0%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:site_name" content="随笔">
+<meta property="og:description" content="寒武纪平台使用(先进研究院-李治澎)使用自带的镜像创建新环境目前有的镜像包括pytorch和tensorflow   业务管理-&gt;开发环境-&gt;创建   创建完之后等待平台拉取镜像后，会出现一个正在运行的环境  点击查看能够看到新创建的环境的ssh连接，如下     也可以直接点击环境名称进入在线的jupyter界面   环境使用（以pytorch_python3.6镜像为例）在进入到容">
+<meta property="og:locale">
+<meta property="og:image" content="http://example.com/2024/02/28/%E5%AF%92%E6%AD%A6%E7%BA%AA%E5%B9%B3%E5%8F%B0%E4%BD%BF%E7%94%A8/assets/image-20240227103324985.png">
+<meta property="og:image" content="http://example.com/2024/02/28/%E5%AF%92%E6%AD%A6%E7%BA%AA%E5%B9%B3%E5%8F%B0%E4%BD%BF%E7%94%A8/assets/image-20240227103524410.png">
+<meta property="og:image" content="http://example.com/2024/02/28/%E5%AF%92%E6%AD%A6%E7%BA%AA%E5%B9%B3%E5%8F%B0%E4%BD%BF%E7%94%A8/assets/image-20240227103823922.png">
+<meta property="og:image" content="http://example.com/2024/02/28/%E5%AF%92%E6%AD%A6%E7%BA%AA%E5%B9%B3%E5%8F%B0%E4%BD%BF%E7%94%A8/assets/image-20240227104043958.png">
+<meta property="og:image" content="http://example.com/2024/02/28/%E5%AF%92%E6%AD%A6%E7%BA%AA%E5%B9%B3%E5%8F%B0%E4%BD%BF%E7%94%A8/assets/image-20240227104126953.png">
+<meta property="og:image" content="http://example.com/2024/02/28/%E5%AF%92%E6%AD%A6%E7%BA%AA%E5%B9%B3%E5%8F%B0%E4%BD%BF%E7%94%A8/assets/image-20240227104725617.png">
+<meta property="og:image" content="http://example.com/2024/02/28/%E5%AF%92%E6%AD%A6%E7%BA%AA%E5%B9%B3%E5%8F%B0%E4%BD%BF%E7%94%A8/assets/image-20240227104941137.png">
+<meta property="og:image" content="http://example.com/2024/02/28/%E5%AF%92%E6%AD%A6%E7%BA%AA%E5%B9%B3%E5%8F%B0%E4%BD%BF%E7%94%A8/assets/image-20240227135854500.png">
+<meta property="og:image" content="http://example.com/2024/02/28/%E5%AF%92%E6%AD%A6%E7%BA%AA%E5%B9%B3%E5%8F%B0%E4%BD%BF%E7%94%A8/assets/image-20240227140117459.png">
+<meta property="og:image" content="http://example.com/2024/02/28/%E5%AF%92%E6%AD%A6%E7%BA%AA%E5%B9%B3%E5%8F%B0%E4%BD%BF%E7%94%A8/assets/image-20240227193106401.png">
+<meta property="og:image" content="http://example.com/2024/02/28/%E5%AF%92%E6%AD%A6%E7%BA%AA%E5%B9%B3%E5%8F%B0%E4%BD%BF%E7%94%A8/assets/image-20240227205218081.png">
+<meta property="og:image" content="http://example.com/2024/02/28/%E5%AF%92%E6%AD%A6%E7%BA%AA%E5%B9%B3%E5%8F%B0%E4%BD%BF%E7%94%A8/assets/image-20240228121032910.png">
+<meta property="og:image" content="http://example.com/2024/02/28/%E5%AF%92%E6%AD%A6%E7%BA%AA%E5%B9%B3%E5%8F%B0%E4%BD%BF%E7%94%A8/assets/image-20240228121053187.png">
+<meta property="og:image" content="http://example.com/2024/02/28/%E5%AF%92%E6%AD%A6%E7%BA%AA%E5%B9%B3%E5%8F%B0%E4%BD%BF%E7%94%A8/assets/image-20240228121636395.png">
+<meta property="og:image" content="http://example.com/2024/02/28/%E5%AF%92%E6%AD%A6%E7%BA%AA%E5%B9%B3%E5%8F%B0%E4%BD%BF%E7%94%A8/assets/image-20240228121934372.png">
+<meta property="og:image" content="http://example.com/2024/02/28/%E5%AF%92%E6%AD%A6%E7%BA%AA%E5%B9%B3%E5%8F%B0%E4%BD%BF%E7%94%A8/assets/image-20240228122039985.png">
+<meta property="og:image" content="http://example.com/2024/02/28/%E5%AF%92%E6%AD%A6%E7%BA%AA%E5%B9%B3%E5%8F%B0%E4%BD%BF%E7%94%A8/assets/image-20240228122141384.png">
+<meta property="og:image" content="http://example.com/2024/02/28/%E5%AF%92%E6%AD%A6%E7%BA%AA%E5%B9%B3%E5%8F%B0%E4%BD%BF%E7%94%A8/assets/image-20240228122259884.png">
+<meta property="og:image" content="http://example.com/2024/02/28/%E5%AF%92%E6%AD%A6%E7%BA%AA%E5%B9%B3%E5%8F%B0%E4%BD%BF%E7%94%A8/assets/image-20240228122340835.png">
+<meta property="og:image" content="http://example.com/2024/02/28/%E5%AF%92%E6%AD%A6%E7%BA%AA%E5%B9%B3%E5%8F%B0%E4%BD%BF%E7%94%A8/assets/image-20240228122447755.png">
+<meta property="og:image" content="http://example.com/2024/02/28/%E5%AF%92%E6%AD%A6%E7%BA%AA%E5%B9%B3%E5%8F%B0%E4%BD%BF%E7%94%A8/assets/image-20240228122547813.png">
+<meta property="og:image" content="http://example.com/2024/02/28/%E5%AF%92%E6%AD%A6%E7%BA%AA%E5%B9%B3%E5%8F%B0%E4%BD%BF%E7%94%A8/assets/image-20240228122618169.png">
+<meta property="article:published_time" content="2024-02-28T09:17:12.183Z">
+<meta property="article:modified_time" content="2024-02-28T12:31:09.523Z">
+<meta property="article:author" content="李治澎">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2024/02/28/%E5%AF%92%E6%AD%A6%E7%BA%AA%E5%B9%B3%E5%8F%B0%E4%BD%BF%E7%94%A8/assets/image-20240227103324985.png">
+
+<link rel="canonical" href="http://example.com/2024/02/28/%E5%AF%92%E6%AD%A6%E7%BA%AA%E5%B9%B3%E5%8F%B0%E4%BD%BF%E7%94%A8/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title> | 随笔</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">随笔</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/02/28/%E5%AF%92%E6%AD%A6%E7%BA%AA%E5%B9%B3%E5%8F%B0%E4%BD%BF%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李治澎">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="随笔">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2024-02-28 17:17:12 / Modified: 20:31:09" itemprop="dateCreated datePublished" datetime="2024-02-28T17:17:12+08:00">2024-02-28</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="寒武纪平台使用-先进研究院-李治澎"><a href="#寒武纪平台使用-先进研究院-李治澎" class="headerlink" title="寒武纪平台使用(先进研究院-李治澎)"></a>寒武纪平台使用(先进研究院-李治澎)</h1><h2 id="使用自带的镜像创建新环境"><a href="#使用自带的镜像创建新环境" class="headerlink" title="使用自带的镜像创建新环境"></a>使用自带的镜像创建新环境</h2><p>目前有的镜像包括pytorch和tensorflow</p>
+<img src="./assets/image-20240227103324985.png" alt="image-20240227103324985" style="zoom: 67%;" />
+
+<p>业务管理-&gt;开发环境-&gt;创建</p>
+<img src="./assets/image-20240227103524410.png" alt="image-20240227103524410" style="zoom: 50%;" />
+
+<p>创建完之后等待平台拉取镜像后，会出现一个正在运行的环境</p>
+<p><img src="./assets/image-20240227103823922.png" alt="image-20240227103823922"></p>
+<p>点击查看能够看到新创建的环境的ssh连接，如下</p>
+<img src="./assets/image-20240227104043958.png" alt="image-20240227104043958" style="zoom:67%;" />
+
+
+
+<p>也可以直接点击环境名称进入在线的jupyter界面</p>
+<img src="./assets/image-20240227104126953.png" alt="image-20240227104126953" style="zoom:67%;" />
+
+<h2 id="环境使用（以pytorch-python3-6镜像为例）"><a href="#环境使用（以pytorch-python3-6镜像为例）" class="headerlink" title="环境使用（以pytorch_python3.6镜像为例）"></a>环境使用（以pytorch_python3.6镜像为例）</h2><p>在进入到容器实例(也就是上面创建的新环境)后，镜像中自带了一个已经配置好的寒武纪环境，在终端中分别输入下面两行命令启动寒武纪python环境（若使用pytorch_python3.7镜像则不需要这一步）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">source /torch/venv3/pytorch/bin/activate</span><br><span class="line">export LD_LIBRARY_PATH=/torch/neuware_home/lib64:/usr/local/openmpi/lib</span><br></pre></td></tr></table></figure>
+
+<p>之后终端就会出现(pytorch)为开头的python环境，如下</p>
+<img src="./assets/image-20240227104725617.png" alt="image-20240227104725617" style="zoom: 80%;" />
+
+<p>可以使用cnmon命令来查看显卡使用情况(类似于NVIDIA的nvidia-smi)</p>
+<img src="./assets/image-20240227104941137.png" alt="image-20240227104941137" style="zoom:67%;" />
+
+<p>以下是一个具体的使用torch的实际代码例子</p>
+<p>因为容器内无法联网，所以下面例子中的数据集需要在本地提前下载好</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">train_set = mnist.MNIST(<span class="string">&#x27;./data&#x27;</span>,train=<span class="literal">True</span>,transform=data_tf,download=<span class="literal">True</span>)</span><br><span class="line">test_set = mnist.MNIST(<span class="string">&#x27;./data&#x27;</span>,train=<span class="literal">False</span>,transform=data_tf,download=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+
+<p>然后将下面完整代码和数据集上传到容器中</p>
+<p><img src="./assets/image-20240227135854500.png" alt="image-20240227135854500"></p>
+<p>在终端中输入下面的命令运行代码</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python mnist.py</span><br></pre></td></tr></table></figure>
+
+<p>终端会输出训练的记录</p>
+<img src="./assets/image-20240227140117459.png" alt="image-20240227140117459" style="zoom:67%;" />
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch       <span class="comment">#导入原生PyTorch</span></span><br><span class="line"><span class="keyword">import</span> torch_mlu   <span class="comment">#导入Cambricon PyTorch Backend</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> torch.utils.data <span class="keyword">import</span> DataLoader</span><br><span class="line"><span class="keyword">from</span> torchvision.datasets <span class="keyword">import</span> mnist</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span> nn</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span> optim</span><br><span class="line"><span class="keyword">from</span> torchvision <span class="keyword">import</span> transforms</span><br><span class="line"><span class="keyword">from</span> torch.optim.lr_scheduler <span class="keyword">import</span> StepLR</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> torch.nn.functional <span class="keyword">as</span> F</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Net</span>(nn.Module):     <span class="comment">#定义模型</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">super</span>(Net, self).__init__()</span><br><span class="line">        self.conv1 = nn.Conv2d(<span class="number">1</span>, <span class="number">32</span>, <span class="number">3</span>, <span class="number">1</span>)</span><br><span class="line">        self.conv2 = nn.Conv2d(<span class="number">32</span>, <span class="number">64</span>, <span class="number">3</span>, <span class="number">1</span>)</span><br><span class="line">        self.dropout1 = nn.Dropout2d(<span class="number">0.25</span>)</span><br><span class="line">        self.dropout2 = nn.Dropout2d(<span class="number">0.5</span>)</span><br><span class="line">        self.fc1 = nn.Linear(<span class="number">9216</span>, <span class="number">128</span>)</span><br><span class="line">        self.fc2 = nn.Linear(<span class="number">128</span>, <span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):   <span class="comment">#定义前向计算</span></span><br><span class="line">        x = self.conv1(x)</span><br><span class="line">        x = F.relu(x)</span><br><span class="line">        x = self.conv2(x)</span><br><span class="line">        x = F.relu(x)</span><br><span class="line">        x = F.max_pool2d(x, <span class="number">2</span>)</span><br><span class="line">        x = self.dropout1(x)</span><br><span class="line">        x = torch.flatten(x, <span class="number">1</span>)</span><br><span class="line">        x = self.fc1(x)</span><br><span class="line">        x = F.relu(x)</span><br><span class="line">        x = self.dropout2(x)</span><br><span class="line">        x = self.fc2(x)</span><br><span class="line">        output = F.log_softmax(x, dim=<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">return</span> output</span><br><span class="line"></span><br><span class="line"><span class="comment">#模型训练</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">train</span>(<span class="params">model, train_data, optimizer, epoch</span>):</span><br><span class="line">    model = model.train()</span><br><span class="line">    <span class="keyword">for</span> batch_idx, (img, label) <span class="keyword">in</span> <span class="built_in">enumerate</span>(train_data):</span><br><span class="line">        img = img.to(torch.device(<span class="string">&#x27;mlu&#x27;</span>))</span><br><span class="line">        label = label.to(torch.device(<span class="string">&#x27;mlu&#x27;</span>))</span><br><span class="line">        optimizer.zero_grad()</span><br><span class="line">        out = model(img)</span><br><span class="line">        loss = F.nll_loss(out, label)</span><br><span class="line">        loss.backward()</span><br><span class="line">        optimizer.step()</span><br><span class="line">        <span class="keyword">if</span> batch_idx % <span class="number">100</span> == <span class="number">0</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;Train Epoch: &#123;&#125; [&#123;&#125;/&#123;&#125; (&#123;:.0f&#125;%)]\tLoss: &#123;:.6f&#125;&#x27;</span>.<span class="built_in">format</span>(</span><br><span class="line">                epoch, batch_idx * <span class="built_in">len</span>(img), <span class="built_in">len</span>(train_data.dataset),</span><br><span class="line">                <span class="number">100.</span> * batch_idx / <span class="built_in">len</span>(train_data), loss.item()))</span><br><span class="line"></span><br><span class="line"><span class="comment">#模型推理</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">validate</span>(<span class="params">val_loader, model</span>):</span><br><span class="line">    test_loss = <span class="number">0</span></span><br><span class="line">    correct = <span class="number">0</span></span><br><span class="line">    model.<span class="built_in">eval</span>()</span><br><span class="line">    <span class="keyword">with</span> torch.no_grad():</span><br><span class="line">        <span class="keyword">for</span> images, target <span class="keyword">in</span> val_loader:</span><br><span class="line">            images = images.to(torch.device(<span class="string">&#x27;mlu&#x27;</span>))</span><br><span class="line">            target = target.to(torch.device(<span class="string">&#x27;mlu&#x27;</span>))</span><br><span class="line">            output = model(images)</span><br><span class="line">            test_loss += F.nll_loss(output, target, reduction=<span class="string">&#x27;sum&#x27;</span>).item()</span><br><span class="line">            pred = output.argmax(dim=<span class="number">1</span>, keepdim=<span class="literal">True</span>)</span><br><span class="line">            pred = pred.cpu()</span><br><span class="line">            target = target.cpu()</span><br><span class="line">            correct += pred.eq(target.view_as(pred)).<span class="built_in">sum</span>().item()</span><br><span class="line">    test_loss /= <span class="built_in">len</span>(val_loader.dataset)</span><br><span class="line">    <span class="comment">#打印精度结果</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;\nTest set: Average loss: &#123;:.4f&#125;, Accuracy: &#123;&#125;/&#123;&#125; (&#123;:.0f&#125;%)\n&#x27;</span>.<span class="built_in">format</span>(</span><br><span class="line">        test_loss, correct, <span class="built_in">len</span>(val_loader.dataset),</span><br><span class="line">        <span class="number">100.</span> * correct / <span class="built_in">len</span>(val_loader.dataset)))</span><br><span class="line"></span><br><span class="line"><span class="comment">#主函数</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    data_tf = transforms.Compose(</span><br><span class="line">                [transforms.ToTensor(),</span><br><span class="line">                 transforms.Normalize([<span class="number">0.1307</span>],[<span class="number">0.3081</span>])])</span><br><span class="line"></span><br><span class="line">    <span class="comment">#获取本地数据集</span></span><br><span class="line">    train_set = mnist.MNIST(<span class="string">&#x27;./data&#x27;</span>,train=<span class="literal">True</span>,transform=data_tf,download=<span class="literal">True</span>)</span><br><span class="line">    test_set = mnist.MNIST(<span class="string">&#x27;./data&#x27;</span>,train=<span class="literal">False</span>,transform=data_tf,download=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">    train_data = DataLoader(train_set,batch_size=<span class="number">64</span>,shuffle=<span class="literal">True</span>)</span><br><span class="line">    test_data = DataLoader(test_set,batch_size=<span class="number">1000</span>,shuffle=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line">    net_orig = Net()</span><br><span class="line">    net = net_orig.to(torch.device(<span class="string">&#x27;mlu&#x27;</span>))   <span class="comment">#模型拷贝到MLU设备</span></span><br><span class="line">    optimizer = optim.Adadelta(net.parameters(), <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    nums_epoch = <span class="number">10</span>   <span class="comment">#训练10个epoch</span></span><br><span class="line">    save_model = <span class="literal">True</span> <span class="comment">#训练完成后保存模型</span></span><br><span class="line"></span><br><span class="line">    scheduler = StepLR(optimizer, step_size=<span class="number">1</span>, gamma=<span class="number">0.7</span>)</span><br><span class="line">    <span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(nums_epoch):</span><br><span class="line">        train(net, train_data, optimizer, epoch)</span><br><span class="line">        validate(test_data, net)</span><br><span class="line"></span><br><span class="line">        scheduler.step()</span><br><span class="line">        <span class="keyword">if</span> save_model:  <span class="comment"># 将训练好的模型保存为model.pth</span></span><br><span class="line">            <span class="keyword">if</span> epoch == nums_epoch-<span class="number">1</span>:</span><br><span class="line">                checkpoint = &#123;<span class="string">&quot;state_dict&quot;</span>:net.state_dict(), <span class="string">&quot;optimizer&quot;</span>:optimizer.state_dict(), <span class="string">&quot;epoch&quot;</span>: epoch&#125;</span><br><span class="line">                torch.save(checkpoint, <span class="string">&#x27;model.pth&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+
+
+
+<p>至此，AI Station 平台中自带的寒武纪环境已经可以使用，只需要在该python环境下使用python ***.py 即可运行相应的代码</p>
+<h2 id="运行已有的pytorch代码"><a href="#运行已有的pytorch代码" class="headerlink" title="运行已有的pytorch代码"></a>运行已有的pytorch代码</h2><p>运行/torch/src/catch/tools/torch_gpu2mlu.py脚本将自己原有的代码转化为可以在寒武纪显卡上可以运行的代码</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python /torch/src/catch/tools/torch_gpu2mlu.py --i /path/your/code/dir</span><br></pre></td></tr></table></figure>
+
+<p>运行完上述代码之后，会在当前目录生成一个新的以_mlu为后缀的文件夹，之后只需要运行新文件夹中的代码即可</p>
+<p><img src="./assets/image-20240227193106401.png" alt="image-20240227193106401"></p>
+<h2 id="运行大模型"><a href="#运行大模型" class="headerlink" title="运行大模型"></a>运行大模型</h2><p>以Chatglm-6b为例</p>
+<p>首先下载Chatglm-6b的运行代码<a target="_blank" rel="noopener" href="https://github.com/THUDM/ChatGLM-6B.git">https://github.com/THUDM/ChatGLM-6B.git</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/THUDM/ChatGLM-6B.git</span><br></pre></td></tr></table></figure>
+
+<p>之后下载Chatglm-6b的模型权重，下载地址是<a target="_blank" rel="noopener" href="https://huggingface.co/THUDM/chatglm-6b">https://huggingface.co/THUDM/chatglm-6b</a></p>
+<p>可以使用命令直接下载，也可以手动下载</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git lfs <span class="built_in">clone</span> https://huggingface.co/THUDM/chatglm-6b</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>[!NOTE]</p>
+<p>这里需要加一步操作，就是将权重文件中的modeling_chatglm.py 中的 所有的skip_init 函数修改，因为MLU不支持1.10的skip_init，具体如何修改可以参考如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#        self.query_key_value = skip_init(</span></span><br><span class="line"><span class="comment">#            torch.nn.Linear,</span></span><br><span class="line"><span class="comment">#            hidden_size,</span></span><br><span class="line"><span class="comment">#            3 * self.inner_hidden_size,</span></span><br><span class="line"><span class="comment">#            bias=bias,</span></span><br><span class="line"><span class="comment">#            dtype=params_dtype,</span></span><br><span class="line"><span class="comment">#        )</span></span><br><span class="line">        self.query_key_value = torch.nn.Linear(hidden_size, <span class="number">3</span> * self.inner_hidden_size, bias=bias)</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>然后将代码和模型权重全部上传到服务器上，可以使用sftp文件传输软件，如filezilla</p>
+<p>通过脚本文件将Chatglm的代码转化为可以在寒武纪显卡上可以运行的</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python /torch/src/catch/tools/torch_gpu2mlu.py --i /path/to/ChatGLM-6B</span><br></pre></td></tr></table></figure>
+
+<p>修改ChatGLM-6B_mlu文件夹代码中的模型权重路径</p>
+<img src="./assets/image-20240227205218081.png" alt="image-20240227205218081"  />
+
+<p>之后就可以在寒武纪显卡上运行Chatglm 6b 大模型</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python cli_demo.py</span><br></pre></td></tr></table></figure>
+
+<p><img src="./assets/image-20240228121032910.png" alt="image-20240228121032910"></p>
+<p>显卡情况如下：</p>
+<p><img src="./assets/image-20240228121053187.png" alt="image-20240228121053187"></p>
+<h2 id="镜像制作"><a href="#镜像制作" class="headerlink" title="镜像制作"></a>镜像制作</h2><p>可以先从<a target="_blank" rel="noopener" href="https://sdk.cambricon.com/download?sdk_version=V1.15.0&component_name=PyTorch">寒武纪官网</a>下载已经配置好的镜像，然后在本地加载镜像进行二次修改，补充自己需要的软件或库文件，之后再上传到AI station平台进行使用，具体流程如下：</p>
+<p>首先，从寒武纪官网下载制作好的镜像</p>
+<p><img src="./assets/image-20240228121636395.png" alt="image-20240228121636395"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://sdk.cambricon.com/static/PyTorch/MLU370_1.9_v1.17.0_X86_ubuntu20.04_python3.7_docker/pytorch-v1.17.0-torch1.9-ubuntu20.04-py37.tar.gz</span><br></pre></td></tr></table></figure>
+
+<p>会在本地得到一个pytorch-v1.17.0-torch1.9-ubuntu20.04-py37.tar.gz的文件</p>
+<p>之后在本地加载该镜像</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker load -i pytorch-v1.17.0-torch1.9-ubuntu20.04-py37.tar.gz</span><br></pre></td></tr></table></figure>
+
+<p><img src="./assets/image-20240228121934372.png" alt="image-20240228121934372"></p>
+<p>之后查询当前已有的镜像，可以看到刚刚下载的镜像已经被载入，复制其 IMAGE_ID</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker image list</span><br></pre></td></tr></table></figure>
+
+<p><img src="./assets/image-20240228122039985.png" alt="image-20240228122039985"></p>
+<p>运行docker镜像,规定好平台为linux,为x86-64架构CPU指令集</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -it --platform linux/amd64 497a0473974f /bin/bash</span><br></pre></td></tr></table></figure>
+
+<p><img src="./assets/image-20240228122141384.png" alt="image-20240228122141384"></p>
+<p>进入该镜像之后，便可以进行软件的安装，或者python环境的安装</p>
+<p>安装完成之后，将运行中的容器(Container) 打包为一个新的镜像</p>
+<p>首先查询当前docker内正在执行的进程，记住当前的CONTAINER_ID</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps</span><br></pre></td></tr></table></figure>
+
+<p><img src="./assets/image-20240228122259884.png" alt="image-20240228122259884"></p>
+<p>将当前运行的容器提交成为一个镜像</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker commit c5cde0f5e319 pytorch_mlu_python3.7</span><br></pre></td></tr></table></figure>
+
+<p><img src="./assets/image-20240228122340835.png" alt="image-20240228122340835"></p>
+<p>将本地镜像保存为一个可循环复用的备份</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker save pytorch_mlu_python3.7 | gzip &gt; mlu_pytorch_python3.7.tar.gz</span><br></pre></td></tr></table></figure>
+
+<p><img src="./assets/image-20240228122447755.png" alt="image-20240228122447755"></p>
+<blockquote>
+<p>[!NOTE]</p>
+<p>该步骤会根据镜像的大小等待不同的时间，一般在十几分钟以上，请耐心等待</p>
+</blockquote>
+<p>完成后会在本地生成一个tar.gz后缀的文件</p>
+<p><img src="./assets/image-20240228122547813.png" alt="image-20240228122547813"></p>
+<p>将本地tar包上传到AIStation，镜像管理&gt;导入</p>
+<p><img src="./assets/image-20240228122618169.png" alt="image-20240228122618169"></p>
+<h1 id="FAQ"><a href="#FAQ" class="headerlink" title="FAQ"></a>FAQ</h1><h2 id="离线安装python库"><a href="#离线安装python库" class="headerlink" title="离线安装python库"></a>离线安装python库</h2><h3 id="第一步-在有网络的主机上下载库文件包"><a href="#第一步-在有网络的主机上下载库文件包" class="headerlink" title="第一步 在有网络的主机上下载库文件包"></a>第一步 在有网络的主机上下载库文件包</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip download -d ./path transformers==4.30.2</span><br></pre></td></tr></table></figure>
+
+<p>该命令将会把对应库及其依赖库的文件都下载到当其目录的path文件夹当中</p>
+<p>然后将path文件夹上传到离线环境的主机下</p>
+<h3 id="第二步-在离线环境下安装path文件夹中的库"><a href="#第二步-在离线环境下安装path文件夹中的库" class="headerlink" title="第二步 在离线环境下安装path文件夹中的库"></a>第二步 在离线环境下安装path文件夹中的库</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install --no-index --find-links=./path transformers</span><br></pre></td></tr></table></figure>
+
+<p>在离线环境下使用上述命令即可安装所需要的库</p>
+<h3 id="补充1-提示缺少某个库依赖"><a href="#补充1-提示缺少某个库依赖" class="headerlink" title="补充1 提示缺少某个库依赖"></a>补充1 提示缺少某个库依赖</h3><p>这种情况是因为有网的主机python环境下已经存在某个所需要的包,所以并没有将这个包下载到path文件中,而离线环境下没有这个包所导致的,这种情况 只需要对于这个没有的包 使用一下上面的流程就可以了</p>
+<h3 id="补充2-提示库的版本不对"><a href="#补充2-提示库的版本不对" class="headerlink" title="补充2 提示库的版本不对"></a>补充2 提示库的版本不对</h3><p>这种情况是因为有网主机的python环境(操作系统, python版本)与离线主机的python环境不一致导致的, 需要找一个与离线主机python版本一致的主机即可.</p>
+<h2 id="离线安装conda库"><a href="#离线安装conda库" class="headerlink" title="离线安装conda库"></a>离线安装conda库</h2><p>你需要有什么？</p>
+<ol>
+<li>迁出机器：可联网，已有虚拟环境准备迁移的机器，可以是本地电脑也可以是服务器</li>
+<li>迁入机器：不可联网，无虚拟环境，可以是另一台电脑也可以是服务器</li>
+</ol>
+<h3 id="迁出机器部分——打包环境"><a href="#迁出机器部分——打包环境" class="headerlink" title="迁出机器部分——打包环境"></a>迁出机器部分——打包环境</h3><p>迁出机器安装打包工具</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install -c conda-forge conda-pack</span><br></pre></td></tr></table></figure>
+
+<p>安装好之后打包需要迁出的环境（-n 之后为 虚拟环境名字 -o 之后为打包出来的文件名）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda pack -n envsname -o conda_envsname.tar.gz</span><br></pre></td></tr></table></figure>
+
+<p>gz是一个压缩文件，包含了你环境本身以及所有的包</p>
+<p>将打包的环境通过 ftp 传输到迁入机器中</p>
+<p>迁出机器部分结束</p>
+<h3 id="迁入机器部分——解压、部署环境"><a href="#迁入机器部分——解压、部署环境" class="headerlink" title="迁入机器部分——解压、部署环境"></a>迁入机器部分——解压、部署环境</h3><p>在你的 anaconda 目录下创建文件夹 名称（envs）即为你迁过来的环境名称</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /root/anaconda3/envs/envsname</span><br></pre></td></tr></table></figure>
+
+<p>解压环境（-C 之前为打包压缩文件路径 -C 之后为迁入机器 anaconda3 文件夹下 envs 目录 + 环境名）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -xzf /root/tempfile/conda_envsname.tar.gz -C /root/anaconda3/envs/envsname</span><br></pre></td></tr></table></figure>
+
+<p>执行后完成 cd 进 envs 目录中已经可以看到环境拷贝完成</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/root/anaconda3/envs/envsname</span><br></pre></td></tr></table></figure>
+
+<p>检查环境是否完全复制</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">conda activate envsname</span><br><span class="line">pip list</span><br><span class="line">conda list</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/02/28/%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9A%8F%E7%9D%80%E5%B9%B4%E9%BE%84%E5%A2%9E%E9%95%BF%EF%BC%8C%E6%88%91%E4%BB%AC%E6%84%9F%E8%A7%89%E6%97%B6%E9%97%B4%E4%BC%BC%E4%B9%8E%E6%B5%81%E9%80%9D%E5%BE%97%E6%9B%B4%E5%BF%AB%20/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/03/02/key/" rel="next" title="">
+       <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%92%E6%AD%A6%E7%BA%AA%E5%B9%B3%E5%8F%B0%E4%BD%BF%E7%94%A8-%E5%85%88%E8%BF%9B%E7%A0%94%E7%A9%B6%E9%99%A2-%E6%9D%8E%E6%B2%BB%E6%BE%8E"><span class="nav-number">1.</span> <span class="nav-text">寒武纪平台使用(先进研究院-李治澎)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E8%87%AA%E5%B8%A6%E7%9A%84%E9%95%9C%E5%83%8F%E5%88%9B%E5%BB%BA%E6%96%B0%E7%8E%AF%E5%A2%83"><span class="nav-number">1.1.</span> <span class="nav-text">使用自带的镜像创建新环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E4%BD%BF%E7%94%A8%EF%BC%88%E4%BB%A5pytorch-python3-6%E9%95%9C%E5%83%8F%E4%B8%BA%E4%BE%8B%EF%BC%89"><span class="nav-number">1.2.</span> <span class="nav-text">环境使用（以pytorch_python3.6镜像为例）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E5%B7%B2%E6%9C%89%E7%9A%84pytorch%E4%BB%A3%E7%A0%81"><span class="nav-number">1.3.</span> <span class="nav-text">运行已有的pytorch代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E5%A4%A7%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.4.</span> <span class="nav-text">运行大模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%95%9C%E5%83%8F%E5%88%B6%E4%BD%9C"><span class="nav-number">1.5.</span> <span class="nav-text">镜像制作</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#FAQ"><span class="nav-number">2.</span> <span class="nav-text">FAQ</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85python%E5%BA%93"><span class="nav-number">2.1.</span> <span class="nav-text">离线安装python库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5-%E5%9C%A8%E6%9C%89%E7%BD%91%E7%BB%9C%E7%9A%84%E4%B8%BB%E6%9C%BA%E4%B8%8A%E4%B8%8B%E8%BD%BD%E5%BA%93%E6%96%87%E4%BB%B6%E5%8C%85"><span class="nav-number">2.1.1.</span> <span class="nav-text">第一步 在有网络的主机上下载库文件包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5-%E5%9C%A8%E7%A6%BB%E7%BA%BF%E7%8E%AF%E5%A2%83%E4%B8%8B%E5%AE%89%E8%A3%85path%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%AD%E7%9A%84%E5%BA%93"><span class="nav-number">2.1.2.</span> <span class="nav-text">第二步 在离线环境下安装path文件夹中的库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%A5%E5%85%851-%E6%8F%90%E7%A4%BA%E7%BC%BA%E5%B0%91%E6%9F%90%E4%B8%AA%E5%BA%93%E4%BE%9D%E8%B5%96"><span class="nav-number">2.1.3.</span> <span class="nav-text">补充1 提示缺少某个库依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%A5%E5%85%852-%E6%8F%90%E7%A4%BA%E5%BA%93%E7%9A%84%E7%89%88%E6%9C%AC%E4%B8%8D%E5%AF%B9"><span class="nav-number">2.1.4.</span> <span class="nav-text">补充2 提示库的版本不对</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85conda%E5%BA%93"><span class="nav-number">2.2.</span> <span class="nav-text">离线安装conda库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%81%E5%87%BA%E6%9C%BA%E5%99%A8%E9%83%A8%E5%88%86%E2%80%94%E2%80%94%E6%89%93%E5%8C%85%E7%8E%AF%E5%A2%83"><span class="nav-number">2.2.1.</span> <span class="nav-text">迁出机器部分——打包环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%81%E5%85%A5%E6%9C%BA%E5%99%A8%E9%83%A8%E5%88%86%E2%80%94%E2%80%94%E8%A7%A3%E5%8E%8B%E3%80%81%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83"><span class="nav-number">2.2.2.</span> <span class="nav-text">迁入机器部分——解压、部署环境</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">李治澎</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">李治澎</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

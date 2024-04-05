@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="使用warp进行校园网免流目录  1. 如何配置  2. 关于手机客户端  3. 关于实现PC端只连接ipv6入口（免流）  4. 关于速度  5. 关于延迟  6. 关于是否需要warp+  7. 关于网站可用性  前排感谢cloudflare提供的免费代理。 另外，不知道什么原因 23.7.20补充：hk和中国代理节点限制了wg直连 ，warp导出的配置在wireguard里面用不了，但是用客">
+<meta property="og:type" content="article">
+<meta property="og:title" content="随笔">
+<meta property="og:url" content="http://example.com/2023/12/01/cloudfare%20warp%20VPN/index.html">
+<meta property="og:site_name" content="随笔">
+<meta property="og:description" content="使用warp进行校园网免流目录  1. 如何配置  2. 关于手机客户端  3. 关于实现PC端只连接ipv6入口（免流）  4. 关于速度  5. 关于延迟  6. 关于是否需要warp+  7. 关于网站可用性  前排感谢cloudflare提供的免费代理。 另外，不知道什么原因 23.7.20补充：hk和中国代理节点限制了wg直连 ，warp导出的配置在wireguard里面用不了，但是用客">
+<meta property="og:locale">
+<meta property="og:image" content="https://p.ananas.chaoxing.com/star3/origin/22270247a1b8dea0fe8d10155f63068b.png">
+<meta property="og:image" content="https://p.ananas.chaoxing.com/star3/origin/93a9f1005e1c2bb43eb1196e66e85cd9.png">
+<meta property="og:image" content="http://example.com/2023/12/01/cloudfare%20warp%20VPN/assets/image-20231201180118189.png">
+<meta property="article:published_time" content="2023-12-01T10:06:29.517Z">
+<meta property="article:modified_time" content="2023-12-01T12:46:17.019Z">
+<meta property="article:author" content="李治澎">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://p.ananas.chaoxing.com/star3/origin/22270247a1b8dea0fe8d10155f63068b.png">
+
+<link rel="canonical" href="http://example.com/2023/12/01/cloudfare%20warp%20VPN/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title> | 随笔</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">随笔</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/12/01/cloudfare%20warp%20VPN/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李治澎">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="随笔">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-12-01 18:06:29 / Modified: 20:46:17" itemprop="dateCreated datePublished" datetime="2023-12-01T18:06:29+08:00">2023-12-01</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="使用warp进行校园网免流"><a href="#使用warp进行校园网免流" class="headerlink" title="使用warp进行校园网免流"></a>使用warp进行校园网免流</h2><h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ol>
+<li> <a href="#%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AE">1. 如何配置</a></li>
+<li> <a href="#%E5%85%B3%E4%BA%8E%E6%89%8B%E6%9C%BA%E5%AE%A2%E6%88%B7%E7%AB%AF">2. 关于手机客户端</a></li>
+<li> <a href="#%E5%85%B3%E4%BA%8E%E5%AE%9E%E7%8E%B0pc%E7%AB%AF%E5%8F%AA%E8%BF%9E%E6%8E%A5ipv6%E5%85%A5%E5%8F%A3%EF%BC%88%E5%85%8D%E6%B5%81%EF%BC%89">3. 关于实现PC端只连接ipv6入口（免流）</a></li>
+<li> <a href="#%E5%85%B3%E4%BA%8E%E9%80%9F%E5%BA%A6">4. 关于速度</a></li>
+<li> <a href="#%E5%85%B3%E4%BA%8E%E5%BB%B6%E8%BF%9F">5. 关于延迟</a></li>
+<li> <a href="#%E5%85%B3%E4%BA%8E%E6%98%AF%E5%90%A6%E9%9C%80%E8%A6%81warp+">6. 关于是否需要warp+</a></li>
+<li> <a href="#%E5%85%B3%E4%BA%8E%E7%BD%91%E7%AB%99%E5%8F%AF%E7%94%A8%E6%80%A7">7. 关于网站可用性</a></li>
+</ol>
+<p>前排感谢cloudflare提供的免费代理。</p>
+<p>另外，不知道什么原因 <code>23.7.20补充：hk和中国代理节点限制了wg直连</code> ，warp导出的配置在wireguard里面用不了，但是用客户端没问题。</p>
+<h3 id="如何配置-仅windows"><a href="#如何配置-仅windows" class="headerlink" title="如何配置(仅windows)"></a>如何配置(仅windows)</h3><p>warp用起来很简单，上tg找个代刷 <code>warp+</code> 账号的Bot。我用的是 <a target="_blank" rel="noopener" href="https://t.me/generatewarpplusbot">@generatewarpplusbot</a> ，输入 <code>/generate</code> 然后回答一个两位数加减法就可以获取一个剩余流量 <code>22PB</code> 的warp+的key，足够用到天荒地老了。</p>
+<p>客户端的话要去<a target="_blank" rel="noopener" href="https://1.1.1.1/">1.1.1.1的官网</a>下载。Windows，Mac，Linux，Android，IOS都有对应的客户端，官网在家宽下条件下被墙，需要科学上网。另外，Android的warp不能代理一些流媒体软件，比如说Youtube，其它平台的客户端没有这个问题。不过在安卓上使用浏览器还是可以看YouTube网页版的。</p>
+<p>warp安装之后默认是普通账户。在电脑上，点击右下角的warp图标（截图是warp+的原因是我懒得退账号了）</p>
+<p><img src="https://p.ananas.chaoxing.com/star3/origin/22270247a1b8dea0fe8d10155f63068b.png"></p>
+<p>点击齿轮左边像甲虫的按钮</p>
+<p><img src="https://p.ananas.chaoxing.com/star3/origin/93a9f1005e1c2bb43eb1196e66e85cd9.png"></p>
+<p>输入机器人发送的密钥。现在就可以使用warp+的流量了。</p>
+<h3 id="关于手机客户端"><a href="#关于手机客户端" class="headerlink" title="关于手机客户端"></a>关于手机客户端</h3><p>试了一下，Android的客户端在校园网环境下无法直接连上warp+，需要先在科学上网的网络环境下先连接一次才可以连接，而且不支持纯ipv6的连接。但是ZeroTrust可以正常连接。（相当于无限流量的企业版warp+，也免费，但是需要绑一下付款方式，支持Paypal，并且可以通过一些手段绕过）</p>
+<p>23.7.20更新：不知为何安卓端最近无法在校园网未登录情况下使用ZeroTrust免流。但是iPad和PC上使用正常。</p>
+<h3 id="关于实现PC端只连接ipv6入口（免流）"><a href="#关于实现PC端只连接ipv6入口（免流）" class="headerlink" title="关于实现PC端只连接ipv6入口（免流）"></a>关于实现PC端只连接ipv6入口（免流）</h3><p>开发区校区的校园网不登录即可实现免流。已登录的可以到<a target="_blank" rel="noopener" href="http://172.20.30.2:8080/Self/dashboard" title="校园网登录/注销">这个页面</a>登出。</p>
+<p>校部的校园网需要额外配置Cf对端IP类型为IPv6，请参考<a target="_blank" rel="noopener" href="https://blog.misaka.rest/2023/03/12/cf-warp-yxip/">优选IP教程</a>。</p>
+<p>盘锦校区没有条件测试，但是应该也可以参考实现。</p>
+<h3 id="Linux系统下"><a href="#Linux系统下" class="headerlink" title="Linux系统下"></a>Linux系统下</h3><p>客户端的话要去<a target="_blank" rel="noopener" href="https://1.1.1.1/">1.1.1.1的官网</a>下载,下载得到的软件是跟window不太一样的,linux下必须要登陆teams,所以需要去cloudfare申请免费plan的账户,申请账户需要用到信用卡(可以用paypal),paypal帐号申请可以使用国内的银行卡,所以只要有国内银行卡就可以申请一个免费plan的cloudfare账户.</p>
+<p>之后就可以登陆Linux下的cloudfare-warp</p>
+<img src="./assets/image-20231201180118189.png" alt="image-20231201180118189" style="zoom: 67%;" />
+
+<p>登陆之后就可以访问外网,但是如果想要配置ipv6还需要从命令行输入命令</p>
+<p>首先使用github上提供的脚本获取可用的ipv6可用ip</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -N https://gitlab.com/Misaka-blog/warp-script/-/raw/main/files/warp-yxip/warp-yxip.sh &amp;&amp; bash warp-yxip.sh</span><br></pre></td></tr></table></figure>
+
+<p>获得可用的ipv6 ip地址后.通过下面的命令设置</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo warp-cli clear-custom-endpoint</span><br><span class="line">sudo warp-cli set-custom-endpoint [上面获得的ipv6的地址]</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="Linux的问题"><a href="#Linux的问题" class="headerlink" title="Linux的问题"></a>Linux的问题</h3><ol>
+<li>Linux下无法使用更换密钥的方式使用</li>
+</ol>
+<h3 id="关于速度"><a href="#关于速度" class="headerlink" title="关于速度"></a>关于速度</h3><p>实测校园网环境网页版Youtube开启4K画质无压力。</p>
+<p><em>7.20补充：300M电信宽带下实测带宽可以达到40M，可以在ios端原速流畅观看YouTube 1080p60的视频。</em></p>
+<h3 id="关于延迟"><a href="#关于延迟" class="headerlink" title="关于延迟"></a>关于延迟</h3><p>打游戏的话，试了试瓦，会定到港服，延迟在60ms左右，可以说是非常优秀了，毕竟不要钱。</p>
+<p><em>5.14补充：晚上使用的话丢包会比较严重，对枪存在可感的延迟。</em></p>
+<h3 id="关于是否需要warp"><a href="#关于是否需要warp" class="headerlink" title="关于是否需要warp+"></a>关于是否需要warp+</h3><p>实测有无warp+或zerotrust对于代理的速度没有显著影响，但据说访问使用Cloudflare作为CDN的网站时，会提供加速功能并消耗流量。</p>
+<h3 id="关于网站可用性"><a href="#关于网站可用性" class="headerlink" title="关于网站可用性"></a>关于网站可用性</h3><p>ChatGPT可以正常登录和使用 <code>更新：单纯使用warp已经无法解锁ChatGPT。</code>似乎大部分的流媒体网站都可用。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/11/30/%E8%AE%BA%E6%96%87%E4%B8%AD%E7%BB%98%E5%88%B6%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%B7%A5%E5%85%B7%E6%B1%87%E6%80%BB/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/12/04/%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85python%E7%9A%84%E5%BA%93%E5%8F%8A%E4%BE%9D%E8%B5%96%E5%BA%93/" rel="next" title="">
+       <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8warp%E8%BF%9B%E8%A1%8C%E6%A0%A1%E5%9B%AD%E7%BD%91%E5%85%8D%E6%B5%81"><span class="nav-number">1.</span> <span class="nav-text">使用warp进行校园网免流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95"><span class="nav-number">2.</span> <span class="nav-text">目录</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AE-%E4%BB%85windows"><span class="nav-number">2.1.</span> <span class="nav-text">如何配置(仅windows)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E6%89%8B%E6%9C%BA%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="nav-number">2.2.</span> <span class="nav-text">关于手机客户端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E5%AE%9E%E7%8E%B0PC%E7%AB%AF%E5%8F%AA%E8%BF%9E%E6%8E%A5ipv6%E5%85%A5%E5%8F%A3%EF%BC%88%E5%85%8D%E6%B5%81%EF%BC%89"><span class="nav-number">2.3.</span> <span class="nav-text">关于实现PC端只连接ipv6入口（免流）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux%E7%B3%BB%E7%BB%9F%E4%B8%8B"><span class="nav-number">2.4.</span> <span class="nav-text">Linux系统下</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">2.5.</span> <span class="nav-text">Linux的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E9%80%9F%E5%BA%A6"><span class="nav-number">2.6.</span> <span class="nav-text">关于速度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E5%BB%B6%E8%BF%9F"><span class="nav-number">2.7.</span> <span class="nav-text">关于延迟</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E6%98%AF%E5%90%A6%E9%9C%80%E8%A6%81warp"><span class="nav-number">2.8.</span> <span class="nav-text">关于是否需要warp+</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E7%BD%91%E7%AB%99%E5%8F%AF%E7%94%A8%E6%80%A7"><span class="nav-number">2.9.</span> <span class="nav-text">关于网站可用性</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">李治澎</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">李治澎</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

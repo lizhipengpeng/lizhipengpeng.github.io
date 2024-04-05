@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Survey of Controllable Text GenerationCTG 的定义 better meet the specific constraints in practical applications Controllable text generation (CTG) refers to the task of generating text according to the g">
+<meta property="og:type" content="article">
+<meta property="og:title" content="随笔">
+<meta property="og:url" content="http://example.com/2023/11/27/Controllable%20text%20generation/index.html">
+<meta property="og:site_name" content="随笔">
+<meta property="og:description" content="Survey of Controllable Text GenerationCTG 的定义 better meet the specific constraints in practical applications Controllable text generation (CTG) refers to the task of generating text according to the g">
+<meta property="og:locale">
+<meta property="og:image" content="http://example.com/2023/11/27/Controllable%20text%20generation/assets/image-20231127212726619.png">
+<meta property="og:image" content="http://example.com/2023/11/27/Controllable%20text%20generation/assets/image-20231127213100182.png">
+<meta property="og:image" content="http://example.com/2023/11/27/Controllable%20text%20generation/assets/image-20231127215815938.png">
+<meta property="og:image" content="http://example.com/2023/11/27/Controllable%20text%20generation/assets/image-20231127220156236.png">
+<meta property="og:image" content="http://example.com/2023/11/27/Controllable%20text%20generation/assets/image-20231127220849538.png">
+<meta property="og:image" content="http://example.com/2023/11/27/Controllable%20text%20generation/assets/image-20231127221138206.png">
+<meta property="article:published_time" content="2023-11-27T14:11:43.437Z">
+<meta property="article:modified_time" content="2023-11-29T02:04:49.338Z">
+<meta property="article:author" content="李治澎">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2023/11/27/Controllable%20text%20generation/assets/image-20231127212726619.png">
+
+<link rel="canonical" href="http://example.com/2023/11/27/Controllable%20text%20generation/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title> | 随笔</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">随笔</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/11/27/Controllable%20text%20generation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李治澎">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="随笔">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-11-27 22:11:43" itemprop="dateCreated datePublished" datetime="2023-11-27T22:11:43+08:00">2023-11-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-11-29 10:04:49" itemprop="dateModified" datetime="2023-11-29T10:04:49+08:00">2023-11-29</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Survey-of-Controllable-Text-Generation"><a href="#Survey-of-Controllable-Text-Generation" class="headerlink" title="Survey of Controllable Text Generation"></a>Survey of Controllable Text Generation</h1><h2 id="CTG-的定义"><a href="#CTG-的定义" class="headerlink" title="CTG 的定义"></a>CTG 的定义</h2><ul>
+<li>better meet the specific constraints in practical applications</li>
+<li>Controllable text generation (CTG) refers to the task of generating text according to the given controlled element</li>
+</ul>
+<p><img src="./assets/image-20231127212726619.png" alt="image-20231127212726619"></p>
+<p>举例说明</p>
+<ul>
+<li>第一个例子就是给定一个故事线，要求模型按照这样的思路去生成。</li>
+<li>第二个例子是关于传统人机对话中如果机器生成文本时不受控制可能带来的问题，比如会给出有害的建议，甚至说脏话，这个时候就需要我们在模型生成的时候加以控制。</li>
+</ul>
+<p>跟传统NLG的区别就在于我们会在输入的时候加入某些控制因素，从而让最终的输出满足某种条件。</p>
+<h2 id="CTG的应用场景"><a href="#CTG的应用场景" class="headerlink" title="CTG的应用场景"></a>CTG的应用场景</h2><ul>
+<li><strong>Attribute-based Generation</strong>，基于某种属性的自然语言生成，比如生成特定情感/口吻/风格的文本</li>
+<li><strong>Dialogue Generation</strong>，对话系统对NLG有更高的要求，因此CTG的应用就不言而喻了</li>
+<li><strong>Storytelling</strong>，用CTG来辅助文学创作，想想就很爽，而传统的NLG，基本给了开头你就无法控制了</li>
+<li><strong>Data to Text</strong>，使用一些结构化数据（table，graph）来生成自然语言，可用于给定每天的天气数据，来自动生成天气播报，或者把老板看不懂的表格数据用CTG技术翻译成人话给他听</li>
+<li><strong>Data Augmentation</strong>，使用CTG可以把已有的文本的某些信息给重新生成，变成我们想要的属性</li>
+<li><strong>Debiasing</strong>，这也非常重要，可以帮助我们把带有某些偏见的文本转化成无偏见的文本，让机器也符合伦理道德</li>
+<li><strong>Format Control</strong>，风格、格式的转换，比如中国古诗词就有明确的格式，这就需要在生成的时候加以控制</li>
+</ul>
+<h2 id="CTG的方法流派"><a href="#CTG的方法流派" class="headerlink" title="CTG的方法流派"></a>CTG的方法流派</h2><img src="./assets/image-20231127213100182.png" alt="image-20231127213100182" style="zoom: 67%;" />
+
+<p>大致上分为三类:</p>
+<ul>
+<li>改良派：在已有PLM的基础上继续预训练</li>
+<li>革命派：另起炉灶，重新训练一个大型预训练模型</li>
+<li>保守派：连PLM都不想动，直接在PLM的输出上做后处理</li>
+</ul>
+<h3 id="1-FineTuning"><a href="#1-FineTuning" class="headerlink" title="1. FineTuning"></a>1. FineTuning</h3><p>改良派，实际上就是沿用了PLM最经典的使用方法——Fine-tuning，虽然原始的PLM在训练的时候，并没有对某些属性、特点、要素进行控制，但是PLM预训练中学习的大规模知识是很有用的，所以我们使用特定的语料，让PLM进一步去学习我们希望的某种控制效果，就可以实现CTG的目的。</p>
+<p>而Finetuning中又分为三种方式：</p>
+<ul>
+<li>Adapted Module方式，通过额外添加一个控制模块，用于添加属性控制，然后连同PLM一起进行训练。代表方法包括 Auxiliary Tuning[2]，DialGPT[3]。</li>
+<li>Prompt方式，包括prompt Learning、prompt tuning[4]等方法，实际上基于prompt的方法，本身就是对PLM的生成加入了额外的控制，如果使用有监督的风格、属性数据集进行训练，就可以直接得到基于prompt的CTG模型。也有更新的工作Inverse Prompt[5]，用模型生成的句子来反过来去预测代表风格、主题等的prompt，从而让prompt对文本生成的控制力更强。</li>
+<li>基于强化学习RL的方法。</li>
+<li>指令微调, 构造指令数据集 进行有监督微调训练</li>
+</ul>
+<p>这些基于finetuning的方法，基本都要求我们有一个下游任务的有监督数据集，从而帮助我们学习某种控制性，比如你希望控制生成文本的情感属性，那么就需要你有情感分类的数据集，让模型去学习[指定情感]——&gt;[该情感的文本]的映射。</p>
+<h3 id="2-Retrain-Refactor"><a href="#2-Retrain-Refactor" class="headerlink" title="2. Retrain/Refactor"></a>2. Retrain/Refactor</h3><ol>
+<li><p>CTRL</p>
+<p> CTRL收集了140GB的数据，涵盖了很多个domain的语料（百科、reddit、影评、新闻、翻译、问答…），<strong>每个domain都设置有一个control code</strong>，从而训练一个大型的包含1.63B参数量的conditional language model, 那些control code是预定义好的，直接插入在sequence的开头</p>
+</li>
+<li><p><strong>Content-Conditioner (CoCon)</strong></p>
+<p> 以CTRL为代表的方法只能从一个总体的层面对生成文本增加限制，比如某种风格主题，但无法对具体内容进行精细控制，CoCon则是直接以原文中的部分内容作为condition，来预测下文, 核心思想就是<strong>使用文本的一部分作为condition，让模型对剩余部分进行复原</strong></p>
+</li>
+</ol>
+<img src="./assets/image-20231127215815938.png" alt="image-20231127215815938" style="zoom:50%;" />
+
+<p>上面列举的CTRL和CoCon的对NLG添加的实际上是比较soft的限制，并不强制要求模型一定要输出什么元素，而有一些工作则会使用hard的限制，要求模型必须输出给定的某些关键词：</p>
+<ol start="3">
+<li><p><strong>POINTER</strong></p>
+<p> POINTER的主要目的是训练根据指定词汇然后生成包含这些词汇的模型，采用的是一种基于插入的、渐进生成的方法,POINTER的生成是一种迭代式地生成，先生成给定的关键词，然后每一轮都按照重要性不断插入新的词，直到把句子给补齐。POINTER中使用的一种Transformer结构叫做<strong>Insertion Transformer</strong></p>
+ <img src="./assets/image-20231127220156236.png" alt="image-20231127220156236" style="zoom:67%;" /></li>
+<li><p><strong>Constrained BART (CBART)</strong></p>
+<p> 对BART进行了改造，通过在encoder上面添加一个token-level classifier来指导decoder在生成的时候应该进行replace还是insert</p>
+</li>
+</ol>
+<h3 id="3-Post-Process"><a href="#3-Post-Process" class="headerlink" title="3. Post-Process"></a>3. Post-Process</h3><ol>
+<li><p><strong>Plug and Play Language Models (PPLM)</strong></p>
+<p> PPLM不希望去训练PLM，而是通过额外的一个attribute model来对PLM的输出加以修正，从而符合某种预期。这里的attribute model，既可以是一个bag of words来代表某个topic，也可以是一个训练好的小模型来对某个topic进行打分，然后通过这个attribute model向PLM的hidden states传递梯度，从而对hidden states进行一定的修正，然后PLM的输出就会往我们希望的topic倾斜了。</p>
+ <img src="./assets/image-20231127220849538.png" alt="image-20231127220849538" style="zoom:67%;" /></li>
+<li><p><strong>MEGATRON-CNTRL</strong></p>
+<p> 选择利用外部知识库来辅助生成，给定一个context，MEGATRON-CNTRL会首先使用一个predictor生成一批关键词，然后通过一个retriever从知识库中找到跟这些关键词匹配的句子，然后通过一个ranker进行筛选，最后再输入PLM进行句子的生成：</p>
+</li>
+</ol>
+<p>还有工作比如<strong>PAIR</strong>[14]则是先生成一个包含关键词和位置信息的模板，然后对模板进行填空，从而进行控制性生成；<strong>GeDi</strong>[15]则是训练一个小型的discriminator来引导PLM的生成。</p>
+<img src="./assets/image-20231127221138206.png" alt="image-20231127221138206" style="zoom:67%;" />
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/08/15/LLM_data/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/11/30/%E6%9C%9F%E5%88%8A/" rel="next" title="">
+       <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Survey-of-Controllable-Text-Generation"><span class="nav-number">1.</span> <span class="nav-text">Survey of Controllable Text Generation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CTG-%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="nav-number">1.1.</span> <span class="nav-text">CTG 的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CTG%E7%9A%84%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">1.2.</span> <span class="nav-text">CTG的应用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CTG%E7%9A%84%E6%96%B9%E6%B3%95%E6%B5%81%E6%B4%BE"><span class="nav-number">1.3.</span> <span class="nav-text">CTG的方法流派</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-FineTuning"><span class="nav-number">1.3.1.</span> <span class="nav-text">1. FineTuning</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Retrain-Refactor"><span class="nav-number">1.3.2.</span> <span class="nav-text">2. Retrain&#x2F;Refactor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Post-Process"><span class="nav-number">1.3.3.</span> <span class="nav-text">3. Post-Process</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">李治澎</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">李治澎</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

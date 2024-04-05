@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="前言在我曾经的文章中，我提到我的 Archlinux 系统已经连续使用两年了，期间一直没有出现过什么大问题。然我事实上我对这个系统安装一直有些不满意： 首先是不满意磁盘分区，我当时只给根目录分了 30G 空间，并且 &#x2F;var 目录没有单独挂载分区，导致根目录的使用空间一直都挺捉襟见肘的，&#x2F;home 目录也只分了 100G 空间，后期也不太够用。那可能会有人问，500G 的硬盘剩下的三百多 G 那里">
+<meta property="og:type" content="article">
+<meta property="og:title" content="随笔">
+<meta property="og:url" content="http://example.com/2024/03/21/archlinux%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/index.html">
+<meta property="og:site_name" content="随笔">
+<meta property="og:description" content="前言在我曾经的文章中，我提到我的 Archlinux 系统已经连续使用两年了，期间一直没有出现过什么大问题。然我事实上我对这个系统安装一直有些不满意： 首先是不满意磁盘分区，我当时只给根目录分了 30G 空间，并且 &#x2F;var 目录没有单独挂载分区，导致根目录的使用空间一直都挺捉襟见肘的，&#x2F;home 目录也只分了 100G 空间，后期也不太够用。那可能会有人问，500G 的硬盘剩下的三百多 G 那里">
+<meta property="og:locale">
+<meta property="article:published_time" content="2024-03-21T13:07:39.543Z">
+<meta property="article:modified_time" content="2024-03-21T13:07:39.546Z">
+<meta property="article:author" content="李治澎">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2024/03/21/archlinux%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title> | 随笔</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">随笔</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/03/21/archlinux%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李治澎">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="随笔">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-03-21 21:07:39" itemprop="dateCreated datePublished" datetime="2024-03-21T21:07:39+08:00">2024-03-21</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在我曾经的<a target="_blank" rel="noopener" href="https://sspai.com/post/77854">文章</a>中，我提到我的 Archlinux 系统已经连续使用两年了，期间一直没有出现过什么大问题。然我事实上我对这个系统安装一直有些不满意：</p>
+<p>首先是不满意磁盘分区，我当时只给根目录分了 30G 空间，并且 <code>/var</code> 目录没有单独挂载分区，导致根目录的使用空间一直都挺捉襟见肘的，<code>/home</code> 目录也只分了 100G 空间，后期也不太够用。那可能会有人问，500G 的硬盘剩下的三百多 G 那里去了？其实剩下的空间又被我单独挂载在了 <code>/home/$USER/data</code> 目录下，用来放一些不常用的大文件。现在想一想这个分区方式是真的不太好。</p>
+<p>其次是磁盘分区使用的文件系统是「good old」的 ext4 文件系统，虽然 ext4 使用起来很可靠稳定，但在特性上多少有些无聊，我想尝试一下新的文件系统 <a target="_blank" rel="noopener" href="https://btrfs.wiki.kernel.org/index.php/Main_Page">Btrfs</a>，支持写时复制（CoW）、快照以及压缩等高级特性。</p>
+<p>秉承着「没有坏就不要动它」的原则，虽然对系统安装有些不满意，但又不是不能用，也就这么用下来了。然而就在前些日子某次系统更新后，我突然发现鼠标不能用了，直到最后我发现其实是 keyd 的一个 <a target="_blank" rel="noopener" href="https://github.com/rvaiya/keyd/issues/439">bug</a>，不知是否是奥米克戎后遗症导致我注意力变差，还是因为前一天晚上睡眠不足，我排查了好一会也没有找到故障原因，最后脑袋一热，决定重装系统。</p>
+<hr>
+<p><em><strong>由于 Arch linux 官方有着十分详尽的</strong></em> <a target="_blank" rel="noopener" href="https://wiki.archlinux.org/"><em><strong>wiki</strong></em></a><em><strong>，同时 ArchlinuxCN 社区也维护了一版中文</strong></em> <a target="_blank" rel="noopener" href="https://wiki.archlinuxcn.org/"><em><strong>wiki</strong></em></a><em><strong>，国内外互联网上也有很多安装与配置教程，只要善用搜索引擎，安装 Archlinux 不是什么难事，所以本文为了篇幅考虑，不会将所有安装步骤列出来，只记录下我个人安装过程中遇到的需要注意的一些特殊配置，权当是个备忘录吧。</strong></em></p>
+<h2 id="重装前的备份"><a href="#重装前的备份" class="headerlink" title="重装前的备份"></a>重装前的备份</h2><p>因为我打算使用 btrfs 文件系统，虽然将 ext4 文件系统转换为 btrfs 文件系统是<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/Btrfs#Ext3/4_to_Btrfs_conversion">可行的</a>，但是毕竟存在风险，保险起见还是备份数据，然后全盘格式化。</p>
+<p>首先运行 <code>pacman -Qe</code>，这个命令可以列出系统中所有手动指定安装的包，运行 <code>pacman -Qe &gt;&gt; list.txt</code> 可以将这个软件包名单保存到 <code>list.txt</code> 文件里面，再将这个文件保存到方便查看的地方，比如自己的手机里什么的，方便重装后参照这个名单将软件装回来。</p>
+<p>之后是备份整个家目录，以便重装完后恢复绝大多数的个人数据。我找到一个闲置的空的移动硬盘，不是空的也没关系，只要剩余空间够放下家目录的内容就行，将其挂载在 <code>/mnt</code> 目录下，并新建一个空文件夹 <code>backup</code>。为了在恢复数据时保留所有文件的权限，我使用 rsync 命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo rsync -avrh --progress /home/ /mnt/backup/</span><br></pre></td></tr></table></figure>
+
+<p>这个命令会将所有家目录中的文件同步至 <code>/mnt/backup/</code> 路径下。选项 <code>-avrh</code> 可以在复制时保留文件的权限，<code>/home/</code> 是需要备份的目录，<code>/mnt/backup/</code> 是备份的目标目录，一定要注意路径最后的斜杠，路径最后是否有斜杠对于 rsync 命令来说是完全不同的两个路径，这里在路径最后加上了斜杠，之后再用 rsync 恢复数据时也需要在路径后面加上斜杠。备份数据可能需要较长时间，取决于硬盘的速度，备份完成后，再次检查一下数据备份是否出错，之后便可以着手重装系统了。</p>
+<p>若你在根分区也有想要备份的文件，也可以选择备份。</p>
+<h2 id="系统安装"><a href="#系统安装" class="headerlink" title="系统安装"></a>系统安装</h2><p>Archlinux 官方的系统镜像如今已经默认集成了一个十分好用的安装脚本，配置好<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/Installation_guide#Connect_to_the_internet">网络</a>后只需运行 <code>archinstall</code> 便可快速安装，不过需要注意的是，运行 <code>archinstall</code> 时会首先刷新镜像列表，如果网络不太好的话可能会花很长时间，所以在这之前可以手动编辑 <code>/etc/pacman.d/mirrorlist</code> 将国内镜像列表移动到最顶部，通过 <code>head</code> 命令查看文件的前 20 行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">head</span> -n 20 /etc/pacman.d/mirrorlist</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">#</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># Arch Linux repository mirrorlist</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># Generated on 2023-02-26</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">#</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># China</span></span></span><br><span class="line">Server = https://mirrors.bfsu.edu.cn/archlinux/$repo/os/$arch</span><br><span class="line">Server = https://mirrors.tuna.tsinghua.edu.cn/archlinux/$repo/os/$arch</span><br><span class="line">Server = https://mirrors.ustc.edu.cn/archlinux/$repo/os/$arch</span><br><span class="line">Server = https://mirrors.aliyun.com/archlinux/$repo/os/$arch</span><br><span class="line">Server = https://mirrors.cqu.edu.cn/archlinux/$repo/os/$arch</span><br><span class="line">Server = https://mirrors.hit.edu.cn/archlinux/$repo/os/$arch</span><br><span class="line">Server = https://mirrors.neusoft.edu.cn/archlinux/$repo/os/$arch</span><br><span class="line">Server = https://mirrors.nju.edu.cn/archlinux/$repo/os/$arch</span><br><span class="line">Server = https://mirrors.njupt.edu.cn/archlinux/$repo/os/$arch</span><br><span class="line">Server = https://mirror.redrock.team/archlinux/$repo/os/$arch</span><br><span class="line">Server = https://mirrors.shanghaitech.edu.cn/archlinux/$repo/os/$arch</span><br><span class="line">Server = https://mirrors.sjtug.sjtu.edu.cn/archlinux/$repo/os/$arch</span><br><span class="line">Server = https://mirrors.wsyu.edu.cn/archlinux/$repo/os/$arch</span><br><span class="line">Server = https://mirrors.xjtu.edu.cn/archlinux/$repo/os/$arch</span><br></pre></td></tr></table></figure>
+
+<p>或者直接在文件最开头手动添加国内镜像源，以<a target="_blank" rel="noopener" href="https://mirrors.bfsu.edu.cn/help/archlinux/">北外镜像站</a>为例，在文件最开头添加这样一行：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">Server</span> = https://mirrors.bfsu.edu.cn/archlinux/<span class="variable">$repo</span>/os/<span class="variable">$arch</span></span><br></pre></td></tr></table></figure>
+
+<p>这样就可以跳过刷新镜像列表这一步，可以节省不少时间。</p>
+<p>官方的安装脚本其实已经挺好用了，如果没什么特殊需求的话完全可以使用这个脚本非常快地安装一个新系统，但是我恰恰是有特殊需求的那种人。我打算配置系统<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/Power_management/Suspend_and_hibernate#Hibernation">休眠（Hibernation）</a>，需要一个 swap 空间，而官方安装脚本默认使用 zram 作为 swap，因为 zram 是将一部分内存空间压缩当作 swap 空间，而内存断电丢失数据的特性决定了它不可以用于系统休眠，想要配置硬盘上的 swap 需要手动分区，而安装脚本的手动分区功能我研究了半天也没搞明白怎么用，所以我最终决定抛弃安装脚本，手动安装。</p>
+<p>手动安装系统的话基本上参照官方的<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/Installation_guide">安装教程</a>就差不多了，以下是我个人的一些配置。</p>
+<h3 id="硬盘分区"><a href="#硬盘分区" class="headerlink" title="硬盘分区"></a>硬盘分区</h3><p>我的硬盘分区挂载状态如下，运行 <code>lsblk</code>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">lsblk</span></span><br><span class="line">NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS</span><br><span class="line">sda      8:0    0 465.8G  0 disk</span><br><span class="line">├─sda1   8:1    0   512M  0 part /boot</span><br><span class="line">├─sda2   8:2    0    16G  0 part [SWAP]</span><br><span class="line">└─sda3   8:3    0 449.3G  0 part /home</span><br><span class="line">                                 /var/log</span><br><span class="line">                                 /var/cache/pacman/pkg</span><br><span class="line">                                 /</span><br></pre></td></tr></table></figure>
+
+<p>你会发现除了常规的 boot 分区 <code>sda1</code> 和 swap 分区 <code>sda2</code> 外，<code>sda3</code> 竟然被挂载到了四个目录下，这对于 btrfs 分区是可行的，btrfs 分区可以创建很多子卷（subvolume），每个子卷又可以像单独的分区一样被挂载，而且每个子卷又像文件夹一样可以共享这个分区所有的容量，挂载子卷而不是挂载分区，就不会出现一个分区用完了，而另一个分区还没用多少的尴尬情况。如果你真的想要限制子卷可使用的空间，也可以使用 <a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/Btrfs#Quota">Quota</a>，不过这个功能目前并不稳定，请谨慎使用。btrfs 分区也可以像传统分区那样直接挂载整个分区，但这样情况下就不可以用快照功能了，所以并不推荐。</p>
+<p>我使用的是 <a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/GPT_fdisk">gdisk</a> 来进行硬盘分区，你也可以使用其他的<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/Partitioning#Partitioning_tools">分区工具</a>。对于支持 UEFI 的机器，<code>/boot</code> 或 <code>/boot/EFI</code> 目录必须挂载到单独的 FAT32 分区，一般 boot 分区只需要几百兆大小。swap 可以为单独的分区或者是交换文件，一般而言使用交换文件配置要更为灵活，但是在 btrfs 分区上使用交换文件需要一些额外设置，而且休眠到交换文件也需要额外设置，所以为了方便起见，我直接划分了一个交换分区，至于交换空间的大小，若是想要休眠到硬盘，一般而言需要交换空间不小于机器物理内存的容量，对于小内存的机器，最好是两倍物理内存的容量，若是机器内存比较大，交换空间小于物理内存容量也是<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/Power_management/Suspend_and_hibernate#About_swap_partition/file_size">可行的</a>，只是需要一些额外设置，我的电脑只有 8G 内存，保险起见我直接分了 16G 交换分区。剩余的空间我全给了主分区，将来格式化成 btrfs 文件系统。</p>
+<p>接下来是格式化分区，分区设备名称不同的机器可能会不同，请自行修改：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkfs.fat -F 32 /dev/sda1    # 格式化 boot 分区</span><br><span class="line">mkswap /dev/sda2    # 格式化 swap 分区</span><br><span class="line">mkfs.btrfs /dev/sda3    # 格式化主分区</span><br></pre></td></tr></table></figure>
+
+<p>然后是挂载分区，btrfs 分区的挂载比较复杂，首先挂载整个 btrfs 分区到 <code>/mnt</code>，这样才可以创建子卷：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mount /dev/sda3 /mnt    # 挂载分区</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">创建子卷</span></span><br><span class="line">btrfs subvolume create /mnt/@</span><br><span class="line">btrfs subvolume create /mnt/@home</span><br><span class="line">btrfs subvolume create /mnt/@log</span><br><span class="line">btrfs subvolume create /mnt/@pkg</span><br><span class="line">umount /dev/sda3    # 卸载分区</span><br></pre></td></tr></table></figure>
+
+<p>关于子卷的划分，我打算使用 <a target="_blank" rel="noopener" href="https://github.com/linuxmint/timeshift">Timeshift</a> 来管理快照，而 Timeshift 只支持 Ubuntu 类型的子卷布局，也就是根目录挂载在 @ 子卷上，<code>/home</code> 目录挂载在 @home 子卷上；另外我还打算使用 <a target="_blank" rel="noopener" href="https://github.com/Antynea/grub-btrfs">grub-btrfs</a> 来为快照自动创建 grub 目录，grub-btrfs 要求 <code>/var/log</code> 挂载在单独的子卷上；还有 @pkg 子卷挂载在 <code>/var/cache/pacman/pkg</code> 目录下，这个目录下保存的是下载的软件包缓存，也没什么保存快照的必要，所以也单独划分了个子卷。</p>
+<p>接下来就是挂载子卷了，使用 <code>subvol</code> 挂载选项来指定挂载的子卷：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">挂载根目录</span></span><br><span class="line">mount /dev/sda3 /mnt -o subvol=@,noatime,discard=async,compress=zstd</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">挂载家目录</span></span><br><span class="line">mkdir /mnt/home</span><br><span class="line">mount /dev/sda3 /mnt/home -o subvol=@home,noatime,discard=async,compress=zstd</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">挂载 /var/log 目录</span></span><br><span class="line">mkdir -p /mnt/var/log</span><br><span class="line">mount /dev/sda3 /mnt/var/log -o subvol=@log,noatime,discard=async,compress=zstd</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">挂载 /var/cache/pacman/pkg 目录</span></span><br><span class="line">mkdir -p /mnt/var/cache/pacman/pkg</span><br><span class="line">mount /dev/sda3 /mnt/var/cache/pacman/pkg -o subvol=@pkg,noatime,discard=async,compress=zstd</span><br></pre></td></tr></table></figure>
+
+<p>除了 <code>subvol</code> 选项用来指定挂载的子卷，我还添加了其他的挂载选项用于优化 btrfs 文件系统的性能：<code>noatime</code> 选项可以降低数据读取和写入的访问时间；<code>discard=async</code> 选项可以在闲时释放磁盘中未使用的区块，也就是 <a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/Solid_state_drive#TRIM">TRIM</a>，另外也可以不添加这个选项，而是在系统安装完成后启用 <code>fstrim.timer</code> 服务从而定时执行 TRIM，可以根据自己的喜好选择；<code>compress</code> 选项可以在数据写入前进行压缩，减少磁盘的写入量，增加磁盘寿命，在某些场景下还能优化一些性能，支持的压缩算法有 <code>zlib</code>、<code>lzo</code> 和 <code>zstd</code>，<code>zstd</code> 算法是最快的。关于更多的挂载选项，可以看<a target="_blank" rel="noopener" href="https://man.archlinux.org/man/btrfs.5#MOUNT_OPTIONS">这里</a>。在系统安装完成后也可以编辑 <code>/etc/fstab</code> 文件修改挂载选项。</p>
+<p>因为 <code>/var/log</code> 和 <code>/var/cache/pacman/pkg</code> 在将来并不会被保存快照，也可以选择为这两个目录禁用写时复制：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chattr +C /mnt/var/log</span><br><span class="line">chattr +C /mnt/var/cache/pacman/pkg</span><br></pre></td></tr></table></figure>
+
+<p>接下来挂载其他分区：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">挂载 boot 分区</span></span><br><span class="line">mkdir /mnt/boot</span><br><span class="line">mount /dev/sda1 /mnt/boot</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">启用 swap 分区</span></span><br><span class="line">swapon /dev/sda2</span><br></pre></td></tr></table></figure>
+
+<p>接下来便可以继续接下来的安装步骤了。</p>
+<h3 id="安装过程"><a href="#安装过程" class="headerlink" title="安装过程"></a>安装过程</h3><p>管理 btrfs 文件系统，比较推荐安装 <a target="_blank" rel="noopener" href="https://archlinux.org/packages/core/x86_64/btrfs-progs/">btrfs-progs</a>，其包含了很多用于管理 btrfs 文件系统的命令，前文用到的 <code>btrfs subvolume create</code> 命令就是来自这个软件包，Arch 官方的的安装镜像已经集成了这个软件包。可以在 <code>pacstrap</code> 步骤中安装这个包，我一般会在这个步骤装上如下的软件包：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pacstrap -K /mnt base base-devel linux-lts linux-lts-headers linux-firmware neovim btrfs-progs amd-ucode</span><br></pre></td></tr></table></figure>
+
+<p>base 和 base-devel 是系统核心的软件包组，linux-lts 和 linux-lts-headers 是长期支持版本的内核及其头文件，若是不追求较新的内核特性及驱动支持，长期支持版本内核更为稳定，linux-firmware 是各种常用的驱动，neovim 是一个文本编辑器，amd-ucode 是用于 AMD 处理器的微码文件，若是 Intel 处理器，可以安装 intel-ucode。</p>
+<p>在 <a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/Installation_guide#Chroot">chroot</a> 进入新系统后，除了官方推荐的配置，对于 btrfs 文件系统，需要编辑 mkinitcpio 文件，通常位于 <code>/etc/mkinitcpio.conf</code>，找到 <code>MODULES=()</code> 一行，在括号中添加 btrfs，这是为了在系统启动时提前加载 btrfs 内核模块，从而正常启动系统。记得每次编辑完 mkinitcpio 文件后都需要手动重新生成 initramfs：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkinitcpio -P</span><br></pre></td></tr></table></figure>
+
+<p>配置完成后，再进行安装 <a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/GRUB">GRUB</a>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pacman -S grub</span><br><span class="line">grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=Arch</span><br><span class="line">grub-mkconfig -o /boot/grub/grub.cfg</span><br></pre></td></tr></table></figure>
+
+<p>添加新用户：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">useradd -m -G wheel -s /bin/bash user</span><br></pre></td></tr></table></figure>
+
+<p>这个命令添加了一个用户组为 wheel，shell 为 bash，用户名为 user 的新用户，如果之后打算恢复以前的家目录，建议使用和之前系统一样的用户名。</p>
+<p>之后运行 <code>visudo</code>，如果环境变量没有指定默认编辑器，会提示选择，选择一个之后会进入文件编辑界面，找到 <code># %wheel ALL=(ALL:ALL)</code> 一行，删除最前面的井号注释，这样所有在 wheel 用户组的用户都可以使用 sudo 命令了，或者要是不想每次运行 sudo 都要输入密码，可以取消注释 <code>%wheel ALL=(ALL:ALL) NOPASSWD: ALL</code> 这一行，但这样可能会降低系统的安全性。</p>
+<p>另外记得安装网络配置相关的软件包，比如 networkmanager，以免重启后没有网。</p>
+<p>推荐阅读一下<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/General_recommendations">常用设置</a>，如果没有其他要配置的，就可以重启进新系统了。</p>
+<h3 id="安装后的配置"><a href="#安装后的配置" class="headerlink" title="安装后的配置"></a>安装后的配置</h3><p>重启进入新系统后，因为还未安装图形界面，会进入 tty，因为之后要恢复家目录文件，所以这里暂时先不用普通用户登录，而是登录进 root 用户，开始着手恢复家目录文件，将之前用于备份家目录的移动硬盘重新挂载到 <code>/mnt</code> 目录，一样使用 rsync 恢复文件，只需将之前备份命令里两个路径互换位置即可：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rsync -avrh --progress /mnt/backup/ /home/</span><br></pre></td></tr></table></figure>
+
+<p>恢复过程同样需要较长时间，请耐心等待，恢复完成后退出 root 登录，使用普通用户登录。参照之前备份的软件包列表将所需的软件包装回来，再启用一些需要的服务，就可以正常使用了，就和重装前一样。</p>
+<h2 id="快照"><a href="#快照" class="headerlink" title="快照"></a>快照</h2><p>btrfs 文件系统最吸引人的特性之一就是快照，通过快照可以方便地回滚系统，虽然我们也可以在命令行<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/Btrfs#Snapshots">手动创建快照</a>，但多少有些麻烦，为了更好地创建和管理快照，可以借助一些其他工具，我使用的是 LinuxMint 团队开发的 <a target="_blank" rel="noopener" href="https://github.com/linuxmint/timeshift">Timeshift</a>，注意 Timeshift 只支持 Ubuntu 类型的子卷布局，这在之前的分区过程中已经搞定了。只需从 <a target="_blank" rel="noopener" href="https://aur.archlinux.org/packages/timeshift">AUR</a> 安装，之后打开按照向导一路设置就好了，记得要启用 cronie 服务，<code>sudo systemctl enable cronie.service --now</code>，以保证 Timeshift 能够定时创建快照。此外也可以安装 <a target="_blank" rel="noopener" href="https://aur.archlinux.org/packages/timeshift-autosnap">timeshift-autosnap</a>，这个包添加了一个 pacman hook，可以在每次系统升级前自动创建快照。</p>
+<p>接下来安装 <a target="_blank" rel="noopener" href="https://archlinux.org/packages/community/any/grub-btrfs/">grub-btrfs</a>，这个软件可以在每次重新生成 grub 配置文件时添加快照的入口，可以在不恢复快照的情况下直接启动进入快照，方便故障排查。若是觉得每次创建快照后都要手动运行 <code>grub-mkconfig</code> 过于麻烦，这个包还提供了一个 systemd 服务 <code>grub-btrfsd.service</code>，需先安装 grub-btrfs 的可选依赖 <a target="_blank" rel="noopener" href="https://archlinux.org/packages/community/x86_64/inotify-tools/">inotify-tools</a>，然后启用这个服务 <code>sudo systemctl enable grub-btrfsd.service --now</code> 就可以在每次创建快照后自动生成 grub 配置文件了，不过这个服务默认监视的快照路径在 <code>/.snapshots</code>，而 Timeshift 创建的快照是一个动态变化的路径，想要让它监视 Timeshift 的快照路径需要编辑 service 文件。一般情况下不推荐直接编辑位于 <code>/usr/lib/systemd/system/</code> 下的 service 文件，因为软件包升级会将编辑后的文件覆盖掉，还好 systemd 提供了解决方案，运行 <code>sudo systemctl edit --full grub-btrfsd</code> ，这个命令会将 <code>/usr/lib/systemd/system/grub-btrfsd.service</code> 文件复制到 <code>/etc/systemd/system/grub-btrfsd.service</code>，再用系统默认的文件编辑器打开，这样编辑后的文件就不会被覆盖掉了，找到下面这一行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ExecStart=/usr/bin/grub-btrfsd --syslog /.snapshots</span><br></pre></td></tr></table></figure>
+
+<p>修改为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ExecStart=/usr/bin/grub-btrfsd --syslog --timeshift-auto</span><br></pre></td></tr></table></figure>
+
+<p>这样 grub-btrfs 就会监视 Timeshift 创建的快照了。</p>
+<p>Timeshift 创建的快照默认是可读写的，但若用其他的快照管理程序，创建的快照可能是只读的，这种情况下，直接启动进入快照可能会发生错误，这种情况 grub-btrfs 也提供了<a target="_blank" rel="noopener" href="https://github.com/Antynea/grub-btrfs/blob/master/initramfs/readme.md">解决方案</a>，grub-btrfs 提供了一个 <code>grub-btrfs-overlayfs</code> 钩子，编辑 <code>/etc/mkinitcpio.conf</code>，找到 <code>HOOKS</code> 一行，在括号最后添加 <code>grub-btrfs-overlayfs</code>，比如这样：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HOOKS=(base udev autodetect modconf block filesystems keyboard fsck grub-btrfs-overlayfs)</span><br></pre></td></tr></table></figure>
+
+<p>然后重新生成 initramfs，<code>sudo mkinitcpio -P</code>。在这之后创建的只读快照，将会以 overlayfs 的形式启动进入，所有的改动将会存储在内存里，重启后都会消失，逻辑和大多数系统的 live-cd 安装镜像差不多。</p>
+<h2 id="休眠到硬盘"><a href="#休眠到硬盘" class="headerlink" title="休眠到硬盘"></a>休眠到硬盘</h2><p>休眠到硬盘（又称 S4 睡眠），是将当前系统的状态存入硬盘的交换空间，然后完全断开电源，相比于常规的挂起到内存（又称 S3 睡眠），休眠时几乎不消耗电量，但是恢复时速度要更慢。</p>
+<p>因为在之前的系统安装过程中我已经配置好了一个单独的足够大的 swap 分区，为了休眠到硬盘，需要告诉系统如何休眠到 swap 分区，首先配置 initramfs，编辑 <code>/etc/mkinitcpio.conf</code>，找到 <code>HOOKS</code> 一行，在括号中加入 <code>resume</code>，并且保证 <code>resume</code> 一定要在 <code>udev</code> 之后，比如这样：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HOOKS=(base udev autodetect modconf keyboard keymap consolefont block filesystems resume fsck grub-btrfs-overlayfs)</span><br></pre></td></tr></table></figure>
+
+<p>之后重新生成 initramfs，<code>sudo mkinitcpio -P</code>。</p>
+<p>再然后需要添加一个内核参数 <code>resume</code> ，指定 swap 分区的设备，参数值支持所有<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/Persistent_block_device_naming">块设备持久化命名方式</a> ，如分区设备号，如 <code>resume=/dev/sda2</code>，或分区 UUID，如 <code>resume=UUID=5514c3aa-63ee-49ec-920d-859b00c676fe</code>，因为在多硬盘的机器上，硬盘的设备号可能会改变，所以还是更推荐使用分区 UUID，运行 <code>sudo blkid</code> 可以获取分区的 UUID：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo blkid</span><br><span class="line">/dev/sda3: UUID=<span class="string">&quot;0929463f-13fe-457b-965a-8382b07a1d5c&quot;</span> UUID_SUB=<span class="string">&quot;175a979b-1fa8-437b-9715-acd48864494f&quot;</span> BLOCK_SIZE=<span class="string">&quot;4096&quot;</span> TYPE=<span class="string">&quot;btrfs&quot;</span> PARTLABEL=<span class="string">&quot;Linux filesystem&quot;</span> PARTUUID=<span class="string">&quot;0ca55fc8-f4c8-42d8-8b1c-620595fa134f&quot;</span></span><br><span class="line">/dev/sda2: UUID=<span class="string">&quot;5514c3aa-63ee-49ec-920d-859b00c676fe&quot;</span> TYPE=<span class="string">&quot;swap&quot;</span> PARTLABEL=<span class="string">&quot;Linux swap&quot;</span> PARTUUID=<span class="string">&quot;2e482d5e-2295-4b58-bdc2-6a1aab0e0af4&quot;</span></span><br><span class="line">/dev/sda1: UUID=<span class="string">&quot;4567-9EEB&quot;</span> BLOCK_SIZE=<span class="string">&quot;512&quot;</span> TYPE=<span class="string">&quot;vfat&quot;</span> PARTLABEL=<span class="string">&quot;EFI system partition&quot;</span> PARTUUID=<span class="string">&quot;24847dd6-c006-46a6-b91e-00466fb19ad4&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>我的 swap 分区是 /dev/sda2，那么 UUID 就是 <code>5514c3aa-63ee-49ec-920d-859b00c676fe</code>。编辑 <code>/etc/default/grub</code>，找到 <code>GRUB_CMDLINE_LINUX_DEFAULT</code> 一行，将所需的内核参数填入引号中，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GRUB_CMDLINE_LINUX_DEFAULT=&quot;loglevel=3 quiet resume=UUID=5514c3aa-63ee-49ec-920d-859b00c676fe&quot;</span><br></pre></td></tr></table></figure>
+
+<p>然后重新生成 grub 配置文件，<code>sudo grub-mkconfig -o /boot/grub/grub.cfg</code>。</p>
+<p>重启，运行 <code>systemctl hibernate</code>，系统就可以进入休眠状态了，按下电源键，就可以从休眠状态恢复。但这样有些麻烦，我们可以配置在短按电源键或笔记本合盖时进入休眠状态，编辑 <code>/etc/systemd/logind.conf</code>，我配置的是短按电源键进入休眠，加入或修改 <code>HandlePowerKey=hibernate</code> 一行，若想要配置合盖休眠，加入或修改 <code>HandleLidSwitch=hibernate</code> 一行，要记得删除行首的井号注释。重启后就可以通过短按电源键或合盖休眠了。</p>
+<p>不过要注意休眠到硬盘的功能可能会在特定机型上出现问题，有时不同的内核版本也会影响休眠的正常工作，我前些天就遇到过问题，具体可以看我之前的<a target="_blank" rel="noopener" href="https://sspai.com/post/78749">文章</a>。对于不同的机型，请自行测试是否有问题，对于出现的问题，建议阅读 Arch wiki 相关的<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/Power_management/Suspend_and_hibernate#Troubleshooting">页面</a>，以及善用搜索引擎。</p>
+<h2 id="一些杂项配置"><a href="#一些杂项配置" class="headerlink" title="一些杂项配置"></a>一些杂项配置</h2><p>做完以上这些，系统差不多就可以正常使用了，但是你目前仍然无法享受到大多数发行版已经提前配置好的特性，因为这是 <a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/Arch_Linux#Principles">The Arch Way</a>，什么东西都要自己配置，以下是我根据我个人的使用情况进行的可选的杂项配置，仅供参考。</p>
+<h3 id="机型问题修复"><a href="#机型问题修复" class="headerlink" title="机型问题修复"></a>机型问题修复</h3><p>在一些锐龙处理器的机器上会出现 Linux 系统卡死的情况，只要系统负载稍微大一点，处理器核心温度一高就会卡死，搜索了一圈，我目前找到的最简单的解决方法是添加一个内核参数 <code>idle=nomwait</code>，编辑 <code>/etc/default/grub</code>，找到 <code>GRUB_CMDLINE_LINUX_DEFAULT</code> 一行，在引号中添加 <code>idle=nomwait</code>，比如这样：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GRUB_CMDLINE_LINUX_DEFAULT=&quot;loglevel=3 quiet resume=UUID=5514c3aa-63ee-49ec-920d-859b00c676fe idle=nomwait&quot;</span><br></pre></td></tr></table></figure>
+
+<p>然后重新生成 grub 配置文件 <code>sudo grub-mkconfig -o /boot/grub/grub.cfg</code>，重启，再尝试运行一些负载较大的软件或游戏，会发现即使运行较长时间，系统也不会卡死了。不过代价是可能会导致系统在空载状态下功耗增加。</p>
+<p><em><strong>2023-05-13 更新</strong></em></p>
+<p>在最近一段时间的使用中，我又遇到了系统卡死的情况，但貌似和系统高负载没有关系，有时刚开机什么都没干就卡死了，使用主线内核卡死概率较高，切换回 lts 内核后，卡死的次数少了很多，但还是无法避免。最后我参照<a target="_blank" rel="noopener" href="https://stblog.penclub.club/posts/Magicbook/">这篇文章</a>中的内容禁用了锐龙处理器的 C6 状态，到现在为止用了好几天了没有再出现过卡死的问题，在这里记录一下：</p>
+<p>首先安装 <a target="_blank" rel="noopener" href="https://aur.archlinux.org/packages/zenstates-git">zenstates-git</a> 包；</p>
+<p>编辑 <code>/etc/modules-load.d/modules.conf</code>，是个空文件，添加内容 <code>msr</code>。</p>
+<p>添加一个服务文件 <code>/etc/systemd/system/disable_c6.service</code> ：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description=Ryzen Disable C6</span><br><span class="line">DefaultDependencies=no</span><br><span class="line">After=sysinit.target local-fs.target</span><br><span class="line">Before=basic.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=oneshot</span><br><span class="line">ExecStart=/usr/bin/zenstates --c6-disable</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=basic.target</span><br></pre></td></tr></table></figure>
+
+<p>最后启用服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl daemon-reload</span><br><span class="line">systemctl <span class="built_in">enable</span> disable_c6.service</span><br></pre></td></tr></table></figure>
+
+<h4 id="BBR-算法"><a href="#BBR-算法" class="headerlink" title="BBR 算法"></a>BBR 算法</h4><p>谷歌开发的<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/TCP_congestion_control#TCP_BBR">BBR 拥塞控制算法</a>，可以实现更高的带宽和更低的延迟，想要优化网速，可以尝试<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/Sysctl#Enable_BBR">开启</a>这个功能，首先加载内核模块 <code>tcp_bbr</code>，<code>sudo modprobe tcp_bbr</code>，之后编辑 <code>/etc/sysctl.d/30-bbr.conf</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">net.core.default_qdisc = cake</span><br><span class="line">net.ipv4.tcp_congestion_control = bbr</span><br></pre></td></tr></table></figure>
+
+<p>之后重启，应该就能生效了。</p>
+<h4 id="ipv6-隐私扩展"><a href="#ipv6-隐私扩展" class="headerlink" title="ipv6 隐私扩展"></a>ipv6 隐私扩展</h4><p>使用 <a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/IPv6#Stateless_autoconfiguration_(SLAAC)">SLAAC</a> 获取的 ipv6 地址，不同于 ipv4 时代使用 NAT 和 dhcp 获取到的内网地址，是全球唯一的公网地址，公网地址更容易被攻击，另外获取的 ipv6 地址是由运营商下发的地址前缀和根据本机网卡 MAC 地址计算出来的后缀组成的，攻击者很有可能根据 ipv6 后缀反推出网卡的 MAC 地址，增大了其危险性。为了解决这个问题，ipv6 提供了一个<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/IPv6#Privacy_extensions">隐私扩展</a>特性，允许在常规的 ipv6 地址之外额外生成一个临时地址，在连接网络时会优先使用临时地址，从而增加了安全性。要启用 ipv6 隐私扩展，需要编辑 <code>/etc/sysctl.d/40-ipv6.conf</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">net.ipv6.conf.all.use_tempaddr = 2</span><br><span class="line">net.ipv6.conf.default.use_tempaddr = 2</span><br><span class="line">net.ipv6.conf.nic0.use_tempaddr = 2</span><br><span class="line">...</span><br><span class="line">net.ipv6.conf.nicN.use_tempaddr = 2</span><br></pre></td></tr></table></figure>
+
+<p>上面的 <code>nic0</code> 到 <code>nicN</code> 要改成机器的网络接口名称，有几个就添加几个，不过若是配合 NetworkManager 使用，只添加前两行应该就够了。</p>
+<p>之后重启，应该就能生效了。</p>
+<h4 id="加密-DNS"><a href="#加密-DNS" class="headerlink" title="加密 DNS"></a>加密 DNS</h4><p>在浏览网页时，有时进入一个正常的网站，会莫名被跳转到钓鱼网站，这很有可能是系统 DNS 被污染了，因为常规的 DNS 协议使用的是 udp 明文传输，很容易被攻击者监听并篡改，而各大运营商默认分配的 DNS 是重点的污染对象，想要避免这个问题，就要使用加密的 DNS 协议。</p>
+<p>systemd 自带的 <a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/Systemd-resolved">systemd-resolved</a> 其实已经支持了加密 DNS 协议，但是目前只支持 DNS-over-TLS，安全性相对较差一些，为了使用其他的加密 DNS 程序，需要禁用这个服务 <code>sudo systemctl disable systemd-resolved.service --now</code>。我选择的软件是 <a target="_blank" rel="noopener" href="https://archlinux.org/packages/community/x86_64/dnscrypt-proxy/">dnscrypt-proxy</a>，支持一些最新的加密 DNS 特性，比如使用 HTTP3 的 DNS-over-HTTPS 协议，具体配置方法在<a target="_blank" rel="noopener" href="https://github.com/DNSCrypt/dnscrypt-proxy/wiki">这里</a>，不再赘述。想要使用其他软件，可以看<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/Domain_name_resolution#DNS_servers">这里</a>。</p>
+<p>加密 DNS 配置完成后，会与远程的加密 DNS 服务器连接，转发 DNS 请求到本地的 53 端口，但系统默认使用上级路由器 dhcp 分配的 DNS 服务器。想要修改系统默认使用的 DNS 服务器，最直接的方法是编辑 <code>/etc/resolv.conf</code>，在最顶部添加一行 <code>nameserver 127.0.0.1</code>，这样就能默认使用本地 DNS 服务器了，但问题是很多网络管理程序，包括 NetworkManager 都会修改这个文件，所以在重启后 <code>/etc/resolv.conf</code> 很有可能会变回默认。所以使用 NetworkManager 时，更有效的方法是编辑 NetworkManager 的<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/NetworkManager#Custom_DNS_servers">配置文件</a>，编辑 <code>/etc/NetworkManager/conf.d/dns-servers.conf</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[global-dns-domain-*]</span><br><span class="line">servers=127.0.0.1</span><br></pre></td></tr></table></figure>
+
+<p>之后重启服务 <code>sudo systemctl restart NetworkManager.service</code>，这样无论连接什么网络，系统都会默认使用本地的 DNS 服务器了。</p>
+<p>另外 Chromium 和 Firefox 浏览器都已经支持了加密 DNS，所以也可以在浏览器对应的配置项开启加密 DNS，这样加密 DNS 将只对浏览器生效。</p>
+<h4 id="随机-MAC-地址"><a href="#随机-MAC-地址" class="headerlink" title="随机 MAC 地址"></a>随机 MAC 地址</h4><p>NetworkManager 还有一个特性就是<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/NetworkManager#Configuring_MAC_address_randomization">随机 MAC 地址</a>，开启之后可以增加安全性，NetworkManager 默认开启了在 wifi 扫描时随机 MAC 地址，想要配置随机 MAC 地址，可以编辑 <code>/etc/NetworkManager/conf.d/rand_mac.conf</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[device-mac-randomization]</span><br><span class="line">wifi.scan-rand-mac-address=yes</span><br><span class="line"></span><br><span class="line">[connection-mac-randomization]</span><br><span class="line">ethernet.cloned-mac-address=stable</span><br><span class="line">wifi.cloned-mac-address=stable</span><br></pre></td></tr></table></figure>
+
+<p><code>wifi.scan-rand-mac-address</code> 决定在 wifi 扫描时是否开启随机 MAC 地址，若需要固定的 MAC 地址，可以设为 no。<code>ethernet.cloned-mac-address</code> 和 <code>wifi.cloned-mac-address</code> 决定了连接有线网络和 wifi 网络时是否开启随机 MAC 地址，可用的值有：</p>
+<ul>
+<li>  指定的 MAC 地址，连接时使用手动指定的 MAC 地址；</li>
+<li>  <code>permanent</code>，不改变 MAC 地址；</li>
+<li>  <code>preserve</code>，在网卡激活后不改变 MAC 地址；</li>
+<li>  <code>random</code>，在每次连接时都使用随机 MAC 地址；</li>
+<li>  <code>stable</code>，在初次连接一个网络时使用随机 MAC 地址，之后每次连接相同的网络都使用相同的 MAC 地址。</li>
+</ul>
+<p>修改完后重启 NetworkManager 服务生效。</p>
+<h3 id="缓解关机卡-90-秒的问题"><a href="#缓解关机卡-90-秒的问题" class="headerlink" title="缓解关机卡 90 秒的问题"></a>缓解关机卡 90 秒的问题</h3><p>Linux 系统在关机时，偶尔会遇见卡住不动，要等大约 90 秒才可以关机的情况，这似乎是 systemd 的<a target="_blank" rel="noopener" href="https://wusiyu.me/%E8%A7%A3%E5%86%B3%E9%83%A8%E5%88%86linux%E5%8F%91%E8%A1%8C%E7%89%88%E5%9C%A8%E5%85%B3%E6%9C%BA%E6%97%B6%E5%8D%A190s%E7%9A%84%E9%97%AE%E9%A2%98/">问题</a>，systemd 以为有服务没有终止，但实际上没有，就只能等待直到强行停止，这个等待的时间默认就是 90 秒。</p>
+<p>虽然不能完全解决这个问题，但至少可以修改它等待的时间，编辑 <code>/etc/systemd/system.conf</code>，添加或修改 <code>DefaultTimeoutStopSec=90s</code> 一行，记得删除行首井号注释，把时间改成一个较短的时间，比如 5 秒，这样等待的时间就会大大缩短了。</p>
+<h3 id="grub-美化"><a href="#grub-美化" class="headerlink" title="grub 美化"></a>grub 美化</h3><p>grub 是很多发行版使用的默认 bootloader，同时大部分 Linux 发行版都会默认对 grub 启动界面做一些美化，然而根据 The Arch Way，Arch Linux 默认同样不会对 grub 做多余的配置，默认就只是一个黑乎乎的菜单界面。</p>
+<p>想要美化 grub 启动页面，最简单的方法是使用现成的 grub 主题，grub 软件包默认已经自带了一个主题，位于 <code>/usr/share/grub/themes/starfield/</code>，官方源中有 grub 主题 <a target="_blank" rel="noopener" href="https://archlinux.org/packages/community/any/grub-theme-vimix/">grub-theme-vimix</a> 和 <a target="_blank" rel="noopener" href="https://archlinux.org/packages/extra/any/breeze-grub/">breeze-grub</a>，AUR 中也有很多 <a target="_blank" rel="noopener" href="https://aur.archlinux.org/packages?O=0&K=grub+theme">grub 主题</a>，另外也可以<a target="_blank" rel="noopener" href="https://www.gnome-look.org/browse?cat=109&ord=latest">在这里</a>手动下载主题。</p>
+<p>用包管理器安装的主题也好，手动下载的主题也好，主题文件夹里面都会有一个 <code>theme.txt</code> 文件，运行 <code>pacman -Ql package</code> 可以列出指定软件包安装的所有文件，找到想要使用的主题对应的 <code>theme.txt</code> 文件，以 grub 自带的 starfield 主题为例，路径在 <code>/usr/share/grub/themes/starfield/theme.txt</code>，编辑 <code>/etc/default/grub</code>，找到 <code>GRUB_THEME</code> 一行，删除行首的井号注释，并将引号内的内容改成对应的 <code>theme.txt</code> 路径，比如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GRUB_THEME=&quot;/usr/share/grub/themes/starfield/theme.txt&quot;</span><br></pre></td></tr></table></figure>
+
+<p>之后重新生成 grub 配置文件，<code>sudo grub-mkconfig -o /boot/grub/grub.cfg</code>，这样下次开机时就可以看到美化后的 grub 菜单了。</p>
+<h3 id="pacman-配置"><a href="#pacman-配置" class="headerlink" title="pacman 配置"></a>pacman 配置</h3><p>Arch linux 的包管理器 pacman 也有一些有用的配置项默认没有开启，编辑 <code>/etc/pacman.conf</code>，首先启用 32 位软件源 <code>multilib</code>，以便安装一些 32 位软件，比如 steam，取消注释以下两行：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[multilib]</span></span><br><span class="line"><span class="attr">Include</span> = /etc/pacman.d/mirrorlist</span><br></pre></td></tr></table></figure>
+
+<p>之后在 <code>[options]</code> 下找到并取消注释：<code>Color</code>，启用彩色高亮；<code>VerbosePkgLists</code>，在安装或升级软件时显示详细变化；<code>ParallelDownloads = 5</code>，启用并行下载，提高下载速度。另外添加一行 <code>IloveCandy</code>，这是 pacman 的一个有趣的小彩蛋，可以让进度条变成吃豆人的样子。</p>
+<h3 id="添加第三方软件源"><a href="#添加第三方软件源" class="headerlink" title="添加第三方软件源"></a>添加第三方软件源</h3><h4 id="ArchlinuxCN"><a href="#ArchlinuxCN" class="headerlink" title="ArchlinuxCN"></a>ArchlinuxCN</h4><p>这是 ArchlinuxCN 社区维护的软件仓库，包含了很多中文用户常用软件包。以北外镜像站为例，在 <code>/etc/pacman.conf</code> 末尾添加如下两行：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[archlinuxcn]</span></span><br><span class="line"><span class="attr">Server</span> = https://mirrors.bfsu.edu.cn/archlinuxcn/<span class="variable">$arch</span></span><br></pre></td></tr></table></figure>
+
+<p>之后运行 <code>sudo pacman -Sy archlinuxcn-keyring</code> 以刷新密钥，另外可选的也可以安装 <code>archlinuxcn-mirrorlist</code> 包，会安装一个 <code>/etc/pacman.d/archlinuxcn-mirrorlist</code> 镜像列表，编辑这个文件，将最快的镜像源（一般可选北外、清华、华科的镜像等）移动到最顶部并删除注释，再次编辑 <code>/etc/pacman.conf</code>，将软件源修改为：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[archlinuxcn]</span></span><br><span class="line"><span class="attr">Include</span> = /etc/pacman.d/archlinuxcn-mirrorlist</span><br></pre></td></tr></table></figure>
+
+<h4 id="Chaotic-AUR"><a href="#Chaotic-AUR" class="headerlink" title="Chaotic-AUR"></a>Chaotic-AUR</h4><p><a target="_blank" rel="noopener" href="https://aur.chaotic.cx/">Chaotic-AUR</a> 包含了很多构建好的 AUR 软件包，若想在安装 AUR 软件包时节省一些时间，可以添加这个软件源：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman-key --recv-key FBA220DFC880C036 --keyserver keyserver.ubuntu.com</span><br><span class="line">sudo pacman-key --lsign-key FBA220DFC880C036</span><br><span class="line">sudo pacman -U <span class="string">&#x27;https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst&#x27;</span> <span class="string">&#x27;https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>在 <code>/etc/pacman.conf</code> 末尾添加如下两行：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[chaotic-aur]</span></span><br><span class="line"><span class="attr">Include</span> = /etc/pacman.d/chaotic-mirrorlist</span><br></pre></td></tr></table></figure>
+
+<p>之后编辑 <code>/etc/pacman.d/chaotic-mirrorlist</code> 镜像列表，Chaotic-AUR 之前有一个托管在阿里云的国内镜像，相对速度快一些，但前段时间不知为何这个镜像没有了，目前国内最近的镜像是在韩国和印度，可以将这两个镜像放在最开头，虽然也不太快，但至少能用。</p>
+<h4 id="ALHP"><a href="#ALHP" class="headerlink" title="ALHP"></a>ALHP</h4><p><a target="_blank" rel="noopener" href="https://somegit.dev/ALHP/ALHP.GO">ALHP</a> 软件源将 Arch Linux 官方源中的软件包进行了重新编译，使用了 <code>x86-64-v2</code> 和 <code>x86-64-v3</code> 优化，可以提升一部分性能。</p>
+<p>添加这个软件源之前，需要先确认当前机器是否支持 <code>x86-64-v2</code> 和 <code>x86-64-v3</code>，运行 <code>/lib/ld-linux-x86-64.so.2 --help</code>，若输出中有：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Subdirectories of glibc-hwcaps directories, <span class="keyword">in</span> priority order:</span><br><span class="line">  x86-64-v4</span><br><span class="line">  x86-64-v3 (supported, searched)</span><br><span class="line">  x86-64-v2 (supported, searched)</span><br></pre></td></tr></table></figure>
+
+<p>说明机器支持 <code>x86-64-v2</code> 和 <code>x86-64-v3</code>。</p>
+<p>之后从 AUR 安装 <code>alhp-keyring</code> 和 <code>alhp-mirrorlist</code>，之后编辑 <code>/etc/pacman.d/alhp-mirrorlist</code> 镜像列表，alhp 在国内有上海科技大学镜像站一个镜像源，这个镜像源速度不太稳定，不过也比其他国外镜像快许多，推荐将这个镜像源放在首位。之后编辑 <code>/etc/pacman.conf</code>，添加：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[core-x86-64-v3]</span></span><br><span class="line"><span class="attr">Include</span> = /etc/pacman.d/alhp-mirrorlist</span><br><span class="line"></span><br><span class="line"><span class="section">[extra-x86-64-v3]</span></span><br><span class="line"><span class="attr">Include</span> = /etc/pacman.d/alhp-mirrorlist</span><br><span class="line"></span><br><span class="line"><span class="section">[community-x86-64-v3]</span></span><br><span class="line"><span class="attr">Include</span> = /etc/pacman.d/alhp-mirrorlist</span><br></pre></td></tr></table></figure>
+
+<p>若系统只支持 <code>x86-64-v2</code>，需要将 <code>x86-64-v3</code> 改成 <code>x86-64-v2</code>，另外一定要添加在官方的 <code>[core]</code>、<code>[extra]</code> 和 <code>[community]</code> 之前，保证软件包优先于官方包安装。</p>
+<p>之后运行 <code>sudo pacman -Suy</code>，这会安装很多软件包，需要较长时间，完成后重启。添加了这个软件源后，跑了下分没有明显变化，但是在游戏中帧率好像高了些，还稳定了些，有点玄学，提升聊胜于无吧。</p>
+<p>若遇到了问题，想要禁用这个软件源，只需删除 <code>/etc/pacman.conf</code> 中对应的内容，卸载 <code>alhp-keyring</code> 和 <code>alhp-mirrorlist</code>，之后运行 <code>sudo pacman -Suuy</code>，就可以将所有软件包恢复到官方了。</p>
+<h3 id="时间同步"><a href="#时间同步" class="headerlink" title="时间同步"></a>时间同步</h3><p>systemd 自带了一个 <a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/Systemd-timesyncd">systemd-timesyncd</a> 服务，提供了简单的时间同步服务，若是没有特别需求，这个服务已经够用了。不过这个服务默认使用的是 Arch Linux 自己的 NTP 服务器，在国内访问较慢，有时会导致时间同步失败，为了更快地同步时间，可以选用其他的 NTP 服务器，我选用了中国 NTP 快速授时服务和中国计量科学研究院 NIM 授时服务的 NTP 服务器，编辑 <code>/etc/systemd/timesyncd.conf</code>，添加或编辑如下一行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NTP=cn.ntp.org.cn ntp1.nim.ac.cn</span><br></pre></td></tr></table></figure>
+
+<p>然后重启 systemd-timesyncd.service，之后运行 <code>timedatectl timesync-status</code> 便可查看时间同步状态：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">timedatectl timesync-status</span></span><br><span class="line">       Server: 2001:da8:9000::130 (cn.ntp.org.cn)</span><br><span class="line">Poll interval: 34min 8s (min: 32s; max 34min 8s)</span><br><span class="line">         Leap: normal</span><br><span class="line">      Version: 4</span><br><span class="line">      Stratum: 1</span><br><span class="line">    Reference: PTP</span><br><span class="line">    Precision: 1us (-26)</span><br><span class="line">Root distance: 45us (max: 5s)</span><br><span class="line">       Offset: -2.957ms</span><br><span class="line">        Delay: 31.415ms</span><br><span class="line">       Jitter: 4.354ms</span><br><span class="line"> Packet count: 18</span><br><span class="line">    Frequency: -4.740ppm</span><br></pre></td></tr></table></figure>
+
+<p>可以看到这里 offset 只有不到 3 毫秒，还是很精准的。</p>
+<h3 id="笔记本续航优化"><a href="#笔记本续航优化" class="headerlink" title="笔记本续航优化"></a>笔记本续航优化</h3><p>Arch Linux 在笔记本平台相比于 Windows 和其他功能齐全的 Linux 发行版一个比较大的劣势就是续航较差，因为其默认并没有为笔记本续航做优化。</p>
+<p>而 Linux 平台笔记本续航优化的软件，最为人熟知且被最多人推荐的是 <a target="_blank" rel="noopener" href="https://github.com/linrunner/TLP">TLP</a>，并且已经被很多发行版预装，这个软件支持很多设备的省电模式优化，如 CPU、无线网络、蓝牙、硬盘等等，配置好了的话可以大大延长笔记本的续航时间。但是这个软件在我的笔记本上运行似乎有些问题，在断开电源后一段时间后外接键盘会不能用，这大概是 <a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/TLP#USB_autosuspend">USB 自动休眠</a>的问题，但就算我在配置文件中禁用了 USB 自动休眠，问题也没解决。并且 TLP 默认对省电模式的性能限制有点狠，CPU 无法睿频，导致在电池模式下干什么事情都挺卡的。因为我的使用情况大部分时间笔记本都连着电源，所以续航不太敏感，所以我就一直没有装 TLP。</p>
+<p>就在最近我发现了另外一个程序，叫 <a target="_blank" rel="noopener" href="https://github.com/AdnanHodzic/auto-cpufreq">auto-cpufreq</a>，顾名思义，这个程序负责自动调节 CPU 频率，连接电源时使用性能模式，断开电源后使用省电模式，并且不限制睿频，对于省电的效果可能没有 TLP 那么好，但因为它只负责调节 CPU，不会出现 TLP 上面好多设备不能用的玄学问题，并且这些设备的功耗也不是占大头。安装的话只需从 <a target="_blank" rel="noopener" href="https://aur.archlinux.org/packages/auto-cpufreq">AUR</a> 安装，无需进行过多设置，直接启用相关服务即可，<code>sudo systemctl enable auto-cpufreq.service --now</code>。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/03/15/%E6%95%88%E7%8E%87/" rel="prev" title="效率">
+      <i class="fa fa-chevron-left"></i> 效率
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/03/22/%E5%85%8D%E5%AF%86%E7%99%BB%E9%99%86ssh/" rel="next" title="">
+       <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E8%A3%85%E5%89%8D%E7%9A%84%E5%A4%87%E4%BB%BD"><span class="nav-number">2.</span> <span class="nav-text">重装前的备份</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85"><span class="nav-number">3.</span> <span class="nav-text">系统安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A1%AC%E7%9B%98%E5%88%86%E5%8C%BA"><span class="nav-number">3.1.</span> <span class="nav-text">硬盘分区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B"><span class="nav-number">3.2.</span> <span class="nav-text">安装过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E5%90%8E%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="nav-number">3.3.</span> <span class="nav-text">安装后的配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BF%AB%E7%85%A7"><span class="nav-number">4.</span> <span class="nav-text">快照</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%91%E7%9C%A0%E5%88%B0%E7%A1%AC%E7%9B%98"><span class="nav-number">5.</span> <span class="nav-text">休眠到硬盘</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E6%9D%82%E9%A1%B9%E9%85%8D%E7%BD%AE"><span class="nav-number">6.</span> <span class="nav-text">一些杂项配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%BA%E5%9E%8B%E9%97%AE%E9%A2%98%E4%BF%AE%E5%A4%8D"><span class="nav-number">6.1.</span> <span class="nav-text">机型问题修复</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#BBR-%E7%AE%97%E6%B3%95"><span class="nav-number">6.1.1.</span> <span class="nav-text">BBR 算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ipv6-%E9%9A%90%E7%A7%81%E6%89%A9%E5%B1%95"><span class="nav-number">6.1.2.</span> <span class="nav-text">ipv6 隐私扩展</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8A%A0%E5%AF%86-DNS"><span class="nav-number">6.1.3.</span> <span class="nav-text">加密 DNS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA-MAC-%E5%9C%B0%E5%9D%80"><span class="nav-number">6.1.4.</span> <span class="nav-text">随机 MAC 地址</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%93%E8%A7%A3%E5%85%B3%E6%9C%BA%E5%8D%A1-90-%E7%A7%92%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">6.2.</span> <span class="nav-text">缓解关机卡 90 秒的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#grub-%E7%BE%8E%E5%8C%96"><span class="nav-number">6.3.</span> <span class="nav-text">grub 美化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pacman-%E9%85%8D%E7%BD%AE"><span class="nav-number">6.4.</span> <span class="nav-text">pacman 配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E7%AC%AC%E4%B8%89%E6%96%B9%E8%BD%AF%E4%BB%B6%E6%BA%90"><span class="nav-number">6.5.</span> <span class="nav-text">添加第三方软件源</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ArchlinuxCN"><span class="nav-number">6.5.1.</span> <span class="nav-text">ArchlinuxCN</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Chaotic-AUR"><span class="nav-number">6.5.2.</span> <span class="nav-text">Chaotic-AUR</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ALHP"><span class="nav-number">6.5.3.</span> <span class="nav-text">ALHP</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%B6%E9%97%B4%E5%90%8C%E6%AD%A5"><span class="nav-number">6.6.</span> <span class="nav-text">时间同步</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%94%E8%AE%B0%E6%9C%AC%E7%BB%AD%E8%88%AA%E4%BC%98%E5%8C%96"><span class="nav-number">6.7.</span> <span class="nav-text">笔记本续航优化</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">李治澎</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">李治澎</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

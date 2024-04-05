@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="A Controllable Text Generation Framework based Prompt learning for Query Auto-completion论文思路研究领域是query自动补全（QAC），对应的显示场景是搜索栏的用户搜索场景，用的研究方法是生成式模型而非召回是模型（该领域常规的方法是先生成候选词，然后对候选词排序） 对于QAC领域，传统的召回式生成query仅仅">
+<meta property="og:type" content="article">
+<meta property="og:title" content="随笔">
+<meta property="og:url" content="http://example.com/2024/04/02/prompt_QAC/index.html">
+<meta property="og:site_name" content="随笔">
+<meta property="og:description" content="A Controllable Text Generation Framework based Prompt learning for Query Auto-completion论文思路研究领域是query自动补全（QAC），对应的显示场景是搜索栏的用户搜索场景，用的研究方法是生成式模型而非召回是模型（该领域常规的方法是先生成候选词，然后对候选词排序） 对于QAC领域，传统的召回式生成query仅仅">
+<meta property="og:locale">
+<meta property="article:published_time" content="2024-04-02T06:15:11.075Z">
+<meta property="article:modified_time" content="2024-04-02T06:15:11.080Z">
+<meta property="article:author" content="李治澎">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2024/04/02/prompt_QAC/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title> | 随笔</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">随笔</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/04/02/prompt_QAC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李治澎">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="随笔">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-04-02 14:15:11" itemprop="dateCreated datePublished" datetime="2024-04-02T14:15:11+08:00">2024-04-02</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="A-Controllable-Text-Generation-Framework-based-Prompt-learning-for-Query-Auto-completion"><a href="#A-Controllable-Text-Generation-Framework-based-Prompt-learning-for-Query-Auto-completion" class="headerlink" title="A Controllable Text Generation Framework based Prompt learning for Query Auto-completion"></a>A Controllable Text Generation Framework based Prompt learning for Query Auto-completion</h1><h3 id="论文思路"><a href="#论文思路" class="headerlink" title="论文思路"></a>论文思路</h3><p>研究领域是query自动补全（QAC），对应的显示场景是搜索栏的用户搜索场景，用的研究方法是生成式模型而非召回是模型（该领域常规的方法是先生成候选词，然后对候选词排序）</p>
+<p>对于QAC领域，传统的召回式生成query仅仅通过候选词频率进行召回，缺乏对于query语意层面的理解，同时对于unseen 的输入，难以生成高质量的补全，以及召回式的生成难以充分实现个性化的生成</p>
+<p><strong>其他生成模型的历史信息的局限性：时间跨度短，数据量比较少，</strong>随着NLP领域中NLG模型的发展，transformer系列的自然语言生成式模型在各个领域展现出巨大的潜力，而且像GPT2这样在大量无监督数据上训练的模型，拥有强大的语意理解能力，有越来越多的研究工作研究生成式模型用于QAC,生成式的模型能够有效应对上述的几个问题。（蹭大模型的热度，垂直领域生成模型）</p>
+<p>对于GPT模型，我们使用提示学习来对GPT的生成做进一步的控制，来达到用户的个性化需求，通过使用提示学习对GPT进行微调，可以使GPT模型生成的query更加贴近用户偏好习惯，而传统上的提示学习包括hard提示和soft提示都是从自然语言语意层面对GPT的输出进行提示，而用户个人的消费行为习惯可能无法简单的从语言层面展现，而在使用bert模型进行语意理解和语意抽取进而进行下游任务的分类时，bert可以很好地进行高维度的特征表征，所以在本文中我们采用bert模型抽取高维度的用户个人特征表征作为GPT模型的提示，进而使GPT的输出达到个性化的要求。（特别的，bert和GPT使用统一词表来保证两个模型的高维映射空间是一致的）</p>
+<h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>Query auto-completion (QAC) aims at suggesting plausible completions for a given query prefix. The recent QAC methods introduce Natural Language Generation to generate the completions for user input. </p>
+<p>  However, NLG (Natural Lagnuage Generation) methods ususally output unsense or wrong words without controll. Moreover, A serious drawback of generative methods is that they can produce an ether effect. It severely affected the performance of the generative methods. </p>
+<p>  We proposed a framework that controls the generation of queries using prompt learning methods, thereby making the generative methods controllable. This framework consists of three parts: the control module, the prompt module, and the generation module. The control module generates a prompt vector endowed with implicit features, then the prompt module ingests the prompt vector and user input into the generation module, and ultimately, the generation module generates the query under control. </p>
+<p>  We trained and tested our model on the Meituan dataset and the AOL dataset. The outcomes reveal that the framework we proposed can elevate the accuracy of queries while mitigating the incoherence of queries.</p>
+<h2 id="The-CTGPrompt4QAC-Framework"><a href="#The-CTGPrompt4QAC-Framework" class="headerlink" title="The CTGPrompt4QAC Framework"></a>The CTGPrompt4QAC Framework</h2><p>在这一节，我们首先介绍QAC的问题定义，然后介绍我们提出的可控提示框架，最后介绍整个框架是如何训练的。</p>
+<h3 id="The-QAC-task-define"><a href="#The-QAC-task-define" class="headerlink" title="The QAC task define"></a>The QAC task define</h3><p>Query Auto-completion是利用用户少量的输入，来为用户生成其可能想要的结果，进而节省用户在搜索过程的时间的一种技术。假设$I$表示用户输入，$G$表示补全的结果，$u$表示用户的信息，那么$G=f(I)$，表示完全利用用户的输入来为用户生成结果，而更加个性化的生成是$G_p=g(I,u)$，其中$G_p$表示个性化的生成。</p>
+<p>在QAC场景中，我们将问题转换为自然语言处理的问题。因为用户的输入和生成都是自然语言，即$I={i_1,i_2 \cdots i_n}$，$G={g_1,g_2 \cdots g_n}$，其中$i$和$g$都表示具体的字符token，所以$G=f( I )$可以看作一个自回归问题，即$g_n=f( i_1,i_2, \cdots,g_{n-2},g_{n-1})$。</p>
+<p>Query Auto-completion is a technology that uses users’ minimal input to generate possible desired results for them, thereby saving them time during the search process. Assuming $I$ represents user input, $G$ represents completed results, and $u$ represents user information, then $G=f(I)$ represents generating results completely utilizing user input, while a more personalized generation is $G_p=g(I,u)$. </p>
+<p>In the QAC scenario, we convert the problem into a natural language processing problem. Since both user input and generated results are natural language, namely $I={i_1,i_2 \cdots i_n}$ and $G={g_1,g_2 \cdots g_n}$ where $i$ and $g$ represent specific character tokens, therefore $G=f(I)$ can be regarded as an autoregressive problem, namely $g_n=f(i_1,i_2, \cdots,g_{n-2},g_{n-1})$.</p>
+<h3 id="Overview-of-the-framework"><a href="#Overview-of-the-framework" class="headerlink" title="Overview of the framework"></a>Overview of the framework</h3><p>首先我们对框架的整体架构进行介绍和解释，框架包括三个部分：生成模块、提示模块和控制模块。生成模块是一个decoder架构，用于预测下一个token，生成模块通常是gpt这样的预训练模型。为了能够对生成模块进行生成效果的控制，我们使用提示学习的方法来进行控制，也就是在生成模块的输入前加入提示向量，提示向量能够对生成模块的模型起到提示作用，这就是提示模块的作用。提示模块中的提示向量是由控制模块产生的，控制模块通过从带有控制目的标签的历史数据中学习得到，生成具有控制效果的提示向量。</p>
+<p>First, we introduce and explain the overall architecture of the framework, which includes three parts: the generation module, the prompt module, and the control module. The generation module is a decoder architecture that predicts the next token and generates text. It typically uses a pre-trained model like GPT. To enable control over the generation effect of the generation module, we use prompt learning methods for control. This means adding a prompt vector to the input of the generation module before generating the text. The prompt vector can provide hints to the model, which is the role of the prompt module. The prompt vector generated in the prompt module is produced by the control module through learning from historical data with controlled purpose labels. This generates a prompt vector with controlling effects.</p>
+<h4 id="1-Control-Module"><a href="#1-Control-Module" class="headerlink" title="1. Control Module"></a>1. Control Module</h4><p>控制模块的输入是用户的个人特征信息和用户的历史数据，输出是用户是否进行点击行为的概率，用户是否对生成词进行点击代表了该用户的偏好，模型是用了Bert模型，因为Bert模型具有深层次的语义理解能力，能够对用户的历史行为数据进行深层次的语义理解和特征抽取。为了体现控制模块的控制作用，我们在考虑除了令控制模块生成体现用户偏好的高维特征向量之外，我们还考虑了生成式模型有非常严重的马太效应现象，因为生成式模型本质上是一个词概率预测模型，所以生成式模型会以更大概率生成在训练集中频繁出现的token，所以想要用控制模块在起到控制生成符合用户偏好结果之外同时能起到控制生成式模型的马太效应。所以在控制模块的Bert模型输出会输入到两个多层神经网络分类器进行多任务学习，一个分类器是用于区分用户是否进行点击，另一个分类器是用来区分用户是否会更倾向于点击低频词的生成结果。通过对用户个人信息和历史的行为数据进行建模，控制模块能够抽取到表征着用户偏好的特征向量。</p>
+<p>The input to the control module is the personal feature information of the user and the user’s historical data, and the output is the probability of the user performing a click behavior. Whether the user clicks on the generated words represents the user’s preferences. The model uses the Bert model because the Bert model has deep semantic understanding capabilities and can perform deep semantic understanding and feature extraction on the user’s historical behavioral data. To reflect the controlling effect of the control module, in addition to letting the control module generate high-dimensional feature vectors reflecting user preferences, we also consider that the generative model has a severe Matthew effect phenomenon. Because the generative model is essentially a word probability prediction model, the generative model will predict tokens that appear frequently in the training set with a higher probability. Therefore, in addition to controlling the generation of user preference-conforming results, the control module can also control the Matthew effect of the generative model.Therefore, the output of the Bert model in the control module will be input to two multi-layer neural network classifiers for multi-task learning. One classifier is used to distinguish whether the user performs a click, and the other classifier is used to distinguish whether the user is more likely to click on the generated results of low-frequency words. By modeling the user’s personal information and historical behavior data, the control module can extract a feature vector representing the user’s preferences.</p>
+<h4 id="2-Prompt-Module"><a href="#2-Prompt-Module" class="headerlink" title="2. Prompt Module"></a>2. Prompt Module</h4><p>提示模块主要由一个多层神经网络组成，将Bert抽取出来的高维特征映射到gpt模型的文本embedding空间中，并将控制模块生成的特征向量进行resize，并将特征向量作为提示与用户的输入embedding合并，之后一起输入到生成模块中。</p>
+<h4 id="3-Generation-Module"><a href="#3-Generation-Module" class="headerlink" title="3. Generation Module"></a>3. Generation Module</h4><p>生成模块的输入是提示模块的提示向量与用户的输入文本的向量，本文中生成模块的模型是GPT2，GPT2根据提示向量对用户输入文本进行结果补全，因为提示向量中蕴含的用户偏好特征情况下，GPT2模型能够生成更加符合用户偏好的结果，并且能够减少那些不热衷于高频商家的用户的马太效应。</p>
+<h3 id="Training-Strategy"><a href="#Training-Strategy" class="headerlink" title="Training Strategy"></a>Training Strategy</h3><p>训练阶段分为两个个阶段：预训练、微调</p>
+<p>预训练阶段分为两个部分：第一部分是对控制模块进行预训练，第二部分是对生成模块进行预训练</p>
+<p>对控制模块预训练实际上是对预训练的Bert模型进行下游任务微调，将用户的用户特征和用户历史的输入和生成的item作为Bert模型的输入</p>
+<p>微调阶段只要针对生成模块和提示模块，微调分为两个阶段：第一阶段只微调提示模块，生成模块的参数是冻结的；第二阶段是微调提示模块和生成模块。</p>
+<h2 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h2><h3 id="Experiment-Settings"><a href="#Experiment-Settings" class="headerlink" title="Experiment Settings"></a>Experiment Settings</h3><h4 id="dataset"><a href="#dataset" class="headerlink" title="dataset"></a>dataset</h4><p>美团数据</p>
+<p>AOL数据</p>
+<h4 id="Evaluation"><a href="#Evaluation" class="headerlink" title="Evaluation"></a>Evaluation</h4><p>BLEU-1、BLEU-2、BLEU-3、BLEU-4</p>
+<p>基尼指数</p>
+<h4 id="Baselines"><a href="#Baselines" class="headerlink" title="Baselines"></a>Baselines</h4><h4 id="Implementation-Details"><a href="#Implementation-Details" class="headerlink" title="Implementation Details"></a>Implementation Details</h4><h3 id="Experimental-Results"><a href="#Experimental-Results" class="headerlink" title="Experimental Results"></a>Experimental Results</h3><p>第一，在传统经典的生成式模型中，生成效果比较好的是Transformer模型，相比较与传统的RNN、CNN系列的生成模型，Transformer模型在自然语言建模上效果更好，所以在同样的数据集上进行训练，Transformer效果更好。甚至，Transformer模型的效果也要比不经过微调的GPT-2模型的效果要好，但是在UCTG框架下经过微调后的模型效果要好于其他所有模型</p>
+<p>第二，与hard prompt 和 soft prompt 相比，在UTCG框架下微调的模型效果是更好的，从结果来看，hard prompt效果好于soft prompt，这是不符合常规逻辑的，但是综合QAC的具体场景和基于的底座模型来考虑，对于GPT-2这种参数量不大的底座模型，soft prompt的微调方法很难发挥出其特点，因为微调方法是依赖于底座模型的能力，如果底座模型的参数量越大，效果越好，那么经过soft prompt微调之后效果也会更好，相反，对于底座模型参数量小的情况，soft prompt可能会起到相反的作用。hard prompt的效果略好与未经微调的模型，这是因为hard prompt中有用户历史的点击item，能够对GPT-2起到一定的提示作用</p>
+<p>第三，从基尼指数效果来看，经过UTCG(多任务)的提示微调的基尼指数要远远小于正常训练得到的模型，而且Transformer模型的基尼指数最高，这也说明Transformer模型非常依赖于token之间的关联度，其他的生成模型都不同程度的增强了生成的马太效应，而经过UTCG框架微调之后的模型基尼指数明显降低也证明了UTCG框架中控制模块抽取的embedding的有效性，并且可以看出，在经过多任务UTCG框架微调的GPT-2模型虽然在基尼指数上效果明显，但是在文本准确度上有所下降，这可能是因为控制模块生成的提示向量在信息容量不变的前提下无法做到将两种提示高维特征整合或者控制模块在多任务学习时更多地学习到了对马太效应的控制特征。</p>
+<p>总的来说，经过UTCG框架微调过后的GPT-2模型能够在控制模块的定向提示下进行相应的文本控制，并且效果有明显地提升</p>
+<p>原始的AOL查询日志包含用户输入的一系列查询以及时间戳详细信息。我们首先通过将所有查询转换为小写，删除重复和单个字符的查询，并删除具有占主导地位（&gt;50%）的非字母数字字符的查询来预处理数据集。为了训练和评估QAC模型，大多数先前的工作从公共查询日志数据集中构建前缀-查询对作为正样本，通过拆分用户输入的完整查询，然后随机从候选池中选择一些查询构建负样本。这些数据集不包含任何真实的前缀到查询点击行为，但在实际的工业开发中，工程师通常使用前缀-查询对训练学习排序模型，其中包括用户输入的前缀和用户点击的完成查询作为正样本，其他对作为负样本。</p>
+<p>原始的AOL quert log数据集只包含了用户的输入、用户是否有点击行为以及时间戳的信息，这些数据并无法直接表征出用户的输入、系统的query候选词、用户对系统query候选词的行为三者的关系，所以我们需要对AOL数据集进行一定的数据处理。我们首先将所有的用户真实输入全部转换为小写，删除重复和单个字符查询，并删除以非字母数字字符为主要输入的用户输入。之后对于每个用户的真实输入，随机取前几位作为用户的模拟输入，使用完整的用户输入作为模拟query，并随机从数据集中选择一些用户完整输入作为负样本，这样就构造出了包含用户输入、query候选词以及用户行为反馈的数据集。</p>
+<p>Tables 3展示了模型在Meituan Query Log和AOL Query Log两个数据集上的指标效果</p>
+<p>各个模型在AOL数据集上的效果趋势与在Meituan数据集上的大致相似，在传统生成模型中，Transformer在两个数据集上的效果都是最好的，与没有微调之前的GPT-2模型和freeze方式进行微调的GPT-2模型的效果差距很小，这说明了在两组实验上模型效果的一致性。在UTCG框架下微调之后的GPT-2模型，在Meituan数据集和AOL数据集市上都表现出了最好的效果，这说明了UTCG框架在不同数据集上的泛化性，证明了UTCG框架的有效性不是只出现在某个数据集上的，是具有普世性的。同时可以观察到，在Meituan数据集上UTCG框架微调的效果提升要明显高于在AOL数据集上的提升，这是因为Meituan数据集是垂直领域的数据集，文本数据都属于商品领域的数据，而AOL数据集的数据分布则要更为广泛，这导致UTCG在进行prompt生成的时候无法很好地生成符合控制条件的prompt。</p>
+<p>Figure 1展示了UTCG框架不同微调和改变生成模块模型大小在不同测试数据量下的文本生成效果，通过控制其他模块不变，只改变生成模块GPT-2模型的大小，可以看出base大小下的UTCG整个的文本生成效果要明显好于distil大小下的UTCG，同时在不经过UTCG框架微调之前，base GPT-2的生成效果本身就要比distil GPT-2的效果要好，这说明在整个UTCG框架中，不同效果的模型作为生成模块会对整个UTCG框架的效果产生不同的影响，并且可以推断，越是效果好的模型作为生成模块，UTCG提示微调框架对模型效果的提升就越明显。另外，作用于不同大小的GPT-2，使用UTCG微调框架都取得了明显的提升，这也说明了UTCG微调效果的通用性和普适性。</p>
+<p>Figure 2展示了UTCG微调框架和常规的两种prompt微调方法的对比效果。从实验结果可以看出，经过hard prompt微调后的模型效果较原模型有少量提升，但是经过soft prompt微调之后的模型效果却有所下降，UTCG微调框架的效果则有明显提升，原因有以下几种: 1) hard prompt和soft prompt的微调效果都依赖于所微调的模型效果本身，对于参数量很大的大模型，hard prompt和soft prompt能够在其基础上产生好的效果，但在本实验中GPT-2本身在电商特定领域数据集效果就不如在通用数据集上效果好，所以hard prompt和soft prompt在其基础之上就很难有较好的效果的提升 2)UTCG控制模块生成的提示向量是在用户历史行为数据作为反馈信号下生成的高维特征向量，该提示向量具有更准确的特征提示，所以尽管GPT-2模型对电商数据集不太熟悉，但依然能够对GPT-2模型起到文本控制生成的作用。</p>
+<p>Figure 3展示了对UTCG控制模块的loss函数进行修改之后的效果对比。从基尼指数上来看，控制模块多loss生成的提示向量对GPT-2模型进行微调之后，在基尼指数上有明显的下降，这说明控制模块多loss下生成的提示向量能够对GPT-2模型产生相对应的控制效果，该消融实验也证明了UTCG框架的更深层次的价值，通过更换UTCG中控制模块的loss函数，控制模块便可以生成具有相对应的控制作用的提示向量，并对GPT-2模型产生控制作用。</p>
+<p>Figure 3是使用了T-SNE对1000条数据和embedding 向量进行聚类和可视化，通过可视化的结果可以看出，对于1000条数据根据距离远近形成若干个小的簇，而每个簇代表了用户在输入前几个词时的用户偏好，以Figure5的左下角来举例，图中左下角形成了一个明显的簇，通过每个点对应的用户和用户输入信息来看，该簇包含了用户2907007597.0输入词是炸鸡提示词是、用户1533072098.0输入词是黄焖鸡提示词是、用户613293787.0输入词是炸鸡提示词是、用户40962466.0输入词是猪肚鸡提示词是等文本，从文本内容上来看，聚集到一起的embedding向量对应的用户输入都是跟鸡肉相关的食物，而且这几个用户的历史点击也是主要跟食物相关，这也再次验证了UCTG框架中控制模块对用户的爱好建模与人的普遍认知是一致，也再次说明了控制模块生成的embedding具有实际的意义，并且能够对GPT-2进行提示进而控制文本的生成。</p>
+<p>Figure 4是使用了UMAP(Uniform Manifold Approximation and Projection)，一种高维数据将为算法，对1000条文本数据和embedding进行可视化展示，UMAP相对于T-SNE能反映全局结构。从降维可视化的图中可以看出，尽管更换了可视化的算法，”用户2907007597.0输入词是炸鸡提示词是“、”用户2561854230.0输入词是烤鸡提示词是“，”用户2270230980输入词是鸡汤提示词是“等还是聚集到了一起，从这些文本中可以看出，输入词主要也是跟食物相关，并且这几个用户的历史点击也表明其偏好特点在食物方面</p>
+<p>从上述两个聚类\降维算法得到的可视化结果可以看出，UCTG框架中控制模块的到的高维向量确实表征了用户的行为偏好和特点，这也验证了在具体试验中UCTG微调之后的模型效果明显的提升确实是由于提示向量的提示作用。</p>
+<p>我们提出的UCTG框架由两个阶段组成：（i）用下游任务数据集预训练GPT-2模型和BERT模型 和（ii）提示调优。这两个阶段的优化使得UCTG框架在前一个阶段GPT-2学习下游领域的相关信息，BERT模型学习到用户的偏好和query出现的频次特点，然后在后一个阶段中利用BERT模型抽取出来的高维向量去微调GPT-2的文本生成，从而使得GPT-2模型能够生成对应控制效果的。</p>
+<p>具体而言，在预训练阶段，GPT-2模型的参数和BERT模型的参数是发生改变的，这是因为GPT-2模型需要在下游数据上进行参数更新以学习到下游数据中的新的信息，BERT模型需要通过对用户行为反馈数据和Query出现的频次特点进行参数更新以便能抽取出具有高维特征的向量。并且，为了后续调优阶段中BERT模型抽取的向量更好地匹配GPT-2的语义空间，需要控制GPT-2模型的vocab与BERT模型的vocab一致。之后，在提示调优阶段，有两种参数更新方式，i)GPT-2模型的参数冻结，提示模块中的参数更新，进一步调整提示向量以适应下游领域任务。ii)GPT-2模型的参数和提示模块中的参数一同更新以更加完美地适应下游领域任务。</p>
+<p>用户3170313953.0输入词是炸鸡提示词是、用户980125838.0输入词是参鸡提示词是、、用户277412824.0输入词是黄焖鸡提示词是、用户2561854230.0输入词是烤鸡提示词是、用户1885650741.0输入词是烧鸡公提示词是、用户3652156408.0输入词是白切鸡提示词是、用户1189562967.0输入词是火锅鸡提示词是、用户3155472689.0输入词是鸡精提示词是、用户412329645.0输入词是凉拌鸡提示词是、用户951668225.0输入词是蛙蛙鸡提示词是、用户3678392590.0输入词是瑶鸡提示词是、用户3803971217.0输入词是鸡提示词是、用户312910262.0输入词是黄焖鸡提示词是、用户700332224.0输入词是猪肚鸡提示词是</p>
+<h3 id="曝光度计算指标"><a href="#曝光度计算指标" class="headerlink" title="曝光度计算指标"></a>曝光度计算指标</h3><p>生成式模型有个很大的问题就是,生成内容容易受训练数据中的文本频率影响,所以需要控制某个商家的曝光率,以及整个推荐的覆盖率和多样性</p>
+<p>所以说,在生成式场景下,马太效应会更加明显</p>
+<h4 id="1-七猫小说推荐系统的做法"><a href="#1-七猫小说推荐系统的做法" class="headerlink" title="1. 七猫小说推荐系统的做法"></a>1. <a target="_blank" rel="noopener" href="https://tech.qimao.com/zhi-neng-pu-guang-da-ya-ce-lue-de-tan-suo-yu-shi-jian/">七猫小说推荐系统的做法</a></h4><p>添加了6个特征进行模型的训练</p>
+<table>
+<thead>
+<tr>
+<th>用户该书30内书籍曝光次数</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>userbook_show_count_14</td>
+<td>用户该书14内书籍曝光次数</td>
+</tr>
+<tr>
+<td>userbook_show_count_7</td>
+<td>用户该书7内书籍曝光次数</td>
+</tr>
+<tr>
+<td>userbook_click_count_30</td>
+<td>用户该书30内书籍点击次数</td>
+</tr>
+<tr>
+<td>userbook_click_count_14</td>
+<td>用户该书14内书籍点击次数</td>
+</tr>
+<tr>
+<td>userbook_click_count_7</td>
+<td>用户该书7内书籍点击次数</td>
+</tr>
+</tbody></table>
+<h3 id="2-覆盖率与基尼系数"><a href="#2-覆盖率与基尼系数" class="headerlink" title="2. 覆盖率与基尼系数"></a>2. 覆盖率与基尼系数</h3><p>覆盖率用来衡量推荐的物品占总物品的比例<br>$$<br>Coverage = \frac{推荐的物品数}{总物品数}<br>$$<br>基尼系数描述的是物品流行度的分布趋势<br>$$<br>G=1-\frac{1}{n}\left(2 \sum_{i=1}^{n-1} w_i+1\right)<br>$$</p>
+<h3 id="3-商品出现次数"><a href="#3-商品出现次数" class="headerlink" title="3. 商品出现次数"></a>3. 商品出现次数</h3><p>统计某个商品在一段时间内的出现次数占所有出现次数的比值作为该商品的曝光度</p>
+<p>或者是基于历史数据算出某个商品下次出现的概率作为商品的曝光度, 可以使用贝叶斯概率计算</p>
+<h1 id="评审意见"><a href="#评审意见" class="headerlink" title="评审意见"></a>评审意见</h1><h2 id="写作问题"><a href="#写作问题" class="headerlink" title="写作问题"></a>写作问题</h2><ol>
+<li><p>Authors made several expiations for their experiment results, but from the results, it contradicts what authors explained.</p>
+</li>
+<li><p>In addition, authors observed the contradict result when comparing soft prompt and hard prompt, the explanation was not quite convincible.</p>
+</li>
+<li><p>Selected architecture is not well motivated compared to similar more flexible approaches like RAG</p>
+</li>
+<li><p>missed an important span of work that would have beeen totally relevant for the presented use-case</p>
+<blockquote>
+<p><strong>Learning to Write with Cooperative Discriminators</strong></p>
+<blockquote>
+</blockquote>
+</blockquote>
+</li>
+<li><p>This paper is not well-written and not presented effectively in appropriate format. Some typos are found and also the presentation of figures (like Figure 3) can be improved.</p>
+</li>
+<li><p>There are some typos in the paper, i.e. in section 3.2 first paragraph, Figure index was missing.</p>
+</li>
+</ol>
+<h2 id="实验问题"><a href="#实验问题" class="headerlink" title="实验问题"></a>实验问题</h2><ol>
+<li>Since this is a framework, authors should present more variety datasets to prove this framework work on different domains and datasets, only one specific domain which cannot persuade audience to believe this framework will work for other domains or tasks.</li>
+<li>experiments section heavily focuses on different variations of the same method</li>
+<li>designed architecture is not flexible and would require retraining given changes in base models</li>
+<li>outdated generative model (GPT2) in the experiments make the reader wonder what would be the results with more capable and versatile generative models</li>
+<li> failed to showcase the flexibility of the approach: flexibility is cited as an advantage of the approach, but not highlighted in the experiments</li>
+<li>More recent baselines can be chosen. The paper lacks comparisons and discussions with widely-known baselines in the field, which hinders the assessment of the novelty and performance of UCTG.</li>
+<li>This paper is not well-written and not presented effectively in appropriate format. Some typos are found and also the presentation of figures (like Figure 3) can be improved.</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/03/28/i3wm%E9%85%8D%E7%BD%AE/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/04/03/15%E4%B8%AA%E9%80%82%E7%94%A8%E4%BA%8E%E5%AD%A6%E6%9C%AF%E5%86%99%E4%BD%9C%E7%9A%84%20ChatGPT%20Prompts/" rel="next" title="">
+       <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#A-Controllable-Text-Generation-Framework-based-Prompt-learning-for-Query-Auto-completion"><span class="nav-number">1.</span> <span class="nav-text">A Controllable Text Generation Framework based Prompt learning for Query Auto-completion</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BA%E6%96%87%E6%80%9D%E8%B7%AF"><span class="nav-number">1.0.1.</span> <span class="nav-text">论文思路</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Abstract"><span class="nav-number">1.1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-CTGPrompt4QAC-Framework"><span class="nav-number">1.2.</span> <span class="nav-text">The CTGPrompt4QAC Framework</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#The-QAC-task-define"><span class="nav-number">1.2.1.</span> <span class="nav-text">The QAC task define</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Overview-of-the-framework"><span class="nav-number">1.2.2.</span> <span class="nav-text">Overview of the framework</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-Control-Module"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">1. Control Module</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-Prompt-Module"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">2. Prompt Module</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-Generation-Module"><span class="nav-number">1.2.2.3.</span> <span class="nav-text">3. Generation Module</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Training-Strategy"><span class="nav-number">1.2.3.</span> <span class="nav-text">Training Strategy</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Experiments"><span class="nav-number">1.3.</span> <span class="nav-text">Experiments</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Experiment-Settings"><span class="nav-number">1.3.1.</span> <span class="nav-text">Experiment Settings</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#dataset"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">dataset</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Evaluation"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">Evaluation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Baselines"><span class="nav-number">1.3.1.3.</span> <span class="nav-text">Baselines</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Implementation-Details"><span class="nav-number">1.3.1.4.</span> <span class="nav-text">Implementation Details</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Experimental-Results"><span class="nav-number">1.3.2.</span> <span class="nav-text">Experimental Results</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%9D%E5%85%89%E5%BA%A6%E8%AE%A1%E7%AE%97%E6%8C%87%E6%A0%87"><span class="nav-number">1.3.3.</span> <span class="nav-text">曝光度计算指标</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E4%B8%83%E7%8C%AB%E5%B0%8F%E8%AF%B4%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%81%9A%E6%B3%95"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">1. 七猫小说推荐系统的做法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E8%A6%86%E7%9B%96%E7%8E%87%E4%B8%8E%E5%9F%BA%E5%B0%BC%E7%B3%BB%E6%95%B0"><span class="nav-number">1.3.4.</span> <span class="nav-text">2. 覆盖率与基尼系数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%95%86%E5%93%81%E5%87%BA%E7%8E%B0%E6%AC%A1%E6%95%B0"><span class="nav-number">1.3.5.</span> <span class="nav-text">3. 商品出现次数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AF%84%E5%AE%A1%E6%84%8F%E8%A7%81"><span class="nav-number">2.</span> <span class="nav-text">评审意见</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%99%E4%BD%9C%E9%97%AE%E9%A2%98"><span class="nav-number">2.1.</span> <span class="nav-text">写作问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E9%97%AE%E9%A2%98"><span class="nav-number">2.2.</span> <span class="nav-text">实验问题</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">李治澎</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">李治澎</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
