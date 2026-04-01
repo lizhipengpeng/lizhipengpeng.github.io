@@ -782,7 +782,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">সম্পাদিত হয়েছে</span>
-      <time title="পরিমার্জন করা হয়েছেঃ 2026-04-01 23:15:44" itemprop="dateModified" datetime="2026-04-01T23:15:44+08:00">2026-04-01</time>
+      <time title="পরিমার্জন করা হয়েছেঃ 2026-04-01 23:20:19" itemprop="dateModified" datetime="2026-04-01T23:20:19+08:00">2026-04-01</time>
     </span>
 
   
@@ -822,7 +822,7 @@
 <p>大致流程：自监督的大规模预训练 + 微调，本文重点关注自监督预训练如何实现</p>
 <p>预训练本质上是迁移学习的一种应用，利用几乎无限的文本，学习输入句子的每一个成员的上下文相关的表示，它隐式地学习到了通用的语法语义知识，预训练通过自监督学习从大规模数据中获得与具体任务无关的预训练模型。体现某一个词在一个特定上下文中的语义表征。</p>
 <h3 id="3-1-网络"><a href="#3-1-网络" class="headerlink" title="3.1 网络"></a>3.1 网络</h3><p>transformer模型，是预训练的核心网络，因为有个非常好的优点，就是可以跑得很快，并且做的很深。</p>
-<h3 id="3-2-预训练任务"><a href="#3-2-预训练任务" class="headerlink" title="3.2 预训练任务"></a>3.2 预训练任务</h3><p><img src="/./2023-06-07_19-48.png"></p>
+<h3 id="3-2-预训练任务"><a href="#3-2-预训练任务" class="headerlink" title="3.2 预训练任务"></a>3.2 预训练任务</h3><p><img src="/images/2023-06-07_19-48.png"></p>
 <p>预训练任务的分类架构通常可以分为两类，一类是基于自监督学习的预训练 任务，另一类是基于监督学习的预训练任务。具体而言，可以将预训练任务分成以下几类：</p>
 <ol>
 <li><p>基于自监督学习的预训练任务：这种预训练任务要求模型通过自监督方式来学习数据中的模式和结构，而不需要人工标注的标签。这种方法通常包括自回归预测和掩码语言模型等任务，模型通过对输入文本的预测来学习文本的语言结构和语义信息。</p>
@@ -905,7 +905,7 @@
 <li>复习 - 跟人一样，在预训练或微调时，回看之前训练的数据。还可以专门把特征图存起来，量化以后放在一个类似于记忆库的地方，之后在新任务上训练的时候从这个记忆库里重构出记忆和新数据一起训练。感兴趣可以看这篇论文 <a target="_blank" rel="noopener" href="https://arxiv.org/abs/1910.02509">[16]</a>。 </li>
 <li>MoE - 稀疏门控制的专家混合层，最近爆出 GPT4 是由 8 个 220B 的模型组合。关于 Moe 相关资料 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/542465517">[17]</a> 大家自行了解。</li>
 </ul>
-<h3 id="3-4-大模型预训练与知识图谱结合"><a href="#3-4-大模型预训练与知识图谱结合" class="headerlink" title="3.4 大模型预训练与知识图谱结合"></a>3.4 大模型预训练与知识图谱结合</h3><p><img src="/./2023-07-13_08-53.jpg"></p>
+<h3 id="3-4-大模型预训练与知识图谱结合"><a href="#3-4-大模型预训练与知识图谱结合" class="headerlink" title="3.4 大模型预训练与知识图谱结合"></a>3.4 大模型预训练与知识图谱结合</h3><p><img src="/images/2023-07-13_08-53.jpg"></p>
 <h4 id="3-4-1-KGs-增强-LLM"><a href="#3-4-1-KGs-增强-LLM" class="headerlink" title="3.4.1 KGs 增强 LLM"></a>3.4.1 KGs 增强 LLM</h4><h5 id="1-KG增强的LLM预训练"><a href="#1-KG增强的LLM预训练" class="headerlink" title="1. KG增强的LLM预训练"></a>1. KG增强的LLM预训练</h5><ol>
 <li><p>将KGs整合到训练目标中</p>
 <p>利用KGs中蕴含的实体信息作为监督信号，让LLM来通过某种方式预测得到KGs中的实体信息</p>
@@ -914,7 +914,7 @@
 <p>将KGs中的知识形成文本作为大模型的输入</p>
 </li>
 <li><p>通过额外的融合模块整合KGs</p>
-<img src="./image-20230713105751597.png" alt="image-20230713105751597" style="zoom:67%;" /></li>
+<img src="/images/image-20230713105751597.png" alt="image-20230713105751597" style="zoom:67%;" /></li>
 </ol>
 <h5 id="2-KG增强LLM推理"><a href="#2-KG增强LLM推理" class="headerlink" title="2. KG增强LLM推理"></a>2. KG增强LLM推理</h5><ol>
 <li><p>动态知识融合</p>
@@ -934,7 +934,7 @@
 </ol>
 <h4 id="3-4-2-LLM增强-KGs"><a href="#3-4-2-LLM增强-KGs" class="headerlink" title="3.4.2 LLM增强 KGs"></a>3.4.2 LLM增强 KGs</h4><h4 id="3-4-3-LLM-与-KGs-协同"><a href="#3-4-3-LLM-与-KGs-协同" class="headerlink" title="3.4.3 LLM 与 KGs 协同"></a>3.4.3 LLM 与 KGs 协同</h4><ol>
 <li><p>知识表示</p>
-<img src="./image-20230713151118243.png" alt="image-20230713151118243" style="zoom:50%;" />
+<img src="/images/image-20230713151118243.png" alt="image-20230713151118243" style="zoom:50%;" />
 </li>
 <li><p>推理</p>
 <p>在问答任务中，QA-GNN[117]首先利用LLM来处理文本问题，并指导推理步骤。通过这种方式，它可以弥合文本和结构信息之间的差距，从而为推理过程提供可解释性。在知识图谱推理任务中，LARK[45]提出了一种LLM引导的逻辑推理方法。它首先将传统的逻辑规则转换为语言序列，然后要求LLM对最终输出进行推理。此外，siyuan等人[46]将结构推理和语言模式预训练统一在一个统一的框架中。给定文本输入，他们采用LLM来生成逻辑查询，该查询在KGs上执行以获得结构上下文。最后，将结构上下文与文本信息融合以生成最终输出。RecInDial[243]结合知识图谱和LLM，在对话系统中提供个性化推荐。KnowledgeDA[244]提出了一个统一的领域语言模型开发pipeline，以增强具有领域知识图谱的任务特定训练过程。</p>
@@ -944,13 +944,13 @@
 <figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- prompt_learning:带女朋友去了一家餐厅，她吃的很开心，这家餐厅太__了！</span><br><span class="line">- Instruction_tuning:判断这句话的情感：带女朋友去了一家餐厅，她吃的很开心。选项：A=好，B=一般，C=差</span><br></pre></td></tr></table></figure>
 
 <h3 id="2-hybrid-tuning"><a href="#2-hybrid-tuning" class="headerlink" title="2. hybrid-tuning"></a>2. hybrid-tuning</h3><p>deal with the catastrophic forgetting</p>
-<img src="./2023-06-15_08-59.png" style="zoom: 50%;" />
+<img src="/images/2023-06-15_08-59.png" style="zoom: 50%;" />
 
 <h3 id="3-MOSS-fine-tuning-in-instruction-data"><a href="#3-MOSS-fine-tuning-in-instruction-data" class="headerlink" title="3. MOSS: fine-tuning in instruction data"></a>3. MOSS: fine-tuning in instruction data</h3><h3 id="4-Chinese-LLaMA-Alpaca-pre-trained-1-pre-trained-2-instruction-tuning"><a href="#4-Chinese-LLaMA-Alpaca-pre-trained-1-pre-trained-2-instruction-tuning" class="headerlink" title="4. Chinese-LLaMA-Alpaca: pre-trained 1 + pre-trained 2 + instruction_tuning"></a>4. Chinese-LLaMA-Alpaca: pre-trained 1 + pre-trained 2 + instruction_tuning</h3><h3 id="5-QLoRA"><a href="#5-QLoRA" class="headerlink" title="5. QLoRA"></a>5. QLoRA</h3><p>QLoRA通过冻结的、4比特量化的预训练语言模型来做 LoRA，进行反向传播梯度。</p>
 <p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2305.14314.pdf">https://arxiv.org/pdf/2305.14314.pdf</a></p>
 <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/632229856">https://zhuanlan.zhihu.com/p/632229856</a></p>
 <p><strong>如果你受限于GPU内存，QLoRA可能是值得考虑的选择。它可以节省33%的内存，但运行时间将增加39%</strong></p>
-<h3 id="6-LORA"><a href="#6-LORA" class="headerlink" title="6. LORA"></a>6. LORA</h3><img src="./image-20231004153011481.png" alt="image-20231004153011481" style="zoom:50%;" />
+<h3 id="6-LORA"><a href="#6-LORA" class="headerlink" title="6. LORA"></a>6. LORA</h3><img src="/images/image-20231004153011481.png" alt="image-20231004153011481" style="zoom:50%;" />
 
 <p>LORA实战小技巧:</p>
 <ol>
@@ -1010,7 +1010,7 @@
 </ol>
 <p>如果这篇文本是由AI写的，那么所得曲线更像红色曲线，原始文本会处于平缓区域的最大值</p>
 <p>如果这篇文本是真人写的，那么所得曲线更像绿色曲线，重写文本的对数概率可能高于&#x2F;低于原文本</p>
-<img src="./image-20231028094229464.png" alt="image-20231028094229464" style="zoom: 33%;" />
+<img src="/images/image-20231028094229464.png" alt="image-20231028094229464" style="zoom: 33%;" />
 
 <h2 id="9-大模型测评"><a href="#9-大模型测评" class="headerlink" title="9. 大模型测评"></a>9. 大模型测评</h2><p><a target="_blank" rel="noopener" href="https://github.com/GPT-Fathom/GPT-Fathom">GPT-Fathom</a></p>
 <p>GPT-Fathom是一个开源和可复制的LLM评估套件，在对齐设置下对10多个领先的开源和闭源LLM以及OpenAI的早期模型进行基准测试。</p>
@@ -1472,7 +1472,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">সম্পাদিত হয়েছে</span>
-      <time title="পরিমার্জন করা হয়েছেঃ 2026-04-01 23:15:44" itemprop="dateModified" datetime="2026-04-01T23:15:44+08:00">2026-04-01</time>
+      <time title="পরিমার্জন করা হয়েছেঃ 2026-04-01 23:20:19" itemprop="dateModified" datetime="2026-04-01T23:20:19+08:00">2026-04-01</time>
     </span>
 
   
@@ -1510,7 +1510,7 @@
 <p>盘锦校区没有条件测试，但是应该也可以参考实现。</p>
 <h3 id="Linux系统下"><a href="#Linux系统下" class="headerlink" title="Linux系统下"></a>Linux系统下</h3><p>客户端的话要去<a target="_blank" rel="noopener" href="https://1.1.1.1/">1.1.1.1的官网</a>下载,下载得到的软件是跟window不太一样的,linux下必须要登陆teams,所以需要去cloudfare申请免费plan的账户,申请账户需要用到信用卡(可以用paypal),paypal帐号申请可以使用国内的银行卡,所以只要有国内银行卡就可以申请一个免费plan的cloudfare账户.</p>
 <p>之后就可以登陆Linux下的cloudfare-warp</p>
-<img src="./image-20231201180118189.png" alt="image-20231201180118189" style="zoom: 67%;" />
+<img src="/images/image-20231201180118189.png" alt="image-20231201180118189" style="zoom: 67%;" />
 
 <p>登陆之后就可以访问外网,但是如果想要配置ipv6还需要从命令行输入命令</p>
 <p>首先使用github上提供的脚本获取可用的ipv6可用ip</p>
