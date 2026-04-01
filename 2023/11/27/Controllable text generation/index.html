@@ -27,17 +27,17 @@
 <meta property="og:site_name" content="随笔">
 <meta property="og:description" content="Survey of Controllable Text GenerationCTG 的定义 better meet the specific constraints in practical applications Controllable text generation (CTG) refers to the task of generating text according to the g">
 <meta property="og:locale">
-<meta property="og:image" content="http://example.com/assets/image-20231127212726619.png">
-<meta property="og:image" content="http://example.com/2023/11/27/Controllable%20text%20generation/assets/image-20231127213100182.png">
-<meta property="og:image" content="http://example.com/2023/11/27/Controllable%20text%20generation/assets/image-20231127215815938.png">
-<meta property="og:image" content="http://example.com/2023/11/27/Controllable%20text%20generation/assets/image-20231127220156236.png">
-<meta property="og:image" content="http://example.com/2023/11/27/Controllable%20text%20generation/assets/image-20231127220849538.png">
-<meta property="og:image" content="http://example.com/2023/11/27/Controllable%20text%20generation/assets/image-20231127221138206.png">
+<meta property="og:image" content="http://example.com/image-20231127212726619.png">
+<meta property="og:image" content="http://example.com/2023/11/27/Controllable%20text%20generation/image-20231127213100182.png">
+<meta property="og:image" content="http://example.com/2023/11/27/Controllable%20text%20generation/image-20231127215815938.png">
+<meta property="og:image" content="http://example.com/2023/11/27/Controllable%20text%20generation/image-20231127220156236.png">
+<meta property="og:image" content="http://example.com/2023/11/27/Controllable%20text%20generation/image-20231127220849538.png">
+<meta property="og:image" content="http://example.com/2023/11/27/Controllable%20text%20generation/image-20231127221138206.png">
 <meta property="article:published_time" content="2023-11-26T16:00:00.000Z">
-<meta property="article:modified_time" content="2026-04-01T07:44:55.014Z">
+<meta property="article:modified_time" content="2026-04-01T15:15:44.709Z">
 <meta property="article:author" content="李治澎">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/assets/image-20231127212726619.png">
+<meta name="twitter:image" content="http://example.com/image-20231127212726619.png">
 
 
 <link rel="canonical" href="http://example.com/2023/11/27/Controllable%20text%20generation/">
@@ -205,7 +205,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">সম্পাদিত হয়েছে</span>
-      <time title="পরিমার্জন করা হয়েছেঃ 2026-04-01 15:44:55" itemprop="dateModified" datetime="2026-04-01T15:44:55+08:00">2026-04-01</time>
+      <time title="পরিমার্জন করা হয়েছেঃ 2026-04-01 23:15:44" itemprop="dateModified" datetime="2026-04-01T23:15:44+08:00">2026-04-01</time>
     </span>
 
   
@@ -221,7 +221,7 @@
 <li>better meet the specific constraints in practical applications</li>
 <li>Controllable text generation (CTG) refers to the task of generating text according to the given controlled element</li>
 </ul>
-<p><img src="/./assets/image-20231127212726619.png" alt="image-20231127212726619"></p>
+<p><img src="/./image-20231127212726619.png" alt="image-20231127212726619"></p>
 <p>举例说明</p>
 <ul>
 <li>第一个例子就是给定一个故事线，要求模型按照这样的思路去生成。</li>
@@ -237,7 +237,7 @@
 <li><strong>Debiasing</strong>，这也非常重要，可以帮助我们把带有某些偏见的文本转化成无偏见的文本，让机器也符合伦理道德</li>
 <li><strong>Format Control</strong>，风格、格式的转换，比如中国古诗词就有明确的格式，这就需要在生成的时候加以控制</li>
 </ul>
-<h2 id="CTG的方法流派"><a href="#CTG的方法流派" class="headerlink" title="CTG的方法流派"></a>CTG的方法流派</h2><img src="./assets/image-20231127213100182.png" alt="image-20231127213100182" style="zoom: 67%;" />
+<h2 id="CTG的方法流派"><a href="#CTG的方法流派" class="headerlink" title="CTG的方法流派"></a>CTG的方法流派</h2><img src="./image-20231127213100182.png" alt="image-20231127213100182" style="zoom: 67%;" />
 
 <p>大致上分为三类:</p>
 <ul>
@@ -262,13 +262,13 @@
 <p> 以CTRL为代表的方法只能从一个总体的层面对生成文本增加限制，比如某种风格主题，但无法对具体内容进行精细控制，CoCon则是直接以原文中的部分内容作为condition，来预测下文, 核心思想就是<strong>使用文本的一部分作为condition，让模型对剩余部分进行复原</strong></p>
 </li>
 </ol>
-<img src="./assets/image-20231127215815938.png" alt="image-20231127215815938" style="zoom:50%;" />
+<img src="./image-20231127215815938.png" alt="image-20231127215815938" style="zoom:50%;" />
 
 <p>上面列举的CTRL和CoCon的对NLG添加的实际上是比较soft的限制，并不强制要求模型一定要输出什么元素，而有一些工作则会使用hard的限制，要求模型必须输出给定的某些关键词：</p>
 <ol start="3">
 <li><p><strong>POINTER</strong></p>
 <p> POINTER的主要目的是训练根据指定词汇然后生成包含这些词汇的模型，采用的是一种基于插入的、渐进生成的方法,POINTER的生成是一种迭代式地生成，先生成给定的关键词，然后每一轮都按照重要性不断插入新的词，直到把句子给补齐。POINTER中使用的一种Transformer结构叫做<strong>Insertion Transformer</strong></p>
- <img src="./assets/image-20231127220156236.png" alt="image-20231127220156236" style="zoom:67%;" />
+ <img src="./image-20231127220156236.png" alt="image-20231127220156236" style="zoom:67%;" />
 </li>
 <li><p><strong>Constrained BART (CBART)</strong></p>
 <p> 对BART进行了改造，通过在encoder上面添加一个token-level classifier来指导decoder在生成的时候应该进行replace还是insert</p>
@@ -277,14 +277,14 @@
 <h3 id="3-Post-Process"><a href="#3-Post-Process" class="headerlink" title="3. Post-Process"></a>3. Post-Process</h3><ol>
 <li><p><strong>Plug and Play Language Models (PPLM)</strong></p>
 <p> PPLM不希望去训练PLM，而是通过额外的一个attribute model来对PLM的输出加以修正，从而符合某种预期。这里的attribute model，既可以是一个bag of words来代表某个topic，也可以是一个训练好的小模型来对某个topic进行打分，然后通过这个attribute model向PLM的hidden states传递梯度，从而对hidden states进行一定的修正，然后PLM的输出就会往我们希望的topic倾斜了。</p>
- <img src="./assets/image-20231127220849538.png" alt="image-20231127220849538" style="zoom:67%;" />
+ <img src="./image-20231127220849538.png" alt="image-20231127220849538" style="zoom:67%;" />
 </li>
 <li><p><strong>MEGATRON-CNTRL</strong></p>
 <p> 选择利用外部知识库来辅助生成，给定一个context，MEGATRON-CNTRL会首先使用一个predictor生成一批关键词，然后通过一个retriever从知识库中找到跟这些关键词匹配的句子，然后通过一个ranker进行筛选，最后再输入PLM进行句子的生成：</p>
 </li>
 </ol>
 <p>还有工作比如<strong>PAIR</strong>[14]则是先生成一个包含关键词和位置信息的模板，然后对模板进行填空，从而进行控制性生成；<strong>GeDi</strong>[15]则是训练一个小型的discriminator来引导PLM的生成。</p>
-<img src="./assets/image-20231127221138206.png" alt="image-20231127221138206" style="zoom:67%;" />
+<img src="./image-20231127221138206.png" alt="image-20231127221138206" style="zoom:67%;" />
     </div>
 
     
@@ -302,8 +302,8 @@
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2023/11/30/%E7%BE%8E%E5%86%9B%E7%94%B5%E7%A3%81%E4%BD%9C%E6%88%98/" rel="next" title="美军电磁作战">
-                  美军电磁作战 <i class="fa fa-angle-right"></i>
+                <a href="/2023/11/30/%E8%BD%AF%E4%BB%B6%E5%A4%8D%E7%94%A8/" rel="next" title="软件复用">
+                  软件复用 <i class="fa fa-angle-right"></i>
                 </a>
             </div>
           </div>

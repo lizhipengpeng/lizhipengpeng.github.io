@@ -156,132 +156,6 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/11/30/%E8%AE%BA%E6%96%87%E4%B8%AD%E7%BB%98%E5%88%B6%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%B7%A5%E5%85%B7%E6%B1%87%E6%80%BB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="李治澎">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="随笔">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 随笔">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/11/30/%E8%AE%BA%E6%96%87%E4%B8%AD%E7%BB%98%E5%88%B6%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%B7%A5%E5%85%B7%E6%B1%87%E6%80%BB/" class="post-title-link" itemprop="url">论文中绘制神经网络工具汇总</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">প্রকাশিত হয়েছে</span>
-
-      <time title="তৈরি করা হয়েছেঃ 2023-11-30 00:00:00" itemprop="dateCreated datePublished" datetime="2023-11-30T00:00:00+08:00">2023-11-30</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">সম্পাদিত হয়েছে</span>
-      <time title="পরিমার্জন করা হয়েছেঃ 2026-04-01 15:44:55" itemprop="dateModified" datetime="2026-04-01T15:44:55+08:00">2026-04-01</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h4 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h4><ul>
-<li><ul>
-<li><a href="#1_LaTeXtikz_3">1. LaTeX的tikz库</a></li>
-<li><a href="#2_ConvNetDraw_11">2. ConvNetDraw</a></li>
-<li><a href="#3_Visio_17">3. Visio</a></li>
-<li><a href="#4_Inkscape_22">4. Inkscape-自由绘图</a></li>
-<li><a href="#5_Omnigraffle_28">5. Omnigraffle</a></li>
-<li><a href="#6_draw_convnet_32">6. draw_convnet</a></li>
-<li><a href="#7_PlotNeuralNet_37">7. PlotNeuralNet</a></li>
-<li><a href="#8_NNSVG_43">8. NN-SVG</a></li>
-<li><a href="#9_Python__Graphviz_50">9. Python + Graphviz</a></li>
-<li><a href="#10_Graphviz__dot_54">10. Graphviz - dot</a></li>
-<li><a href="#11_Keras_59">11. Keras</a></li>
-<li><a href="#12Netscope_74">12、Netscope</a></li>
-<li><a href="#13_Caffe_82">13. Caffe自带绘图工具</a></li>
-<li><a href="#14_TensorBoard_85">14. TensorBoard</a></li>
-<li><a href="#15_NetworkX_90">15. NetworkX</a></li>
-<li><a href="#16_Bokeh_116">16. Bokeh</a></li>
-<li><a href="#17_DAFT_122">17. DAFT</a></li>
-<li><a href="#18_Netron_128">18. Netron</a></li>
-<li><a href="#_137">注意事项</a></li>
-<li><a href="#_144">参考资料</a></li>
-</ul>
-</li>
-</ul>
-<p>作为一名科研人员，也许你经常会在不同类型的论文中看到各种令人称赞的算法框图或者神经网络框图，作为一名AI从业者，你经常需要在你的论文、Poster或者Slide中添加一些神经网络框图，作为新手的我也经常遇到这个问题，但是一直并没有找到一个好的工具，很多大佬们都说利用PPT或者Visio等就能绘制成功，我的想法是这样的，尽管很多工具都能完成同样的一项工作，但是它们的效果和效率肯定是不一样的，你用Visio需要2个小时的一张图或者利用另外的一个工具仅仅需要花费20分钟，这可能就是所谓的区别，如果你感觉你的时间很多，浪费一点无所谓，请高手们绕过这篇博文。我花费了一点时间在网上找了很多有用的工具，在这里总结汇总一下，朋友们各取所好！</p>
-<h3 id="1-LaTeX的tikz库"><a href="#1-LaTeX的tikz库" class="headerlink" title="1. LaTeX的tikz库"></a>1. LaTeX的tikz库</h3><p>作为科研人员，你可能经常需要用Latex写一些论文，那么其中有一款支持LaTex的工具tikz可以用来绘制各种各样的图，这可能是最方便的工具了。下面是有关该库的一些学习资料。<br>1、TikZ的官网-<a target="_blank" rel="noopener" href="http://www.texample.net/tikz/">http://www.texample.net/tikz/</a><br>2、LateX在线编辑工具-<a target="_blank" rel="noopener" href="https://www.overleaf.com/">https://www.overleaf.com</a><br>3、TikZ快速入门文档-<a target="_blank" rel="noopener" href="http://cremeronline.com/LaTeX/minimaltikz.pdf">http://cremeronline.com/LaTeX/minimaltikz.pdf</a><br><img src="https://img-blog.csdnimg.cn/20190222202144480.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center" alt="tikz样例1"><br><img src="https://img-blog.csdnimg.cn/20190222202543351.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center" alt="tikz样例2"></p>
-<h3 id="2-ConvNetDraw"><a href="#2-ConvNetDraw" class="headerlink" title="2. ConvNetDraw"></a>2. ConvNetDraw</h3><p>这个工具可能很多人都不知道，不过如果你知道神经网络的结构，而且你能很快的写出基本的代码，那么这款软件再方便不过啦，重要的是它的绘制结果是3D，比较好看，缺点是卷积层的颜色等比较固定，不适合进行设计。以下是有关该工具的几个有用链接。<br>1、ConvNetDraw的github-<a target="_blank" rel="noopener" href="https://github.com/cbovar/ConvNetDraw">https://github.com/cbovar/ConvNetDraw</a><br>2、ConvNetDraw在线绘图网址-<a target="_blank" rel="noopener" href="https://cbovar.github.io/ConvNetDraw/">https://cbovar.github.io/ConvNetDraw/</a><br><img src="https://img-blog.csdnimg.cn/20190222203906377.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center" alt="ConvNetDraw样例1"></p>
-<h3 id="3-Visio"><a href="#3-Visio" class="headerlink" title="3. Visio"></a>3. Visio</h3><p>这个软件可能很多人都使用过，我以前所有的图基本上都是用它完成的，它的确很强大，值得去推荐，但是我总想去寻找一个更优的工具。以下是使用Visio绘制的几张神经网络图。这个软件可能很多人都使用过，我以前所有的图基本上都是用它完成的，它的确很强大，值得去推荐，但是我总想去寻找一个更优的工具。以下是使用Visio绘制的几张神经网络图。<br><img src="https://img-blog.csdnimg.cn/2019022220453623.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center" alt="Visio样例1"><br><img src="https://img-blog.csdnimg.cn/20190222204636416.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center" alt="Visio样例2"></p>
-<h3 id="4-Inkscape-自由绘图"><a href="#4-Inkscape-自由绘图" class="headerlink" title="4. Inkscape-自由绘图"></a>4. Inkscape-自由绘图</h3><p>这个软件是一个类似Visio的软件，功能比较齐全，可以完成各种各样的图，不过我一直没有去尝试过。下面是有关该软件的一些有用链接。这个软件是一个雷士Visio的软件，功能比较齐全，可以完成各种各样的图，不过我一直没有去尝试过。下面是有关该软件的一些有用链接。<br>1、Inkscape官网-<a target="_blank" rel="noopener" href="https://inkscape.org/zh/">https://inkscape.org/zh/</a><br>2、Inkscape教程-<a target="_blank" rel="noopener" href="https://inkscape.org/zh/learn/tutorials/">https://inkscape.org/zh/learn/tutorials/</a><br><img src="https://img-blog.csdnimg.cn/20190222220113542.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
-<h3 id="5-Omnigraffle"><a href="#5-Omnigraffle" class="headerlink" title="5. Omnigraffle"></a>5. Omnigraffle</h3><p>它是由The Omni Group制作的一款绘图软件，<strong>其只能于运行在Mac OS X和iPad平台之上</strong>，添加公式可以配合latexit使用。可以用来绘制图表，流程图，组织结构图以及插图，也可以用来组织头脑中思考的信息，组织头脑风暴的结果，绘制心智图，作为样式管理器，或设计网页或PDF文档的原型。嵌入在论文里导出成pdf，嵌入在网页里导出成svg。十分方便。由The Omni Group制作的一款绘图软件，其只能于运行在Mac OS X和iPad平台之上，添加公式可以配合latexit使用。可以用来绘制图表，流程图，组织结构图以及插图，也可以用来组织头脑中思考的信息，组织头脑风暴的结果，绘制心智图，作为样式管理器，或设计网页或PDF文档的原型。嵌入在论文里导出成pdf，嵌入在网页里导出成svg，十分方便。<img src="https://img-blog.csdnimg.cn/2019022221071977.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20190222210936166.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
-<h3 id="6-draw-convnet"><a href="#6-draw-convnet" class="headerlink" title="6. draw_convnet"></a>6. draw_convnet</h3><p>这是一个Python工具，可以将代码转换为网络图显示出来。有关该工具的有用链接如下所示：<br>1、raw_convnet的github链接-<a target="_blank" rel="noopener" href="https://github.com/gwding/draw/_convnet">https://github.com/gwding/draw\_convnet</a><br><img src="https://img-blog.csdnimg.cn/20190222211810780.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
-<h3 id="7-PlotNeuralNet"><a href="#7-PlotNeuralNet" class="headerlink" title="7. PlotNeuralNet"></a>7. PlotNeuralNet</h3><p>这是我偶然间寻找到的工具，基于Latex，话不多说，直接看效果你就决定要不要使用它啦。其相关链接如下所示：<br>1、PlotNeuralNet的github链接-<a target="_blank" rel="noopener" href="https://github.com/HarisIqbal88/PlotNeuralNet">https://github.com/HarisIqbal88/PlotNeuralNet</a><br><img src="https://img-blog.csdnimg.cn/20190222212248848.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center" alt="PlotNeuralNet"><br><img src="https://img-blog.csdnimg.cn/20190222212417267.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
-<h3 id="8-NN-SVG"><a href="#8-NN-SVG" class="headerlink" title="8. NN-SVG"></a>8. NN-SVG</h3><p>有关该软件的有用链接如下所示：<br>1、N-SVG的github链接-<a target="_blank" rel="noopener" href="https://github.com/zfrenchee/NN-SVG">https://github.com/zfrenchee/NN-SVG</a><br>2、N-SVG的在线界面-<a target="_blank" rel="noopener" href="http://alexlenail.me/NN-SVG/LeNet.html">http://alexlenail.me/NN-SVG/LeNet.html</a><br><img src="https://img-blog.csdnimg.cn/20190222213012164.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20190222213100918.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
-<h3 id="9-Python-Graphviz"><a href="#9-Python-Graphviz" class="headerlink" title="9. Python + Graphviz"></a>9. Python + Graphviz</h3><p>针对节点较多的网络，不可避免需要投入大量尽量来写重复的脚本代码。用python编写了一个简单的dot脚本生成工具（MakeNN），可以很方便的输入参数生成nn结构图。<br><img src="https://img-blog.csdnimg.cn/20190222213700605.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
-<h3 id="10-Graphviz-dot"><a href="#10-Graphviz-dot" class="headerlink" title="10. Graphviz - dot"></a>10. Graphviz - dot</h3><p>在dot里面label的玩法比较多，在上面看到的每个节点都是简单的一段文字，如果想要比较复杂的结构怎么办？那就通过编写代码生成吧。其对应的代码和结果如下所示。其相关的资源如下所示：<br>1、Graphviz的官方链接-<a target="_blank" rel="noopener" href="https://www.graphviz.org/![%E5%9C%A8%E8%BF%99%E9%87%8C%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87%E6%8F%8F%E8%BF%B0](https://img-blog.csdnimg.cn/20190222213956794.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center)">https://www.graphviz.org/![在这里插入图片描述](https://img-blog.csdnimg.cn/20190222213956794.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center)</a><br><img src="https://img-blog.csdnimg.cn/2019022221402545.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
-<h3 id="11-Keras"><a href="#11-Keras" class="headerlink" title="11. Keras"></a>11. Keras</h3><p>使用Keras框架（后端可选tensorflow或者theano），可以画出卷积神经网络的结构图。其相关资源如下所示：<br>1、keras英文文档-<a target="_blank" rel="noopener" href="https://keras.io/">https://keras.io/</a><br>2、keras中文文档-<a target="_blank" rel="noopener" href="https://keras.io/zh/">https://keras.io/zh/</a><br>3、keras的github链接-<a target="_blank" rel="noopener" href="https://github.com/keras-team/keras">https://github.com/keras-team/keras</a></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from keras.layers import Input, Convolution2D, Flatten, Dense, Activationfrom keras.models import Sequentialfrom keras.optimizers import SGD , Adamfrom keras.initializations import normalfrom keras.utils.visualize_util import plot# apply a 3x3 convolution with 64 output filters on a 256x256 image:model = Sequential()</span><br><span class="line">model.add(Convolution2D(64, 3, 3, border_mode=&#x27;same&#x27;, dim_ordering=&#x27;th&#x27;,input_shape=(3, 256, 256)))# now model.output_shape == (None, 64, 256, 256)# add a 3x3 convolution on top, with 32 output filters:model.add(Convolution2D(32, 3, 3, border_mode=&#x27;same&#x27;, dim_ordering=&#x27;th&#x27;))# now model.output_shape == (None, 32, 256, 256)adam = Adam(lr=1e-6)</span><br><span class="line">model.compile(loss=&#x27;mse&#x27;,optimizer=adam)</span><br><span class="line">print(&quot;We finish building the model&quot;)</span><br><span class="line"></span><br><span class="line">plot(model, to_file=&#x27;model1.png&#x27;, show_shapes=True) </span><br></pre></td></tr></table></figure>
-
-<p><img src="https://img-blog.csdnimg.cn/20190222222708390.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
-<h3 id="12、Netscope"><a href="#12、Netscope" class="headerlink" title="12、Netscope"></a>12、Netscope</h3><p>Netscope是个支持prototxt格式描述的神经网络结构的在线可视工具，<strong>专门针对神经网络框架caffe而言</strong>。该工具的有用资源如下所示：<br>1、Netscope文档链接- <a target="_blank" rel="noopener" href="https://ethereon.github.io/netscope/quickstart.html">https://ethereon.github.io/netscope/quickstart.html</a><br>2、Netscope的github链接-<a target="_blank" rel="noopener" href="https://github.com/ethereon/netscope">https://github.com/ethereon/netscope</a><br>3、Netscope在线链接-<a target="_blank" rel="noopener" href="http://ethereon.github.io/netscope/#/editor">http://ethereon.github.io/netscope/#/editor</a><br>使用说明：直接打开相应的.prototxt文件复制到左边的黑色区域，然后按下Shift+Enter即可获得可视化结果。<br><img src="https://img-blog.csdnimg.cn/20190222215519765.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
-<h3 id="13-Caffe自带绘图工具"><a href="#13-Caffe自带绘图工具" class="headerlink" title="13. Caffe自带绘图工具"></a>13. Caffe自带绘图工具</h3><p>caffe源码中的tools文件夹下面有个draw_net.py文件。Python&#x2F;draw_net.py, 这个文件，就是用来绘制网络模型的。也就是将网络模型由prototxt变成一张图片。 <img src="https://img-blog.csdnimg.cn/20190222220000120.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
-<h3 id="14-TensorBoard"><a href="#14-TensorBoard" class="headerlink" title="14. TensorBoard"></a>14. TensorBoard</h3><p>这个工具也好用于，可以保存好多在训练网络过程中的中间结果，同时也可以可视化整个网络的架构。其相关的有用资源如下所示：<br>1、tensorboard文档-<a target="_blank" rel="noopener" href="https://www.tensorflow.org/guide/summaries/_and/_tensorboard">https://www.tensorflow.org/guide/summaries\_and\_tensorboard</a><br>2、tensorboardgithub-<a target="_blank" rel="noopener" href="https://github.com/tensorflow/tensorboard">https://github.com/tensorflow/tensorboard</a> <img src="https://img-blog.csdnimg.cn/20190222220736802.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
-<h3 id="15-NetworkX"><a href="#15-NetworkX" class="headerlink" title="15. NetworkX"></a>15. NetworkX</h3><p>一个可以用来绘制神经网络的python包，其相应的资源如下所示：<br>1、NetworkX文档-<a target="_blank" rel="noopener" href="https://networkx.github.io/documentation/latest/tutorial.html">https://networkx.github.io/documentation/latest/tutorial.html</a><br>2、NetworkX的github-<a target="_blank" rel="noopener" href="https://github.com/networkx">https://github.com/networkx</a></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; options = &#123;</span><br><span class="line">...     &#x27;node_color&#x27;: &#x27;black&#x27;,</span><br><span class="line">...     &#x27;node_size&#x27;: 100,</span><br><span class="line">...     &#x27;width&#x27;: 3,</span><br><span class="line">... &#125;</span><br><span class="line">&gt;&gt;&gt; plt.subplot(221)</span><br><span class="line">&lt;matplotlib.axes._subplots.AxesSubplot object at ...&gt;</span><br><span class="line">&gt;&gt;&gt; nx.draw_random(G, **options)</span><br><span class="line">&gt;&gt;&gt; plt.subplot(222)</span><br><span class="line">&lt;matplotlib.axes._subplots.AxesSubplot object at ...&gt;</span><br><span class="line">&gt;&gt;&gt; nx.draw_circular(G, **options)</span><br><span class="line">&gt;&gt;&gt; plt.subplot(223)</span><br><span class="line">&lt;matplotlib.axes._subplots.AxesSubplot object at ...&gt;</span><br><span class="line">&gt;&gt;&gt; nx.draw_spectral(G, **options)</span><br><span class="line">&gt;&gt;&gt; plt.subplot(224)</span><br><span class="line">&lt;matplotlib.axes._subplots.AxesSubplot object at ...&gt;</span><br><span class="line">&gt;&gt;&gt; nx.draw_shell(G, nlist=[range(5,10), range(5)], **options)</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://img-blog.csdnimg.cn/20190222224313814.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
-<h3 id="16-Bokeh"><a href="#16-Bokeh" class="headerlink" title="16. Bokeh"></a>16. Bokeh</h3><p>Bokeh是一个交互式可视化库，面向现代Web浏览器进行演示。 它的目标是提供优雅，简洁的多功能图形构造，并通过非常大或流数据集的高性能交互来扩展此功能。 Bokeh可以帮助任何想要快速轻松地创建交互式图表，仪表板和数据应用程序的人。其相关资源链接如下所示：<br>1、Bokeh官网-<a target="_blank" rel="noopener" href="https://bokeh.pydata.org/en/latest/">https://bokeh.pydata.org/en/latest/</a><br>2、Bokeh文档-<a target="_blank" rel="noopener" href="https://bokeh.pydata.org/en/latest/docs/user/_guide.html#userguide">https://bokeh.pydata.org/en/latest/docs/user\_guide.html#userguide</a><br><img src="https://img-blog.csdnimg.cn/20190222224709108.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
-<h3 id="17-DAFT"><a href="#17-DAFT" class="headerlink" title="17. DAFT"></a>17. DAFT</h3><p>Daft是一个Python包，它使用matplotlib渲染像素完美的概率图形模型，以便在期刊或互联网上发布。 使用简短的Python脚本和直观的模型构建语法，您可以设计定向（贝叶斯网络，有向无环图）和无向（马尔可夫随机场）模型，并将它们保存为matplotlib支持的任何格式（包括PDF，PNG，EPS和SVG））。其相关资源如下所示：<br>1、daft官网链接-<a target="_blank" rel="noopener" href="http://daft-pgm.org/">http://daft-pgm.org/</a><br>2、daft的github链接-<a target="_blank" rel="noopener" href="https://github.com/dfm/daft">https://github.com/dfm/daft</a><br><img src="https://img-blog.csdnimg.cn/20190222225212153.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
-<h3 id="18-Netron"><a href="#18-Netron" class="headerlink" title="18. Netron"></a>18. Netron</h3><p>这是一款模型可视化神器，Netron supports ONNX (.onnx, .pb, .pbtxt), Keras (.h5, .keras), CoreML (.mlmodel), Caffe2(predict_net.pb, predict_net.pbtxt), MXNet (.model, -symbol.json) and TensorFlow Lite (.tflite). Netron has experimental support for Caffe (.caffemodel, .prototxt), PyTorch (.pth), Torch (.t7), CNTK(.model, .cntk), PaddlePaddle (<strong>model</strong>), Darknet (.cfg), scikit-learn (.pkl), TensorFlow.js(model.json, .pb) and TensorFlow (.pb, .meta, .pbtxt).你应该很惊讶吧，它就是这么厉害。有关资源如下所示：<br>1、Netron官网-<a target="_blank" rel="noopener" href="https://electronjs.org/apps/netron">https://electronjs.org/apps/netron</a><br>2、Netron的github-<a target="_blank" rel="noopener" href="https://github.com/lutzroeder/netron">https://github.com/lutzroeder/netron</a><br>3、Netron的在线界面-<a target="_blank" rel="noopener" href="https://lutzroeder.github.io/netron/">https://lutzroeder.github.io/netron/</a><br><img src="https://img-blog.csdnimg.cn/20190223103647150.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1daWjE4MTkxMTcxNjYx,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p>1、<a target="_blank" rel="noopener" href="https://datascience.stackexchange.com/questions/12851/how-do-you-visualize-neural-network-architectures">https://datascience.stackexchange.com/questions/12851/how-do-you-visualize-neural-network-architectures</a><br>2、<a target="_blank" rel="noopener" href="https://datascience.stackexchange.com/questions/14899/how-to-draw-deep-learning-network-architecture-diagrams">https://datascience.stackexchange.com/questions/14899/how-to-draw-deep-learning-network-architecture-diagrams</a><br>3、<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/31920000">https://zhuanlan.zhihu.com/p/31920000</a><br>4、<a target="_blank" rel="noopener" href="https://www.quora.com/What-tools-are-good-for-drawing-neural-network-architecture-diagrams">https://www.quora.com/What-tools-are-good-for-drawing-neural-network-architecture-diagrams</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://example.com/2023/11/30/%E7%BE%8E%E5%86%9B%E7%94%B5%E7%A3%81%E4%BD%9C%E6%88%98/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -318,7 +192,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">সম্পাদিত হয়েছে</span>
-      <time title="পরিমার্জন করা হয়েছেঃ 2026-04-01 15:44:55" itemprop="dateModified" datetime="2026-04-01T15:44:55+08:00">2026-04-01</time>
+      <time title="পরিমার্জন করা হয়েছেঃ 2026-04-01 23:15:44" itemprop="dateModified" datetime="2026-04-01T23:15:44+08:00">2026-04-01</time>
     </span>
 
   
@@ -343,7 +217,7 @@
 <p><strong>三是为“齐射”火力开辟电磁通道、协同火力打击、实施效果评估。</strong>诱饵和小型干扰器迷茫或欺骗敌方防空系统传感器，并在齐射集群到达防御区域之前耗尽其防御火力。因而可以通过建立安全通道，掩护火力到达打击目标；无人机蜂群中的诱饵和小型干扰器处于打击最前沿，验证目标引导打击，并可为巡飞打击平台实时分配时敏目标，确保首先摧毁高优先级目标；为评估打击效果，在进攻武器的后面可以跟随一个波次无人机蜂群，感知目标是否已被摧毁，并可以利用上述的协同，直接指挥齐射中剩余的武器对未被充分削弱的目标再次进行打击，或为后续的齐射提供打击提示。</p>
 <p><strong>四是遂行“穿透型电子攻击”，为“穿透型制空”创造条件。</strong>无人机蜂群中的诱饵和小型干扰器在主战飞机之前核实对方防空系统的位置信息，并通过通信网络将这些信息传回主战飞机。干扰机和诱饵实施干扰，削弱对方防空系统传感器，降低对方防空火力密度。然后，主战飞机进入作战区域，齐射大型短程武器，摧毁地面目标。电磁频谱战蜂群实施的“穿透型电子攻击”，为大型空中攻击平台抵近目标、在防护密集区域遂行打击创造了条件，并且增加了空对地打击平台可携带武器数量。</p>
 <p><strong>五是反侦察探测，掩护地（海）面机动。</strong>组合使用诱饵、电子干扰和电子佯动，给对方创建一幅虚假的战场态势图，以保护地面部队在高威胁区域安全。采取辐射控制措施，降低被探测概率；使用低成本诱饵和伪装，具备模拟真实舰船、飞机或者地面部队的雷达和无线电信号的能力，以迟滞对方对己方的定位，或者迫使对方采取更大规模的齐射来同时攻击真实目标和诱饵目标；由无人地面载具、无人水面载具或无人机携带激光眩目或无线电干扰，实施反侦察。</p>
-<img src="./assets/image-20231002103643569.png" alt="image-20231002103643569" style="zoom:33%;" />
+<img src="./image-20231002103643569.png" alt="image-20231002103643569" style="zoom:33%;" />
 
 <p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/HjnD-5ZR_YLWW86gfyc_xA">如何制胜未来电磁空间</a></p>
 <p>美军提出认知电子战的作战概念后开展了广泛的作战试验。2016年，美国国防部高级研究计划局（DARPA）与洛克希德.马丁公司合作开发了“自适应雷达对抗”项目。该项目推出了首款认知雷达对抗系统原型机，依托机器学习算法动态侦察干扰目标雷达，并大幅缩短了信号分析的时间。此外，诸如自适应电子战行为学习项目、极端射频频谱条件通信项目、认知干扰机项目、空军先进电子战组件项目、海军认知通信电子战项目等一系列项目也加速推进。</p>
@@ -352,7 +226,7 @@
 <p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/2aRhTHpP1rpGMWFmh_Dnhw">首发 | 兰德报告《在电磁频谱中智胜敏捷对手》解读</a></p>
 <p>值得一提的是，该报告研究的重点是实现美空军在执行任务时软件重编程序中各项指标的建设，帮助进一步增强机器学习算法（Machine Learning, ML）。换言之，将电子战和电磁频谱作战管理的数据能够通过软件让机器正确理解，最终使美空军武器平台能够自主学习、重编程序、适应并回击飞行中遇到的各类威胁，而这种基于机器学习的能力被称为认知型电子战。</p>
 <p>将人工智能向认知电子战赋能——使用机器学习算法（ML）、让平台能够自主学习、进而重编程序以应对不断变化的威胁挑战。为了实现美空军的最终愿景</p>
-<img src="./assets/image-20231002101137394.png" alt="image-20231002101137394" style="zoom:33%;" />
+<img src="./image-20231002101137394.png" alt="image-20231002101137394" style="zoom:33%;" />
 
 <p>该报告多次提到人工智能、机器学习（ML）、深度学习以及认知型电子战（Electronic Warfare，EW）。</p>
 <p>报告指出，要关注依赖机载高性能计算的进展，以及在相应尺寸、重量和功率限制范围内，支持计算密集型算法对处理能力的需求。此外，该报告还重点关注将高性能计算机（High-Performance Computing，HPC）装载到能够执行EWIR任务的飞机上，旨在增强机载处理能力（onboard processing，OBP），使飞机能够在执行任务中快速重编程序。同时，飞机还能通过卫星通信和高速数据链接实现与其他武器平台的实时共享。</p>
@@ -387,6 +261,153 @@
 <ol>
 <li>策略层面，一些不同情况下的作战流程，时序流程，具体场景和具体任务的作战干扰过程</li>
 <li>按照干扰样式分别写 干扰机理和原理</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/11/30/%E8%BD%AF%E4%BB%B6%E5%A4%8D%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李治澎">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="随笔">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 随笔">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/11/30/%E8%BD%AF%E4%BB%B6%E5%A4%8D%E7%94%A8/" class="post-title-link" itemprop="url">软件复用</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">প্রকাশিত হয়েছে</span>
+
+      <time title="তৈরি করা হয়েছেঃ 2023-11-30 00:00:00" itemprop="dateCreated datePublished" datetime="2023-11-30T00:00:00+08:00">2023-11-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">সম্পাদিত হয়েছে</span>
+      <time title="পরিমার্জন করা হয়েছেঃ 2026-04-01 23:15:44" itemprop="dateModified" datetime="2026-04-01T23:15:44+08:00">2026-04-01</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="面向舰艇作战软件研制的仿真模型体系建设"><a href="#面向舰艇作战软件研制的仿真模型体系建设" class="headerlink" title="面向舰艇作战软件研制的仿真模型体系建设"></a>面向舰艇作战软件研制的仿真模型体系建设</h3><h3 id="软件产品线度量及应用研究"><a href="#软件产品线度量及应用研究" class="headerlink" title="软件产品线度量及应用研究"></a>软件产品线度量及应用研究</h3><p>软件复用是提高软件生产力、软件质量的最有潜力的领域,软件产品线实质上是最高级别的软件复用，而软件产品线度量技术对提升软件产品线有帮助，提出了一些重要的度量技术思路,分析了相应的度量指标</p>
+<h3 id="仿真模型重用与组合关键技术研究"><a href="#仿真模型重用与组合关键技术研究" class="headerlink" title="仿真模型重用与组合关键技术研究"></a>仿真模型重用与组合关键技术研究</h3><p>能够通过灵活地组装已有仿真模型，快速构建满足不同应用需求的仿真系统，及时响应所研究系统的不断演化，保持对其结构组成、行为及过程的建模与仿真的有效性</p>
+<h3 id="Software-Reuse-Research-Status-and-Future"><a href="#Software-Reuse-Research-Status-and-Future" class="headerlink" title="Software Reuse Research: Status and Future"></a>Software Reuse Research: Status and Future</h3><p>软件重用是利用现有的软件或软件知识来构建新的软件。可重用资产可以是可重用的软件或软件知识，而可重用性是一个软件资产的属性，表示其被重用的概率。</p>
+<p>软件重用研究的主要贡献包括： </p>
+<ol>
+<li>提高软件开发效率和质量：通过重用现有的软件或软件知识，可以减少软件开发的时间和成本，并提高软件的质量和可靠性。 </li>
+<li>促进软件工程的发展：软件重用是软件工程的一个重要组成部分，可以促进软件工程的发展和进步。 </li>
+<li>提高软件开发人员的技能和能力：通过软件重用，软件开发人员可以学习和掌握更多的软件知识和技能，提高自己的能力和竞争力。</li>
+</ol>
+<p>软件重用研究的未解决问题包括： </p>
+<ol>
+<li>软件重用的度量和评估：如何度量和评估软件重用的效果和价值，是软件重用研究中的一个重要问题。 </li>
+<li>领域工程：如何将软件重用应用于特定领域的软件开发，是软件重用研究中的一个重要问题。 </li>
+<li>软件架构和生成器：如何设计和实现可重用的软件架构和生成器，是软件重用研究中的一个重要问题。 </li>
+<li>软件重用的挑战：软件重用面临着许多挑战，如如何管理和维护可重用的软件资产，如何解决软件兼容性和集成性等问题，这些都是软件重用研究中的重要问题。</li>
+</ol>
+<h3 id="Dynamic-Software-Product-Lines"><a href="#Dynamic-Software-Product-Lines" class="headerlink" title="Dynamic Software Product Lines"></a>Dynamic Software Product Lines</h3><p>这篇论文介绍了动态软件产品线（DSPL）的概念和应用。DSPL是一种软件工程方法，旨在通过使用可重用的组件和变异点来实现软件产品的快速开发和定制化。这篇论文介绍了动态软件产品线（DSPL）的概念和应用。DSPL是一种软件工程方法，旨在通过使用可重用的组件和变异点来实现软件产品的快速开发和定制化。</p>
+<p>DSPL的优点包括： </p>
+<ol>
+<li>可以快速开发和定制化软件产品。 </li>
+<li>可以提高软件产品的质量和可靠性。 </li>
+<li>可以降低软件产品的开发和维护成本。 </li>
+<li>可以提高软件产品的可重用性和可扩展性。</li>
+</ol>
+<p>DSPL的应用场景包括： </p>
+<ol>
+<li>需要快速开发和定制化软件产品的场景。 </li>
+<li>需要提高软件产品质量和可靠性的场景。 </li>
+<li>需要降低软件产品开发和维护成本的场景。 </li>
+<li>需要提高软件产品可重用性和可扩展性的场景。</li>
+</ol>
+<p>DSPL的实现方法包括： </p>
+<ol>
+<li>使用可重用的组件和变异点来实现软件产品的快速开发和定制化。 </li>
+<li>使用动态绑定技术来实现软件产品的动态变异。 </li>
+<li>使用多智能体系统来实现软件产品的自适应和演化。</li>
+<li>使用动态重构架构来实现软件产品的动态变异和演化。</li>
+</ol>
+<h3 id="软件产品线可变性建模技术系统综述"><a href="#软件产品线可变性建模技术系统综述" class="headerlink" title="软件产品线可变性建模技术系统综述"></a>软件产品线可变性建模技术系统综述</h3><p>软件产品线是实现大规模的软件复用、保证高质量的新产品开发的最佳实践.</p>
+<p>软件产品线的关键问题是如何进行可变性管理,并基于可变性管理实现软件核心资产的复用.</p>
+<p>软件产品线可变性建模是可变性管理的关键技术,实现产品家族成员的共性和可变性的描述</p>
+<h3 id="A-systematic-review-of-evaluation-of-variability-management-approaches-in-software-product-lines"><a href="#A-systematic-review-of-evaluation-of-variability-management-approaches-in-software-product-lines" class="headerlink" title="A systematic review of evaluation of variability management approaches in software product lines"></a>A systematic review of evaluation of variability management approaches in software product lines</h3><p>关于软件产品线工程中可变性管理方法评估的系统性综述</p>
+<ol>
+<li><p>基于特征模型的方法 </p>
+<p>基于特征模型的方法是一种常用的可变性管理方法，它通过定义和描述软件产品线中的特征来管理可变性。特征是指软件产品线中的可变部分，例如不同的功能、性能、平台等等。特征模型是一种用于描述特征之间关系的模型，它可以帮助开发人员理解和管理软件产品线中的可变性。特征模型通常使用树形结构表示，其中根节点表示整个软件产品线，子节点表示不同的特征。特征模型可以用于生成不同的产品，也可以用于验证和分析软件产品线的可变性。 </p>
+</li>
+<li><p>基于约束模型的方法 </p>
+<p>基于约束模型的方法是一种通过定义和描述约束来管理可变性的方法。约束是指软件产品线中的限制条件，例如不同的需求、规范、标准等等。约束模型是一种用于描述约束之间关系的模型，它可以帮助开发人员理解和管理软件产品线中的可变性。约束模型通常使用图形化表示，其中节点表示不同的约束，边表示约束之间的关系。约束模型可以用于生成不同的产品，也可以用于验证和分析软件产品线的可变性。</p>
+</li>
+<li><p>基于元模型的方法 </p>
+<p>基于元模型的方法是一种通过定义和描述元模型来管理可变性的方法。元模型是一种用于描述模型之间关系的模型，它可以帮助开发人员理解和管理软件产品线中的可变性。元模型通常使用图形化表示，其中节点表示不同的模型元素，边表示元素之间的关系。元模型可以用于生成不同的产品，也可以用于验证和分析软件产品线的可变性。基于元模型的方法通常需要使用特定的建模语言和工具，例如UML、Ecore等等。</p>
+</li>
+</ol>
+<h3 id="基于复用的军用软件构件化与生产线技术探讨"><a href="#基于复用的军用软件构件化与生产线技术探讨" class="headerlink" title="基于复用的军用软件构件化与生产线技术探讨"></a>基于复用的军用软件构件化与生产线技术探讨</h3><p>军用软件构件化</p>
+<img src="./image-20230720144356338.png" alt="image-20230720144356338" style="zoom:67%;" />
+
+
+
+<h3 id="船舶列队协同控制方法研究综述"><a href="#船舶列队协同控制方法研究综述" class="headerlink" title="船舶列队协同控制方法研究综述"></a>船舶列队协同控制方法研究综述</h3><p>涉及的主要问题有人机共驾、系统建 模、控制一致性、通信受限等</p>
+<ol>
+<li><p>人机共驾控制问题</p>
+<p>如何合理地分配人与机器在驾控中的角色与 权重，利用人机的差异性和互补性提升列队航行 的技术效能，是需要解决的关键问题</p>
+</li>
+<li><p>列队控制运动不确定性建模问题</p>
+<p>建立精确的列 队控制运动模型是当下亟需突破的一个技术难点</p>
+</li>
+<li><p>列队协同控制一致性问题</p>
+<p>解决异质船舶列队中的一致性控制问题 是未来研究的难点问题</p>
+</li>
+<li><p>通信受限下船舶列队鲁棒控制问题</p>
+</li>
 </ol>
 
       
@@ -450,7 +471,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">সম্পাদিত হয়েছে</span>
-      <time title="পরিমার্জন করা হয়েছেঃ 2026-04-01 15:44:55" itemprop="dateModified" datetime="2026-04-01T15:44:55+08:00">2026-04-01</time>
+      <time title="পরিমার্জন করা হয়েছেঃ 2026-04-01 23:15:44" itemprop="dateModified" datetime="2026-04-01T23:15:44+08:00">2026-04-01</time>
     </span>
 
   
@@ -467,7 +488,7 @@
 <li>better meet the specific constraints in practical applications</li>
 <li>Controllable text generation (CTG) refers to the task of generating text according to the given controlled element</li>
 </ul>
-<p><img src="/./assets/image-20231127212726619.png" alt="image-20231127212726619"></p>
+<p><img src="/./image-20231127212726619.png" alt="image-20231127212726619"></p>
 <p>举例说明</p>
 <ul>
 <li>第一个例子就是给定一个故事线，要求模型按照这样的思路去生成。</li>
@@ -483,7 +504,7 @@
 <li><strong>Debiasing</strong>，这也非常重要，可以帮助我们把带有某些偏见的文本转化成无偏见的文本，让机器也符合伦理道德</li>
 <li><strong>Format Control</strong>，风格、格式的转换，比如中国古诗词就有明确的格式，这就需要在生成的时候加以控制</li>
 </ul>
-<h2 id="CTG的方法流派"><a href="#CTG的方法流派" class="headerlink" title="CTG的方法流派"></a>CTG的方法流派</h2><img src="./assets/image-20231127213100182.png" alt="image-20231127213100182" style="zoom: 67%;" />
+<h2 id="CTG的方法流派"><a href="#CTG的方法流派" class="headerlink" title="CTG的方法流派"></a>CTG的方法流派</h2><img src="./image-20231127213100182.png" alt="image-20231127213100182" style="zoom: 67%;" />
 
 <p>大致上分为三类:</p>
 <ul>
@@ -508,13 +529,13 @@
 <p> 以CTRL为代表的方法只能从一个总体的层面对生成文本增加限制，比如某种风格主题，但无法对具体内容进行精细控制，CoCon则是直接以原文中的部分内容作为condition，来预测下文, 核心思想就是<strong>使用文本的一部分作为condition，让模型对剩余部分进行复原</strong></p>
 </li>
 </ol>
-<img src="./assets/image-20231127215815938.png" alt="image-20231127215815938" style="zoom:50%;" />
+<img src="./image-20231127215815938.png" alt="image-20231127215815938" style="zoom:50%;" />
 
 <p>上面列举的CTRL和CoCon的对NLG添加的实际上是比较soft的限制，并不强制要求模型一定要输出什么元素，而有一些工作则会使用hard的限制，要求模型必须输出给定的某些关键词：</p>
 <ol start="3">
 <li><p><strong>POINTER</strong></p>
 <p> POINTER的主要目的是训练根据指定词汇然后生成包含这些词汇的模型，采用的是一种基于插入的、渐进生成的方法,POINTER的生成是一种迭代式地生成，先生成给定的关键词，然后每一轮都按照重要性不断插入新的词，直到把句子给补齐。POINTER中使用的一种Transformer结构叫做<strong>Insertion Transformer</strong></p>
- <img src="./assets/image-20231127220156236.png" alt="image-20231127220156236" style="zoom:67%;" />
+ <img src="./image-20231127220156236.png" alt="image-20231127220156236" style="zoom:67%;" />
 </li>
 <li><p><strong>Constrained BART (CBART)</strong></p>
 <p> 对BART进行了改造，通过在encoder上面添加一个token-level classifier来指导decoder在生成的时候应该进行replace还是insert</p>
@@ -523,14 +544,14 @@
 <h3 id="3-Post-Process"><a href="#3-Post-Process" class="headerlink" title="3. Post-Process"></a>3. Post-Process</h3><ol>
 <li><p><strong>Plug and Play Language Models (PPLM)</strong></p>
 <p> PPLM不希望去训练PLM，而是通过额外的一个attribute model来对PLM的输出加以修正，从而符合某种预期。这里的attribute model，既可以是一个bag of words来代表某个topic，也可以是一个训练好的小模型来对某个topic进行打分，然后通过这个attribute model向PLM的hidden states传递梯度，从而对hidden states进行一定的修正，然后PLM的输出就会往我们希望的topic倾斜了。</p>
- <img src="./assets/image-20231127220849538.png" alt="image-20231127220849538" style="zoom:67%;" />
+ <img src="./image-20231127220849538.png" alt="image-20231127220849538" style="zoom:67%;" />
 </li>
 <li><p><strong>MEGATRON-CNTRL</strong></p>
 <p> 选择利用外部知识库来辅助生成，给定一个context，MEGATRON-CNTRL会首先使用一个predictor生成一批关键词，然后通过一个retriever从知识库中找到跟这些关键词匹配的句子，然后通过一个ranker进行筛选，最后再输入PLM进行句子的生成：</p>
 </li>
 </ol>
 <p>还有工作比如<strong>PAIR</strong>[14]则是先生成一个包含关键词和位置信息的模板，然后对模板进行填空，从而进行控制性生成；<strong>GeDi</strong>[15]则是训练一个小型的discriminator来引导PLM的生成。</p>
-<img src="./assets/image-20231127221138206.png" alt="image-20231127221138206" style="zoom:67%;" />
+<img src="./image-20231127221138206.png" alt="image-20231127221138206" style="zoom:67%;" />
       
     </div>
 
@@ -1211,7 +1232,7 @@
 </ol>
 </blockquote>
 <p>算法设计思路（重点阐述）及实现。需要强调的是：在设计思路部分，请重点阐述模型库、数据库还有交互界面的基本框架。</p>
-<p>答辩完成后请各位同学在7月24日中午12时之前将答辩ppt、系统程序源程序代码打包压缩以邮件的形式发送至<a href="mailto:&#x57;&#97;&#x6e;&#x7a;&#104;&#101;&#x6e;&#103;&#95;&#76;&#x69;&#x75;&#x36;&#64;&#49;&#54;&#51;&#46;&#99;&#111;&#109;">&#x57;&#97;&#x6e;&#x7a;&#104;&#101;&#x6e;&#103;&#95;&#76;&#x69;&#x75;&#x36;&#64;&#49;&#54;&#51;&#46;&#99;&#111;&#109;</a>。过期不接受补交作业。请各位同学注意。有问题请及时沟通。</p>
+<p>答辩完成后请各位同学在7月24日中午12时之前将答辩ppt、系统程序源程序代码打包压缩以邮件的形式发送至<a href="mailto:&#87;&#x61;&#110;&#122;&#x68;&#x65;&#110;&#x67;&#95;&#x4c;&#x69;&#117;&#x36;&#64;&#49;&#x36;&#51;&#46;&#x63;&#111;&#x6d;">&#87;&#x61;&#110;&#122;&#x68;&#x65;&#110;&#x67;&#95;&#x4c;&#x69;&#117;&#x36;&#64;&#49;&#x36;&#51;&#46;&#x63;&#111;&#x6d;</a>。过期不接受补交作业。请各位同学注意。有问题请及时沟通。</p>
 
       
     </div>
@@ -1351,7 +1372,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">সম্পাদিত হয়েছে</span>
-      <time title="পরিমার্জন করা হয়েছেঃ 2026-04-01 15:44:55" itemprop="dateModified" datetime="2026-04-01T15:44:55+08:00">2026-04-01</time>
+      <time title="পরিমার্জন করা হয়েছেঃ 2026-04-01 23:15:44" itemprop="dateModified" datetime="2026-04-01T23:15:44+08:00">2026-04-01</time>
     </span>
 
   
@@ -1621,7 +1642,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">সম্পাদিত হয়েছে</span>
-      <time title="পরিমার্জন করা হয়েছেঃ 2026-04-01 15:44:55" itemprop="dateModified" datetime="2026-04-01T15:44:55+08:00">2026-04-01</time>
+      <time title="পরিমার্জন করা হয়েছেঃ 2026-04-01 23:15:44" itemprop="dateModified" datetime="2026-04-01T23:15:44+08:00">2026-04-01</time>
     </span>
 
   
@@ -1683,15 +1704,15 @@
 <p>（6）<strong>会议往往偏向声音最大的人，而不一定偏向那些有最好想法的人</strong>。这会扼杀创新和思想的多样性。作为对比，文档提供了公平的竞争环境，每个团队成员都可以表达他们的想法和见解，它促进了一种深思熟虑和反思的文化，而不是草率的判断和冲动的决定。</p>
 <p>（7）结论：你的时间和资源最好花在记录上，而不是花在会议上。大多数会议很容易被一份精心起草的、提供相关数据和建议、并征求反馈意见的文件所取代。</p>
 <h3 id="四种优化程序的方法"><a href="#四种优化程序的方法" class="headerlink" title="四种优化程序的方法"></a>四种优化程序的方法</h3><p>优化程序的四种方法：使用更好的算法、使用更好的数据结构、使用底层的编程语言、以及接受不太精确的解决方案。文章开头和结尾则提出了一些教训：我们对于性能优化问题容易过度乐观、我们可能只顾性能而牺牲了正确性、不该作过早和复杂的优化、优化的广度比优化的深度更重要。</p>
-<h3 id="知识和智慧"><a href="#知识和智慧" class="headerlink" title="知识和智慧"></a>知识和智慧</h3><p><img src="/./assets/image-20240406213800652.png" alt="image-20240406213800652"></p>
-<h3 id="计算机底层原理"><a href="#计算机底层原理" class="headerlink" title="计算机底层原理"></a>计算机底层原理</h3><p><img src="/./assets/image-20250108140345474.png" alt="image-20250108140345474"></p>
-<h3 id="中世纪城堡"><a href="#中世纪城堡" class="headerlink" title="中世纪城堡"></a>中世纪城堡</h3><p><img src="/./assets/image-20250108140528210.png" alt="image-20250108140528210"></p>
+<h3 id="知识和智慧"><a href="#知识和智慧" class="headerlink" title="知识和智慧"></a>知识和智慧</h3><p><img src="/./image-20240406213800652.png" alt="image-20240406213800652"></p>
+<h3 id="计算机底层原理"><a href="#计算机底层原理" class="headerlink" title="计算机底层原理"></a>计算机底层原理</h3><p><img src="/./image-20250108140345474.png" alt="image-20250108140345474"></p>
+<h3 id="中世纪城堡"><a href="#中世纪城堡" class="headerlink" title="中世纪城堡"></a>中世纪城堡</h3><p><img src="/./image-20250108140528210.png" alt="image-20250108140528210"></p>
 <h3 id="超加工食品"><a href="#超加工食品" class="headerlink" title="超加工食品"></a>超加工食品</h3><p>15年前，一位巴西营养学家发现，尽管巴西家庭对糖和油的消费减少，但肥胖率却在上升。为什么人们吃得更健康，却变胖了？他认为，这是因为精细加工食品的出现，促进了人们对食品的消化。他因此创造了“超加工食品”（ultra-processed foods）这个词。从此，这成了科学界的共识：想要健康，应该吃一些粗粮，避免多吃精细加工的食品。</p>
 <h3 id="品牌-Brand"><a href="#品牌-Brand" class="headerlink" title="品牌 Brand"></a>品牌 Brand</h3><p>品牌(brand)一词很有意思，它的本义是牛身上的烙印，用以区分不同主人的牲畜。</p>
 <h3 id="社会运转机制"><a href="#社会运转机制" class="headerlink" title="社会运转机制"></a>社会运转机制</h3><p>这个社会有一套运转机制： 善于讲故事的人治人，喜欢听故事的人治于人。 人分四个等级： 善于讲故事、善于讲方法、喜欢听方法、喜欢听故事。 最后一种是最low、最难有出息的。</p>
-<h3 id="美国总统"><a href="#美国总统" class="headerlink" title="美国总统"></a>美国总统</h3><p><img src="/./assets/image-20250108140658241.png" alt="image-20250108140658241"></p>
-<p><img src="/./assets/image-20250108140702668.png" alt="image-20250108140702668"></p>
-<p><img src="/./assets/image-20250108140706040.png" alt="image-20250108140706040"></p>
+<h3 id="美国总统"><a href="#美国总统" class="headerlink" title="美国总统"></a>美国总统</h3><p><img src="/./image-20250108140658241.png" alt="image-20250108140658241"></p>
+<p><img src="/./image-20250108140702668.png" alt="image-20250108140702668"></p>
+<p><img src="/./image-20250108140706040.png" alt="image-20250108140706040"></p>
 <h3 id="中美工作区别"><a href="#中美工作区别" class="headerlink" title="中美工作区别"></a>中美工作区别</h3><ol>
 <li>在湾区的科技公司里面，不管是真实的原因还是PR的原因，往往公司上下会认为技术和产品是公司竞争的最大优势</li>
 <li>我觉得本质原因还是国内的创业公司，真的是因为科技创新而成功的，真的不多。不能说没有，但是真的不多，或者说是远没有湾区科技公司的案例多。</li>
