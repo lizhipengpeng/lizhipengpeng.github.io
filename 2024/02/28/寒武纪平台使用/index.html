@@ -88,11 +88,129 @@
 
 
 
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
 
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
-</head>
+<style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
   <div class="headband"></div>
@@ -234,33 +352,33 @@
     
     
     <div class="post-body" itemprop="articleBody"><h1 id="寒武纪平台使用-先进研究院-李治澎"><a href="#寒武纪平台使用-先进研究院-李治澎" class="headerlink" title="寒武纪平台使用(先进研究院-李治澎)"></a>寒武纪平台使用(先进研究院-李治澎)</h1><h2 id="使用自带的镜像创建新环境"><a href="#使用自带的镜像创建新环境" class="headerlink" title="使用自带的镜像创建新环境"></a>使用自带的镜像创建新环境</h2><p>目前有的镜像包括pytorch和tensorflow</p>
-<img src="/images/image-20240227103324985.png" alt="image-20240227103324985" style="zoom: 67%;" />
+<img src="/images/image-20240227103324985.png" alt="image-20240227103324985" style="zoom: 67%;">
 
 <p>业务管理-&gt;开发环境-&gt;创建</p>
-<img src="/images/image-20240227103524410.png" alt="image-20240227103524410" style="zoom: 50%;" />
+<img src="/images/image-20240227103524410.png" alt="image-20240227103524410" style="zoom: 50%;">
 
 <p>创建完之后等待平台拉取镜像后，会出现一个正在运行的环境</p>
 <p><img src="/images/image-20240227103823922.png" alt="image-20240227103823922"></p>
 <p>点击查看能够看到新创建的环境的ssh连接，如下</p>
-<img src="/images/image-20240227104043958.png" alt="image-20240227104043958" style="zoom:67%;" />
+<img src="/images/image-20240227104043958.png" alt="image-20240227104043958" style="zoom:67%;">
 
 
 
 <p>也可以直接点击环境名称进入在线的jupyter界面</p>
-<img src="/images/image-20240227104126953.png" alt="image-20240227104126953" style="zoom:67%;" />
+<img src="/images/image-20240227104126953.png" alt="image-20240227104126953" style="zoom:67%;">
 
 <h2 id="环境使用（以pytorch-python3-6镜像为例）"><a href="#环境使用（以pytorch-python3-6镜像为例）" class="headerlink" title="环境使用（以pytorch_python3.6镜像为例）"></a>环境使用（以pytorch_python3.6镜像为例）</h2><p>在进入到容器实例(也就是上面创建的新环境)后，镜像中自带了一个已经配置好的寒武纪环境，在终端中分别输入下面两行命令启动寒武纪python环境（若使用pytorch_python3.7镜像则不需要这一步）</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">source /torch/venv3/pytorch/bin/activate</span><br><span class="line">export LD_LIBRARY_PATH=/torch/neuware_home/lib64:/usr/local/openmpi/lib</span><br></pre></td></tr></table></figure>
 
 <p>之后终端就会出现(pytorch)为开头的python环境，如下</p>
-<img src="/images/image-20240227104725617.png" alt="image-20240227104725617" style="zoom: 80%;" />
+<img src="/images/image-20240227104725617.png" alt="image-20240227104725617" style="zoom: 80%;">
 
 <p>可以使用cnmon命令来查看显卡使用情况(类似于NVIDIA的nvidia-smi)</p>
-<img src="/images/image-20240227104941137.png" alt="image-20240227104941137" style="zoom:67%;" />
+<img src="/images/image-20240227104941137.png" alt="image-20240227104941137" style="zoom:67%;">
 
 <p>以下是一个具体的使用torch的实际代码例子</p>
 <p>因为容器内无法联网，所以下面例子中的数据集需要在本地提前下载好</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">train_set = mnist.MNIST(<span class="string">&#x27;./data&#x27;</span>,train=<span class="literal">True</span>,transform=data_tf,download=<span class="literal">True</span>)</span><br><span class="line">test_set = mnist.MNIST(<span class="string">&#x27;./data&#x27;</span>,train=<span class="literal">False</span>,transform=data_tf,download=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">train_set = mnist.MNIST(<span class="string">'./data'</span>,train=<span class="literal">True</span>,transform=data_tf,download=<span class="literal">True</span>)</span><br><span class="line">test_set = mnist.MNIST(<span class="string">'./data'</span>,train=<span class="literal">False</span>,transform=data_tf,download=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
 
 <p>然后将下面完整代码和数据集上传到容器中</p>
 <p><img src="/images/image-20240227135854500.png" alt="image-20240227135854500"></p>
@@ -268,16 +386,16 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python mnist.py</span><br></pre></td></tr></table></figure>
 
 <p>终端会输出训练的记录</p>
-<img src="/images/image-20240227140117459.png" alt="image-20240227140117459" style="zoom:67%;" />
+<img src="/images/image-20240227140117459.png" alt="image-20240227140117459" style="zoom:67%;">
 
 
 
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch       <span class="comment">#导入原生PyTorch</span></span><br><span class="line"><span class="keyword">import</span> torch_mlu   <span class="comment">#导入Cambricon PyTorch Backend</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> torch.utils.data <span class="keyword">import</span> DataLoader</span><br><span class="line"><span class="keyword">from</span> torchvision.datasets <span class="keyword">import</span> mnist</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span> nn</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span> optim</span><br><span class="line"><span class="keyword">from</span> torchvision <span class="keyword">import</span> transforms</span><br><span class="line"><span class="keyword">from</span> torch.optim.lr_scheduler <span class="keyword">import</span> StepLR</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> torch.nn.functional <span class="keyword">as</span> F</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Net</span>(nn.Module):     <span class="comment">#定义模型</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">super</span>(Net, <span class="variable language_">self</span>).__init__()</span><br><span class="line">        <span class="variable language_">self</span>.conv1 = nn.Conv2d(<span class="number">1</span>, <span class="number">32</span>, <span class="number">3</span>, <span class="number">1</span>)</span><br><span class="line">        <span class="variable language_">self</span>.conv2 = nn.Conv2d(<span class="number">32</span>, <span class="number">64</span>, <span class="number">3</span>, <span class="number">1</span>)</span><br><span class="line">        <span class="variable language_">self</span>.dropout1 = nn.Dropout2d(<span class="number">0.25</span>)</span><br><span class="line">        <span class="variable language_">self</span>.dropout2 = nn.Dropout2d(<span class="number">0.5</span>)</span><br><span class="line">        <span class="variable language_">self</span>.fc1 = nn.Linear(<span class="number">9216</span>, <span class="number">128</span>)</span><br><span class="line">        <span class="variable language_">self</span>.fc2 = nn.Linear(<span class="number">128</span>, <span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):   <span class="comment">#定义前向计算</span></span><br><span class="line">        x = <span class="variable language_">self</span>.conv1(x)</span><br><span class="line">        x = F.relu(x)</span><br><span class="line">        x = <span class="variable language_">self</span>.conv2(x)</span><br><span class="line">        x = F.relu(x)</span><br><span class="line">        x = F.max_pool2d(x, <span class="number">2</span>)</span><br><span class="line">        x = <span class="variable language_">self</span>.dropout1(x)</span><br><span class="line">        x = torch.flatten(x, <span class="number">1</span>)</span><br><span class="line">        x = <span class="variable language_">self</span>.fc1(x)</span><br><span class="line">        x = F.relu(x)</span><br><span class="line">        x = <span class="variable language_">self</span>.dropout2(x)</span><br><span class="line">        x = <span class="variable language_">self</span>.fc2(x)</span><br><span class="line">        output = F.log_softmax(x, dim=<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">return</span> output</span><br><span class="line"></span><br><span class="line"><span class="comment">#模型训练</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">train</span>(<span class="params">model, train_data, optimizer, epoch</span>):</span><br><span class="line">    model = model.train()</span><br><span class="line">    <span class="keyword">for</span> batch_idx, (img, label) <span class="keyword">in</span> <span class="built_in">enumerate</span>(train_data):</span><br><span class="line">        img = img.to(torch.device(<span class="string">&#x27;mlu&#x27;</span>))</span><br><span class="line">        label = label.to(torch.device(<span class="string">&#x27;mlu&#x27;</span>))</span><br><span class="line">        optimizer.zero_grad()</span><br><span class="line">        out = model(img)</span><br><span class="line">        loss = F.nll_loss(out, label)</span><br><span class="line">        loss.backward()</span><br><span class="line">        optimizer.step()</span><br><span class="line">        <span class="keyword">if</span> batch_idx % <span class="number">100</span> == <span class="number">0</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;Train Epoch: &#123;&#125; [&#123;&#125;/&#123;&#125; (&#123;:.0f&#125;%)]\tLoss: &#123;:.6f&#125;&#x27;</span>.<span class="built_in">format</span>(</span><br><span class="line">                epoch, batch_idx * <span class="built_in">len</span>(img), <span class="built_in">len</span>(train_data.dataset),</span><br><span class="line">                <span class="number">100.</span> * batch_idx / <span class="built_in">len</span>(train_data), loss.item()))</span><br><span class="line"></span><br><span class="line"><span class="comment">#模型推理</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">validate</span>(<span class="params">val_loader, model</span>):</span><br><span class="line">    test_loss = <span class="number">0</span></span><br><span class="line">    correct = <span class="number">0</span></span><br><span class="line">    model.<span class="built_in">eval</span>()</span><br><span class="line">    <span class="keyword">with</span> torch.no_grad():</span><br><span class="line">        <span class="keyword">for</span> images, target <span class="keyword">in</span> val_loader:</span><br><span class="line">            images = images.to(torch.device(<span class="string">&#x27;mlu&#x27;</span>))</span><br><span class="line">            target = target.to(torch.device(<span class="string">&#x27;mlu&#x27;</span>))</span><br><span class="line">            output = model(images)</span><br><span class="line">            test_loss += F.nll_loss(output, target, reduction=<span class="string">&#x27;sum&#x27;</span>).item()</span><br><span class="line">            pred = output.argmax(dim=<span class="number">1</span>, keepdim=<span class="literal">True</span>)</span><br><span class="line">            pred = pred.cpu()</span><br><span class="line">            target = target.cpu()</span><br><span class="line">            correct += pred.eq(target.view_as(pred)).<span class="built_in">sum</span>().item()</span><br><span class="line">    test_loss /= <span class="built_in">len</span>(val_loader.dataset)</span><br><span class="line">    <span class="comment">#打印精度结果</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;\nTest set: Average loss: &#123;:.4f&#125;, Accuracy: &#123;&#125;/&#123;&#125; (&#123;:.0f&#125;%)\n&#x27;</span>.<span class="built_in">format</span>(</span><br><span class="line">        test_loss, correct, <span class="built_in">len</span>(val_loader.dataset),</span><br><span class="line">        <span class="number">100.</span> * correct / <span class="built_in">len</span>(val_loader.dataset)))</span><br><span class="line"></span><br><span class="line"><span class="comment">#主函数</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    data_tf = transforms.Compose(</span><br><span class="line">                [transforms.ToTensor(),</span><br><span class="line">                 transforms.Normalize([<span class="number">0.1307</span>],[<span class="number">0.3081</span>])])</span><br><span class="line"></span><br><span class="line">    <span class="comment">#获取本地数据集</span></span><br><span class="line">    train_set = mnist.MNIST(<span class="string">&#x27;./data&#x27;</span>,train=<span class="literal">True</span>,transform=data_tf,download=<span class="literal">True</span>)</span><br><span class="line">    test_set = mnist.MNIST(<span class="string">&#x27;./data&#x27;</span>,train=<span class="literal">False</span>,transform=data_tf,download=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">    train_data = DataLoader(train_set,batch_size=<span class="number">64</span>,shuffle=<span class="literal">True</span>)</span><br><span class="line">    test_data = DataLoader(test_set,batch_size=<span class="number">1000</span>,shuffle=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line">    net_orig = Net()</span><br><span class="line">    net = net_orig.to(torch.device(<span class="string">&#x27;mlu&#x27;</span>))   <span class="comment">#模型拷贝到MLU设备</span></span><br><span class="line">    optimizer = optim.Adadelta(net.parameters(), <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    nums_epoch = <span class="number">10</span>   <span class="comment">#训练10个epoch</span></span><br><span class="line">    save_model = <span class="literal">True</span> <span class="comment">#训练完成后保存模型</span></span><br><span class="line"></span><br><span class="line">    scheduler = StepLR(optimizer, step_size=<span class="number">1</span>, gamma=<span class="number">0.7</span>)</span><br><span class="line">    <span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(nums_epoch):</span><br><span class="line">        train(net, train_data, optimizer, epoch)</span><br><span class="line">        validate(test_data, net)</span><br><span class="line"></span><br><span class="line">        scheduler.step()</span><br><span class="line">        <span class="keyword">if</span> save_model:  <span class="comment"># 将训练好的模型保存为model.pth</span></span><br><span class="line">            <span class="keyword">if</span> epoch == nums_epoch-<span class="number">1</span>:</span><br><span class="line">                checkpoint = &#123;<span class="string">&quot;state_dict&quot;</span>:net.state_dict(), <span class="string">&quot;optimizer&quot;</span>:optimizer.state_dict(), <span class="string">&quot;epoch&quot;</span>: epoch&#125;</span><br><span class="line">                torch.save(checkpoint, <span class="string">&#x27;model.pth&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch       <span class="comment">#导入原生PyTorch</span></span><br><span class="line"><span class="keyword">import</span> torch_mlu   <span class="comment">#导入Cambricon PyTorch Backend</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> torch.utils.data <span class="keyword">import</span> DataLoader</span><br><span class="line"><span class="keyword">from</span> torchvision.datasets <span class="keyword">import</span> mnist</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span> nn</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span> optim</span><br><span class="line"><span class="keyword">from</span> torchvision <span class="keyword">import</span> transforms</span><br><span class="line"><span class="keyword">from</span> torch.optim.lr_scheduler <span class="keyword">import</span> StepLR</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> torch.nn.functional <span class="keyword">as</span> F</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Net</span>(nn.Module):     <span class="comment">#定义模型</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">super</span>(Net, <span class="variable language_">self</span>).__init__()</span><br><span class="line">        <span class="variable language_">self</span>.conv1 = nn.Conv2d(<span class="number">1</span>, <span class="number">32</span>, <span class="number">3</span>, <span class="number">1</span>)</span><br><span class="line">        <span class="variable language_">self</span>.conv2 = nn.Conv2d(<span class="number">32</span>, <span class="number">64</span>, <span class="number">3</span>, <span class="number">1</span>)</span><br><span class="line">        <span class="variable language_">self</span>.dropout1 = nn.Dropout2d(<span class="number">0.25</span>)</span><br><span class="line">        <span class="variable language_">self</span>.dropout2 = nn.Dropout2d(<span class="number">0.5</span>)</span><br><span class="line">        <span class="variable language_">self</span>.fc1 = nn.Linear(<span class="number">9216</span>, <span class="number">128</span>)</span><br><span class="line">        <span class="variable language_">self</span>.fc2 = nn.Linear(<span class="number">128</span>, <span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):   <span class="comment">#定义前向计算</span></span><br><span class="line">        x = <span class="variable language_">self</span>.conv1(x)</span><br><span class="line">        x = F.relu(x)</span><br><span class="line">        x = <span class="variable language_">self</span>.conv2(x)</span><br><span class="line">        x = F.relu(x)</span><br><span class="line">        x = F.max_pool2d(x, <span class="number">2</span>)</span><br><span class="line">        x = <span class="variable language_">self</span>.dropout1(x)</span><br><span class="line">        x = torch.flatten(x, <span class="number">1</span>)</span><br><span class="line">        x = <span class="variable language_">self</span>.fc1(x)</span><br><span class="line">        x = F.relu(x)</span><br><span class="line">        x = <span class="variable language_">self</span>.dropout2(x)</span><br><span class="line">        x = <span class="variable language_">self</span>.fc2(x)</span><br><span class="line">        output = F.log_softmax(x, dim=<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">return</span> output</span><br><span class="line"></span><br><span class="line"><span class="comment">#模型训练</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">train</span>(<span class="params">model, train_data, optimizer, epoch</span>):</span><br><span class="line">    model = model.train()</span><br><span class="line">    <span class="keyword">for</span> batch_idx, (img, label) <span class="keyword">in</span> <span class="built_in">enumerate</span>(train_data):</span><br><span class="line">        img = img.to(torch.device(<span class="string">'mlu'</span>))</span><br><span class="line">        label = label.to(torch.device(<span class="string">'mlu'</span>))</span><br><span class="line">        optimizer.zero_grad()</span><br><span class="line">        out = model(img)</span><br><span class="line">        loss = F.nll_loss(out, label)</span><br><span class="line">        loss.backward()</span><br><span class="line">        optimizer.step()</span><br><span class="line">        <span class="keyword">if</span> batch_idx % <span class="number">100</span> == <span class="number">0</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">'Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'</span>.<span class="built_in">format</span>(</span><br><span class="line">                epoch, batch_idx * <span class="built_in">len</span>(img), <span class="built_in">len</span>(train_data.dataset),</span><br><span class="line">                <span class="number">100.</span> * batch_idx / <span class="built_in">len</span>(train_data), loss.item()))</span><br><span class="line"></span><br><span class="line"><span class="comment">#模型推理</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">validate</span>(<span class="params">val_loader, model</span>):</span><br><span class="line">    test_loss = <span class="number">0</span></span><br><span class="line">    correct = <span class="number">0</span></span><br><span class="line">    model.<span class="built_in">eval</span>()</span><br><span class="line">    <span class="keyword">with</span> torch.no_grad():</span><br><span class="line">        <span class="keyword">for</span> images, target <span class="keyword">in</span> val_loader:</span><br><span class="line">            images = images.to(torch.device(<span class="string">'mlu'</span>))</span><br><span class="line">            target = target.to(torch.device(<span class="string">'mlu'</span>))</span><br><span class="line">            output = model(images)</span><br><span class="line">            test_loss += F.nll_loss(output, target, reduction=<span class="string">'sum'</span>).item()</span><br><span class="line">            pred = output.argmax(dim=<span class="number">1</span>, keepdim=<span class="literal">True</span>)</span><br><span class="line">            pred = pred.cpu()</span><br><span class="line">            target = target.cpu()</span><br><span class="line">            correct += pred.eq(target.view_as(pred)).<span class="built_in">sum</span>().item()</span><br><span class="line">    test_loss /= <span class="built_in">len</span>(val_loader.dataset)</span><br><span class="line">    <span class="comment">#打印精度结果</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">'\nTest set: Average loss: {:.4f}, Accuracy: {}/{} ({:.0f}%)\n'</span>.<span class="built_in">format</span>(</span><br><span class="line">        test_loss, correct, <span class="built_in">len</span>(val_loader.dataset),</span><br><span class="line">        <span class="number">100.</span> * correct / <span class="built_in">len</span>(val_loader.dataset)))</span><br><span class="line"></span><br><span class="line"><span class="comment">#主函数</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    data_tf = transforms.Compose(</span><br><span class="line">                [transforms.ToTensor(),</span><br><span class="line">                 transforms.Normalize([<span class="number">0.1307</span>],[<span class="number">0.3081</span>])])</span><br><span class="line"></span><br><span class="line">    <span class="comment">#获取本地数据集</span></span><br><span class="line">    train_set = mnist.MNIST(<span class="string">'./data'</span>,train=<span class="literal">True</span>,transform=data_tf,download=<span class="literal">True</span>)</span><br><span class="line">    test_set = mnist.MNIST(<span class="string">'./data'</span>,train=<span class="literal">False</span>,transform=data_tf,download=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">    train_data = DataLoader(train_set,batch_size=<span class="number">64</span>,shuffle=<span class="literal">True</span>)</span><br><span class="line">    test_data = DataLoader(test_set,batch_size=<span class="number">1000</span>,shuffle=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line">    net_orig = Net()</span><br><span class="line">    net = net_orig.to(torch.device(<span class="string">'mlu'</span>))   <span class="comment">#模型拷贝到MLU设备</span></span><br><span class="line">    optimizer = optim.Adadelta(net.parameters(), <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    nums_epoch = <span class="number">10</span>   <span class="comment">#训练10个epoch</span></span><br><span class="line">    save_model = <span class="literal">True</span> <span class="comment">#训练完成后保存模型</span></span><br><span class="line"></span><br><span class="line">    scheduler = StepLR(optimizer, step_size=<span class="number">1</span>, gamma=<span class="number">0.7</span>)</span><br><span class="line">    <span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(nums_epoch):</span><br><span class="line">        train(net, train_data, optimizer, epoch)</span><br><span class="line">        validate(test_data, net)</span><br><span class="line"></span><br><span class="line">        scheduler.step()</span><br><span class="line">        <span class="keyword">if</span> save_model:  <span class="comment"># 将训练好的模型保存为model.pth</span></span><br><span class="line">            <span class="keyword">if</span> epoch == nums_epoch-<span class="number">1</span>:</span><br><span class="line">                checkpoint = {<span class="string">"state_dict"</span>:net.state_dict(), <span class="string">"optimizer"</span>:optimizer.state_dict(), <span class="string">"epoch"</span>: epoch}</span><br><span class="line">                torch.save(checkpoint, <span class="string">'model.pth'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
 
 
 
 <p>至此，AI Station 平台中自带的寒武纪环境已经可以使用，只需要在该python环境下使用python ***.py 即可运行相应的代码</p>
-<h2 id="运行已有的pytorch代码"><a href="#运行已有的pytorch代码" class="headerlink" title="运行已有的pytorch代码"></a>运行已有的pytorch代码</h2><p>运行&#x2F;torch&#x2F;src&#x2F;catch&#x2F;tools&#x2F;torch_gpu2mlu.py脚本将自己原有的代码转化为可以在寒武纪显卡上可以运行的代码</p>
+<h2 id="运行已有的pytorch代码"><a href="#运行已有的pytorch代码" class="headerlink" title="运行已有的pytorch代码"></a>运行已有的pytorch代码</h2><p>运行/torch/src/catch/tools/torch_gpu2mlu.py脚本将自己原有的代码转化为可以在寒武纪显卡上可以运行的代码</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python /torch/src/catch/tools/torch_gpu2mlu.py --i /path/your/code/dir</span><br></pre></td></tr></table></figure>
 
 <p>运行完上述代码之后，会在当前目录生成一个新的以_mlu为后缀的文件夹，之后只需要运行新文件夹中的代码即可</p>
@@ -300,7 +418,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python /torch/src/catch/tools/torch_gpu2mlu.py --i /path/to/ChatGLM-6B</span><br></pre></td></tr></table></figure>
 
 <p>修改ChatGLM-6B_mlu文件夹代码中的模型权重路径</p>
-<img src="/images/image-20240227205218081.png" alt="image-20240227205218081"  />
+<img src="/images/image-20240227205218081.png" alt="image-20240227205218081">
 
 <p>之后就可以在寒武纪显卡上运行Chatglm 6b 大模型</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python cli_demo.py</span><br></pre></td></tr></table></figure>

@@ -73,11 +73,129 @@
 
 
 
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
 
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
-</head>
+<style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
   <div class="headband"></div>
@@ -222,13 +340,13 @@
 <h2 id="1-什么是大模型"><a href="#1-什么是大模型" class="headerlink" title="1. 什么是大模型"></a>1. 什么是大模型</h2><p>参数量很大（十几亿，几百亿）的深度神经网络模型</p>
 <h3 id="1-1-基座模型选择"><a href="#1-1-基座模型选择" class="headerlink" title="1.1 基座模型选择"></a>1.1 基座模型选择</h3><p>开源领域 ChatGLM，LLAMA，RWKV 主要就是这 3 种模型， 中文好一点就是 ChatGLM，潜力最好的就是 LLAMA，RNN 架构决定 RWKV 有很好的推理效率（随输入长度内存占比线性自增，而 LLAMA 则是指数增加） 和 Length Extrapolation （关于长度外推性，可以参考苏神的文章 <a target="_blank" rel="noopener" href="https://kexue.fm/archives/9431">[4]</a>）</p>
 <h3 id="1-2-模型参数大小选择"><a href="#1-2-模型参数大小选择" class="headerlink" title="1.2 模型参数大小选择"></a>1.2 模型参数大小选择</h3><p>当然对于模型参数的选择，往往是参数越大效果越好。如果资源充足，当然是推荐 30B 以上的模型。不管是 6B, 7B 和 13B 同样的训练数据，同样训练参数，模型参数量大效果则优于低参数的模型。那么根据模型参数，如何预估我们的训练所需的内存开销，这里有一个简单的方法 比如 6B 模型，60 亿规模参数，根据以下公式计算： </p>
-<p>模型参数 + 梯度参数 + 优化器参数 &#x3D; 6B * 1bytes + 6GB + 2*6GB &#x3D; 24GB </p>
+<p>模型参数 + 梯度参数 + 优化器参数 = 6B * 1bytes + 6GB + 2*6GB = 24GB </p>
 <h3 id="1-3-数据处理"><a href="#1-3-数据处理" class="headerlink" title="1.3 数据处理"></a>1.3 数据处理</h3><p>对于 LLM 训练，数据质量很重要。预训练时，我们可以将数据先进行预处理，比如对数据进行一定规则的筛选，数据去重，去除一些低质量的数据。同时，我们可能面临各种类型的数据，PDF，Word，HTML，代码文件等等，对于这种不同类型的数据我们需要都处理成文本，同时还过滤掉一些干扰项或乱码的数据。</p>
 <p>当然，我们也可以利用一些工具去处理，比如 justext <a target="_blank" rel="noopener" href="https://github.com/miso-belica/jusText">[7]</a>，trafilatura <a target="_blank" rel="noopener" href="https://github.com/adbar/trafilatura">[8]</a>，来提取文档主要内容，减少数据的噪音。对于空的文档或文档长度低于 100 进行过滤，进一步减少噪音。</p>
 <p>对于一些机器生成的文本或 OCR 识别错误的文本，质量不高，由没有什么逻辑性，虽然比较难以检测，但是还是会有一些工具能做这样的事情，比如 ctrl-detector <a target="_blank" rel="noopener" href="https://github.com/salesforce/ctrl-detector">[9]</a>。当然对于一些有毒的或带有偏见的数据，可以采用 PerspectiveAPI <a target="_blank" rel="noopener" href="https://perspectiveapi.com/">[10]</a> 或垃圾邮件检测的办法来过滤。</p>
 <p>我们还不得不考虑数据的一些隐私风险，也需要考虑，比如身份证号，银行卡等信息，比如 presidio 和 pii-codex 等工具提供了检测、分析和处理文本数据中的个人身份信息的能力。</p>
 <p>指令微调数据，我们可以使用 PromptSource <a target="_blank" rel="noopener" href="https://github.com/bigscience-workshop/promptsource">[11]</a> 来创建微调数据。当然我们还可以让 GPT4 给我们标注一些数据，这样蒸馏知识，可以让数据质量进一步提升。这里我分享一个我使用的 Prompt 工程：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">first_prompt = &quot;&quot;&quot;</span><br><span class="line">作为一位专业的xxxx，您的任务是从给定的上下文回答问题。</span><br><span class="line">给定的上下文：</span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">last_prompt = &quot;&quot;&quot;</span><br><span class="line">请综合上述信息，你给出的回复需要包含以下三个字段：</span><br><span class="line">1.questions: 基于上下文内容，提出与这个内容相关的问题，至少两个以上。</span><br><span class="line">2.answers: 然后根据问题，分别给出每个问题的答案，请用 markdown 格式。</span><br><span class="line">3.instruction: 给出上下文内容的总结，尽量精简，用 markdown 格式。</span><br><span class="line">请按照以下JSON格式来回答：</span><br><span class="line">前括号</span><br><span class="line">      &quot;questions&quot;: [</span><br><span class="line">          &quot;&lt;内容相关问题1&gt;&quot;,</span><br><span class="line">          &quot;&lt;内容相关问题2&gt;&quot;</span><br><span class="line">      ],</span><br><span class="line">      &quot;answers&quot;: [</span><br><span class="line">           &quot;&lt;内容相关问题1的答案&gt;&quot;,</span><br><span class="line">           &quot;&lt;内容相关问题2的答案&gt;&quot;</span><br><span class="line">      ],</span><br><span class="line">      instruction: &quot;&lt;总结性的内容&gt;&quot;</span><br><span class="line">后括号</span><br><span class="line">注意：如果碰到上下文内容信息不够，无法回答问题的情况，answers和questions可以返回空。</span><br><span class="line">最后强调一下：你的回复将直接用于javascript的JSON.parse解析，所以注意一定要以标准的JSON格式做回答，不要包含任何其他非JSON内容，否则你将被扣分！！！</span><br><span class="line">&quot;&quot;&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">first_prompt = """</span><br><span class="line">作为一位专业的xxxx，您的任务是从给定的上下文回答问题。</span><br><span class="line">给定的上下文：</span><br><span class="line">"""</span><br><span class="line">last_prompt = """</span><br><span class="line">请综合上述信息，你给出的回复需要包含以下三个字段：</span><br><span class="line">1.questions: 基于上下文内容，提出与这个内容相关的问题，至少两个以上。</span><br><span class="line">2.answers: 然后根据问题，分别给出每个问题的答案，请用 markdown 格式。</span><br><span class="line">3.instruction: 给出上下文内容的总结，尽量精简，用 markdown 格式。</span><br><span class="line">请按照以下JSON格式来回答：</span><br><span class="line">前括号</span><br><span class="line">      "questions": [</span><br><span class="line">          "&lt;内容相关问题1&gt;",</span><br><span class="line">          "&lt;内容相关问题2&gt;"</span><br><span class="line">      ],</span><br><span class="line">      "answers": [</span><br><span class="line">           "&lt;内容相关问题1的答案&gt;",</span><br><span class="line">           "&lt;内容相关问题2的答案&gt;"</span><br><span class="line">      ],</span><br><span class="line">      instruction: "&lt;总结性的内容&gt;"</span><br><span class="line">后括号</span><br><span class="line">注意：如果碰到上下文内容信息不够，无法回答问题的情况，answers和questions可以返回空。</span><br><span class="line">最后强调一下：你的回复将直接用于javascript的JSON.parse解析，所以注意一定要以标准的JSON格式做回答，不要包含任何其他非JSON内容，否则你将被扣分！！！</span><br><span class="line">"""</span><br></pre></td></tr></table></figure>
 
 <h3 id="1-4-大模型内在原理"><a href="#1-4-大模型内在原理" class="headerlink" title="1.4 大模型内在原理"></a>1.4 大模型内在原理</h3><h4 id="大模型不存在涌现能力"><a href="#大模型不存在涌现能力" class="headerlink" title="大模型不存在涌现能力"></a><a target="_blank" rel="noopener" href="https://twitter.com/i/web/status/1654386086746132481">大模型不存在涌现能力</a></h4><p>目前人们所看到的涌现能力实质上是人们构建的指标是非线性指标所造成的,指标的非线性指的是指标只能代表0或1,所以模型在指标上表现出了从0到1的涌现性,而如果将指标换为线性指标,这篇论文发现模型的能力随着算力和模型参数规模在线性增加,也就是说,模型只是在做减小loss的行为,而没有发生涌现行为,是一种涌现错觉</p>
 <blockquote>
@@ -292,7 +410,7 @@
 </li>
 </ol>
 </li>
-<li><p>基于监督学习的预训练任务：这种预训练任务要求模型通过有标注的数据来学习任务特定的语言处理技能。这些任务通常包括情感分析、命名实体识别、文本分类等任务，模型通过对标注数据的学习来提高在特定任务上的表现。&#x3D;&#x3D;NLP领域，没有足够多的带标签的数据&#x3D;&#x3D;</p>
+<li><p>基于监督学习的预训练任务：这种预训练任务要求模型通过有标注的数据来学习任务特定的语言处理技能。这些任务通常包括情感分析、命名实体识别、文本分类等任务，模型通过对标注数据的学习来提高在特定任务上的表现。==NLP领域，没有足够多的带标签的数据==</p>
 </li>
 <li><p>基于弱监督学习的预训练任务：这种预训练任务要求模型通过仅有部分标注数据或者弱标注数据来学习任务特定的语言处理技能。这些任务通常包括半监督学习、多任务学习等方法，模型通过对标注数据和非标注数据的学习来提高在特定任务上的表现。</p>
 </li>
@@ -337,13 +455,13 @@
 <p>将KGs中的知识形成文本作为大模型的输入</p>
 </li>
 <li><p>通过额外的融合模块整合KGs</p>
-<img src="/images/image-20230713105751597.png" alt="image-20230713105751597" style="zoom:67%;" /></li>
+<img src="/images/image-20230713105751597.png" alt="image-20230713105751597" style="zoom:67%;"></li>
 </ol>
 <h5 id="2-KG增强LLM推理"><a href="#2-KG增强LLM推理" class="headerlink" title="2. KG增强LLM推理"></a>2. KG增强LLM推理</h5><ol>
 <li><p>动态知识融合</p>
 <p>将知识图谱编码，与输入编码融合，使用问答数据微调</p>
 </li>
-<li><p>&#x3D;&#x3D;检索增强的知识融合&#x3D;&#x3D;</p>
+<li><p>==检索增强的知识融合==</p>
 <p>对于问题，先在KG上查找相关信息作为变量z, 然后将z作为附加上下文信息和问题一起输入到LLM中</p>
 </li>
 </ol>
@@ -357,7 +475,7 @@
 </ol>
 <h4 id="3-4-2-LLM增强-KGs"><a href="#3-4-2-LLM增强-KGs" class="headerlink" title="3.4.2 LLM增强 KGs"></a>3.4.2 LLM增强 KGs</h4><h4 id="3-4-3-LLM-与-KGs-协同"><a href="#3-4-3-LLM-与-KGs-协同" class="headerlink" title="3.4.3 LLM 与 KGs 协同"></a>3.4.3 LLM 与 KGs 协同</h4><ol>
 <li><p>知识表示</p>
-<img src="/images/image-20230713151118243.png" alt="image-20230713151118243" style="zoom:50%;" />
+<img src="/images/image-20230713151118243.png" alt="image-20230713151118243" style="zoom:50%;">
 </li>
 <li><p>推理</p>
 <p>在问答任务中，QA-GNN[117]首先利用LLM来处理文本问题，并指导推理步骤。通过这种方式，它可以弥合文本和结构信息之间的差距，从而为推理过程提供可解释性。在知识图谱推理任务中，LARK[45]提出了一种LLM引导的逻辑推理方法。它首先将传统的逻辑规则转换为语言序列，然后要求LLM对最终输出进行推理。此外，siyuan等人[46]将结构推理和语言模式预训练统一在一个统一的框架中。给定文本输入，他们采用LLM来生成逻辑查询，该查询在KGs上执行以获得结构上下文。最后，将结构上下文与文本信息融合以生成最终输出。RecInDial[243]结合知识图谱和LLM，在对话系统中提供个性化推荐。KnowledgeDA[244]提出了一个统一的领域语言模型开发pipeline，以增强具有领域知识图谱的任务特定训练过程。</p>
@@ -367,13 +485,13 @@
 <figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- prompt_learning:带女朋友去了一家餐厅，她吃的很开心，这家餐厅太__了！</span><br><span class="line">- Instruction_tuning:判断这句话的情感：带女朋友去了一家餐厅，她吃的很开心。选项：A=好，B=一般，C=差</span><br></pre></td></tr></table></figure>
 
 <h3 id="2-hybrid-tuning"><a href="#2-hybrid-tuning" class="headerlink" title="2. hybrid-tuning"></a>2. hybrid-tuning</h3><p>deal with the catastrophic forgetting</p>
-<img src="/images/2023-06-15_08-59.png" style="zoom: 50%;" />
+<img src="/images/2023-06-15_08-59.png" style="zoom: 50%;">
 
 <h3 id="3-MOSS-fine-tuning-in-instruction-data"><a href="#3-MOSS-fine-tuning-in-instruction-data" class="headerlink" title="3. MOSS: fine-tuning in instruction data"></a>3. MOSS: fine-tuning in instruction data</h3><h3 id="4-Chinese-LLaMA-Alpaca-pre-trained-1-pre-trained-2-instruction-tuning"><a href="#4-Chinese-LLaMA-Alpaca-pre-trained-1-pre-trained-2-instruction-tuning" class="headerlink" title="4. Chinese-LLaMA-Alpaca: pre-trained 1 + pre-trained 2 + instruction_tuning"></a>4. Chinese-LLaMA-Alpaca: pre-trained 1 + pre-trained 2 + instruction_tuning</h3><h3 id="5-QLoRA"><a href="#5-QLoRA" class="headerlink" title="5. QLoRA"></a>5. QLoRA</h3><p>QLoRA通过冻结的、4比特量化的预训练语言模型来做 LoRA，进行反向传播梯度。</p>
 <p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2305.14314.pdf">https://arxiv.org/pdf/2305.14314.pdf</a></p>
 <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/632229856">https://zhuanlan.zhihu.com/p/632229856</a></p>
 <p><strong>如果你受限于GPU内存，QLoRA可能是值得考虑的选择。它可以节省33%的内存，但运行时间将增加39%</strong></p>
-<h3 id="6-LORA"><a href="#6-LORA" class="headerlink" title="6. LORA"></a>6. LORA</h3><img src="/images/image-20231004153011481.png" alt="image-20231004153011481" style="zoom:50%;" />
+<h3 id="6-LORA"><a href="#6-LORA" class="headerlink" title="6. LORA"></a>6. LORA</h3><img src="/images/image-20231004153011481.png" alt="image-20231004153011481" style="zoom:50%;">
 
 <p>LORA实战小技巧:</p>
 <ol>
@@ -381,21 +499,21 @@
 <li><strong>如果你正在使用LoRA，应将其应用于所有层（而不是仅仅应用于Key和Value矩阵），以最大化模型性能</strong></li>
 <li><strong>我们可以在14GB RAM的单个GPU上，在几小时内有效微调70亿参数的模型。使用静态数据集优化一个LLM，让其完美胜任所有基准任务难以实现。要解决这个问题，需要使用多样化的数据源，或许LoRA并不是理想的工具</strong></li>
 <li><strong>对指令微调进行多轮训练作用不大，可能会导致结果恶化。我在1000个示例的LIMA数据集上也观察到了同样的情况。这种性能下降可能是由过拟合导致的，这需要进一步的研究</strong></li>
-<li><strong>LoRA让我们能够在单个GPU上微调7B参数的LLM。在这种特殊情况下，使用最佳设置（r&#x3D;256、alpha&#x3D;512）的QLoRA，在A100上，使用AdamW进行50000个训练示例（Alpaca数据集）的训练，占用了17.86 GB的内存，大约需要3小时。</strong></li>
+<li><strong>LoRA让我们能够在单个GPU上微调7B参数的LLM。在这种特殊情况下，使用最佳设置（r=256、alpha=512）的QLoRA，在A100上，使用AdamW进行50000个训练示例（Alpaca数据集）的训练，占用了17.86 GB的内存，大约需要3小时。</strong></li>
 </ol>
 <h3 id="7-Adapter-Tuning"><a href="#7-Adapter-Tuning" class="headerlink" title="7. Adapter Tuning"></a>7. Adapter Tuning</h3><h3 id="8-Prefix-Tuning"><a href="#8-Prefix-Tuning" class="headerlink" title="8. Prefix  Tuning"></a>8. Prefix  Tuning</h3><h3 id="9-AdaLoRA"><a href="#9-AdaLoRA" class="headerlink" title="9. AdaLoRA"></a>9. AdaLoRA</h3><h2 id="5-对齐"><a href="#5-对齐" class="headerlink" title="5.对齐"></a>5.对齐</h2><h3 id="1-RLHF"><a href="#1-RLHF" class="headerlink" title="1. RLHF"></a>1. RLHF</h3><h2 id="6-模型使用"><a href="#6-模型使用" class="headerlink" title="6. 模型使用"></a>6. 模型使用</h2><h3 id="1-上下文提示"><a href="#1-上下文提示" class="headerlink" title="1. 上下文提示"></a>1. 上下文提示</h3><h3 id="2-思维链提示"><a href="#2-思维链提示" class="headerlink" title="2. 思维链提示"></a>2. 思维链提示</h3><p>鼓励大语言模型解释其推理过程。思维链的主要思想是通过向大语言模型展示一些少量的 exapmles，在样例中解释推理过程，大语言模型在回答提示时也会显示推理过程。这种推理的解释往往会引导出更准确的结果。</p>
 <p><strong>CoT prompting：</strong>输出由原来的answer 变为 reason + answer</p>
 <p><strong>Zero-shot-CoT：</strong>是一个 pipeline。使用“Let’s think step by step”让LLM 生成一些思考过程 a，然后将生成的 a（理由） 和 question 拼在一起，再加一个answer 指向的 prompt 如“The answer is ”来激励模型生成答案。</p>
 <p><strong><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2203.11171">自洽性（Self-consistency）</a>：</strong>生成多个思路链，然后取多数答案作为最终答案</p>
 <p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2205.10625"><strong>Least to Most prompting, LtM</strong></a>：首先将问题分解为子问题，然后逐个解决。</p>
-<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2307.05300">Multi-Persona Self-Collaboration</a>：这个有点类似之前提到的 AutoGen，让多个代理相互对话来解决问题，只不过 AutoGen 是从工程层面真正做到了多 Agents 交互，而这里提到的，是让 ChatGPT 扮演多重人格&#x2F;角色，例如：</p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2307.05300">Multi-Persona Self-Collaboration</a>：这个有点类似之前提到的 AutoGen，让多个代理相互对话来解决问题，只不过 AutoGen 是从工程层面真正做到了多 Agents 交互，而这里提到的，是让 ChatGPT 扮演多重人格/角色，例如：</p>
 <p>“你可以扮演任何角色，针对我给出的问题，请提供三个最相关的角色，对问题进行两轮讨论，然后你综合讨论结果总结最佳方案。请打印三个角色的讨论过程以及最后的方案。</p>
 <p><strong>思维树：</strong></p>
 <blockquote>
 <p>举例：假设三位不同的专家来回答这个问题。所有专家都写下他们思考这个问题的第一个步骤，然后与大家分享。然后，所有专家都写下他们思考的下一个骤并分享。以此类推，直到所有专家写完他们思考的所有步骤。只要大家发现有专家的步骤出错了，就让这位专家离开。请问…</p>
 </blockquote>
 <h3 id="3-推理加速"><a href="#3-推理加速" class="headerlink" title="3. 推理加速"></a>3. <strong>推理加速</strong></h3><p>对于推理，一般我们采用量化方案，这里有两个办法。第一个则是采用 ggml 工具，比如 llama.cpp <a target="_blank" rel="noopener" href="https://github.com/ggerganov/llama.cpp">[18]</a> 针对 llama 模型，将模型量化运行在 cpu 或 gpu 上，也可以 cpu 和 gpu 一起跑，内存则大大减少，推理速度有极大的提高。 </p>
-<p>这里如果将 llama.cpp 运行在 gpu 上， 编译时一定要加 LLAMA_CUBLAS&#x3D;1，同时推理的时候，指定 –gpu-layers|-ngl 来分配运行在 gpu 上的层数，当然越大，占用 gpu 的内存会越多。</p>
+<p>这里如果将 llama.cpp 运行在 gpu 上， 编译时一定要加 LLAMA_CUBLAS=1，同时推理的时候，指定 –gpu-layers|-ngl 来分配运行在 gpu 上的层数，当然越大，占用 gpu 的内存会越多。</p>
 <p>如果是 RWKV 模型，则考虑采用 rwkv.cpp <a target="_blank" rel="noopener" href="https://github.com/saharNooby/rwkv.cpp">[19]</a>，此方法与 llama.cpp 类似，使用方式也是类似的。</p>
 <p>还有 Llama 模型还可以考虑使用 exllama <a target="_blank" rel="noopener" href="https://github.com/turboderp/exllama">[20]</a> 纯 GPU 的加速，虽然还不够完善，但也可以值得一试。</p>
 <p>另一个，采用 LLM Accelerator <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2304.04487.pdf">[21]</a>，LLM 存在大量的相似性推理，基于此，可以做一些优化加速推理，具体请看论文。最后采用架构上的调整，faster transformer <a target="_blank" rel="noopener" href="https://github.com/NVIDIA/FasterTransformer">[22]</a> 要优于传统的 transformer 架构。</p>
@@ -432,8 +550,8 @@
 <li>重复几次，将这些对数概率画成曲线</li>
 </ol>
 <p>如果这篇文本是由AI写的，那么所得曲线更像红色曲线，原始文本会处于平缓区域的最大值</p>
-<p>如果这篇文本是真人写的，那么所得曲线更像绿色曲线，重写文本的对数概率可能高于&#x2F;低于原文本</p>
-<img src="/images/image-20231028094229464.png" alt="image-20231028094229464" style="zoom: 33%;" />
+<p>如果这篇文本是真人写的，那么所得曲线更像绿色曲线，重写文本的对数概率可能高于/低于原文本</p>
+<img src="/images/image-20231028094229464.png" alt="image-20231028094229464" style="zoom: 33%;">
 
 <h2 id="9-大模型测评"><a href="#9-大模型测评" class="headerlink" title="9. 大模型测评"></a>9. 大模型测评</h2><p><a target="_blank" rel="noopener" href="https://github.com/GPT-Fathom/GPT-Fathom">GPT-Fathom</a></p>
 <p>GPT-Fathom是一个开源和可复制的LLM评估套件，在对齐设置下对10多个领先的开源和闭源LLM以及OpenAI的早期模型进行基准测试。</p>

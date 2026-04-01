@@ -61,11 +61,129 @@
 
 
 
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
 
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
-</head>
+<style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
   <div class="headband"></div>
@@ -224,7 +342,7 @@
 </ol>
 </blockquote>
 <p>算法设计思路（重点阐述）及实现。需要强调的是：在设计思路部分，请重点阐述模型库、数据库还有交互界面的基本框架。</p>
-<p>答辩完成后请各位同学在7月24日中午12时之前将答辩ppt、系统程序源程序代码打包压缩以邮件的形式发送至<a href="mailto:&#x57;&#97;&#110;&#122;&#x68;&#x65;&#110;&#x67;&#x5f;&#x4c;&#x69;&#117;&#54;&#64;&#49;&#54;&#51;&#x2e;&#99;&#x6f;&#109;">&#x57;&#97;&#110;&#122;&#x68;&#x65;&#110;&#x67;&#x5f;&#x4c;&#x69;&#117;&#54;&#64;&#49;&#54;&#51;&#x2e;&#99;&#x6f;&#109;</a>。过期不接受补交作业。请各位同学注意。有问题请及时沟通。</p>
+<p>答辩完成后请各位同学在7月24日中午12时之前将答辩ppt、系统程序源程序代码打包压缩以邮件的形式发送至<a href="mailto:&#x57;&#x61;&#x6e;&#122;&#104;&#101;&#110;&#x67;&#95;&#x4c;&#x69;&#x75;&#x36;&#64;&#49;&#x36;&#51;&#46;&#x63;&#111;&#x6d;">Wanzheng_Liu6@163.com</a>。过期不接受补交作业。请各位同学注意。有问题请及时沟通。</p>
 
       
     </div>
@@ -301,7 +419,7 @@
     
     <div class="post-body" itemprop="articleBody">
           <p>为了深入讨论似然的概念，需要先来了解概率, 概率和自然都是统计学中重要的概念, 它们之间有着紧密的联系。</p>
-<p>概率是在特定环境下某件事情发生的可能性, 在结果没有产生之前, 我们可以根据环境中的参数, 对某件事情发生的概率进行预测, 例如对于抛硬币事件, 在抛硬币之前, 并不知道抛硬币的结果是哪一面朝上, 但我们可以根据硬币的性质进行推测, 如果抛掷的硬币是一枚均匀的硬币, 那么可以推断出, 任何一面朝上的可能性都是50%, 我们要注意这里的概率50%, 只有在抛硬币之前是有意义的, 因为抛完硬币后, 结果就确定了, 自然和概率刚好相反, 它是基于已经确定的结果来推测, 产生这个结果的可能环境, 或者说是推测环境中的某些参数, 依然使用抛硬币的例子, 假如随机抛出一枚硬币1万次, 结果8000次, 人像在上, 2000次, 数字在上, 那么可以判断出, 这枚硬币在构造时是有些特殊的, 我们基于炮制结果, 进一步推测该硬币的具体参数, 人像的概率是0.8, 数字的概率是0.2, 这个根据结果判断事情本身性质的过程, 就是自然, 因此总结来说, 自然和概率可以看作是问题的两个不同的方向, 概率是在已知模型参数的情况下预测结果, 而自然是在已知结果的情况下推断模型参数, 这c他表示环境中的参数, x表示事件发生的结果, 那么概率就可以表示为p x, c塔也就是在环境参数为theta的这个条件下, x发生的概率, 而自然为lc塔, x, 也就是在已知观察结果是x的情况下去推断c, 他这里需要注意的是, t是关于x的函数, l是关于theta的函数, 极大似然估计, maximum likelihood estimate也成为最大自然估计, 就是利用已知的样本标记结果反推最具可能, 或者是说最大概率, 导致这些样本结果出现的模型参数极大, 自然估计是一种已知观察数据, 来推断模型参数的过程, 例如根据事件x的观察结果, 推断c它是多少, 是结果x最有可能发生就是极大似然估计, 我们仍然使用抛硬币这个例子, 说它有theta的概率, 人像在上, 那么就有一减c塔的概率, 数字在上, c它是客观存在的, 但是我们最初并不知道theta具体是多少, 需要根据观测结果来进行判断, 为了获得theta, 需要进行多次抛硬币实验, 并记录抛出的结果序列, 假如在这个序列中有七次是人像, 三次是数字, 这样就得到了函数lc塔, 它等于theta的七次方乘一减theta的三次方, 函数l被称为theta的自然函数, 对于函数lc塔, 我们可以枚举c a的值, 画出函数l的图像, 例如当theta等于零时, 函数值是0&#x3D;0.5时, 函数是1&#x2F;1024等等, 这时候我们会发现函数在c塔等于0.7时, 取得最大值最大, 似然估计又是要求c塔等于多少时, 前面得到的十次观测最可能发生, 也就是七次人像朝上, 三次数字朝上, 这样的结果最可能发生, 这时我们会发现在函数取得最大值时, c它的取值为0.7, 在真实情况下, theta的值可能并不是0.7, 因为如果硬币是均值的, 那么c a应该是0.5, 但如果我们只从这次实验的结果来看, 在没有提供足够的证据证明硬币是均值的, 那么0.7就是该实验的最大似然估计取值, 另外如果希望获得更准确的参数, theta的值, 我们可以增加实验次数, 获得更多的实验结果, 并重新计算lc塔取得最大值时, c a的取值, 所以总结来说, 最大自然估计是一种参数的估计方法, 它的目标呢就是找到最可能产生观测数据结果, 的参数值, 在使用最大似然估计时, 需要构建一个自然函数l theta, 并找到使这个函数取得最大值时的参数值, 一般我们可以使用数学求导的方式, 计算导数为零时对应的参数取值, 或者使用梯度下降算法优化得到参数值, 需要说明的是, 最大似然估计的结果会受数据量的影响, 更多的数据通常可以得到更准确的估计, 在机器学习算法中, 比如逻辑回归模型, 会根据已有的数据x学习相应的参数分布, 也就是计算c他, 这其实就是最大自然估计的思想, 那么到这里自然和极大似然估计就讲完了, 感谢大家的观看, 我们下节课再会,</p>
+<p>概率是在特定环境下某件事情发生的可能性, 在结果没有产生之前, 我们可以根据环境中的参数, 对某件事情发生的概率进行预测, 例如对于抛硬币事件, 在抛硬币之前, 并不知道抛硬币的结果是哪一面朝上, 但我们可以根据硬币的性质进行推测, 如果抛掷的硬币是一枚均匀的硬币, 那么可以推断出, 任何一面朝上的可能性都是50%, 我们要注意这里的概率50%, 只有在抛硬币之前是有意义的, 因为抛完硬币后, 结果就确定了, 自然和概率刚好相反, 它是基于已经确定的结果来推测, 产生这个结果的可能环境, 或者说是推测环境中的某些参数, 依然使用抛硬币的例子, 假如随机抛出一枚硬币1万次, 结果8000次, 人像在上, 2000次, 数字在上, 那么可以判断出, 这枚硬币在构造时是有些特殊的, 我们基于炮制结果, 进一步推测该硬币的具体参数, 人像的概率是0.8, 数字的概率是0.2, 这个根据结果判断事情本身性质的过程, 就是自然, 因此总结来说, 自然和概率可以看作是问题的两个不同的方向, 概率是在已知模型参数的情况下预测结果, 而自然是在已知结果的情况下推断模型参数, 这c他表示环境中的参数, x表示事件发生的结果, 那么概率就可以表示为p x, c塔也就是在环境参数为theta的这个条件下, x发生的概率, 而自然为lc塔, x, 也就是在已知观察结果是x的情况下去推断c, 他这里需要注意的是, t是关于x的函数, l是关于theta的函数, 极大似然估计, maximum likelihood estimate也成为最大自然估计, 就是利用已知的样本标记结果反推最具可能, 或者是说最大概率, 导致这些样本结果出现的模型参数极大, 自然估计是一种已知观察数据, 来推断模型参数的过程, 例如根据事件x的观察结果, 推断c它是多少, 是结果x最有可能发生就是极大似然估计, 我们仍然使用抛硬币这个例子, 说它有theta的概率, 人像在上, 那么就有一减c塔的概率, 数字在上, c它是客观存在的, 但是我们最初并不知道theta具体是多少, 需要根据观测结果来进行判断, 为了获得theta, 需要进行多次抛硬币实验, 并记录抛出的结果序列, 假如在这个序列中有七次是人像, 三次是数字, 这样就得到了函数lc塔, 它等于theta的七次方乘一减theta的三次方, 函数l被称为theta的自然函数, 对于函数lc塔, 我们可以枚举c a的值, 画出函数l的图像, 例如当theta等于零时, 函数值是0=0.5时, 函数是1/1024等等, 这时候我们会发现函数在c塔等于0.7时, 取得最大值最大, 似然估计又是要求c塔等于多少时, 前面得到的十次观测最可能发生, 也就是七次人像朝上, 三次数字朝上, 这样的结果最可能发生, 这时我们会发现在函数取得最大值时, c它的取值为0.7, 在真实情况下, theta的值可能并不是0.7, 因为如果硬币是均值的, 那么c a应该是0.5, 但如果我们只从这次实验的结果来看, 在没有提供足够的证据证明硬币是均值的, 那么0.7就是该实验的最大似然估计取值, 另外如果希望获得更准确的参数, theta的值, 我们可以增加实验次数, 获得更多的实验结果, 并重新计算lc塔取得最大值时, c a的取值, 所以总结来说, 最大自然估计是一种参数的估计方法, 它的目标呢就是找到最可能产生观测数据结果, 的参数值, 在使用最大似然估计时, 需要构建一个自然函数l theta, 并找到使这个函数取得最大值时的参数值, 一般我们可以使用数学求导的方式, 计算导数为零时对应的参数取值, 或者使用梯度下降算法优化得到参数值, 需要说明的是, 最大似然估计的结果会受数据量的影响, 更多的数据通常可以得到更准确的估计, 在机器学习算法中, 比如逻辑回归模型, 会根据已有的数据x学习相应的参数分布, 也就是计算c他, 这其实就是最大自然估计的思想, 那么到这里自然和极大似然估计就讲完了, 感谢大家的观看, 我们下节课再会,</p>
 
       
     </div>
@@ -401,11 +519,11 @@
 </blockquote>
 <p>使用文心一言API进行层次分类数据标注结果：</p>
 <blockquote>
-<p>076型—-武器装备##舰船舰艇##两栖做战舰<br>076型两栖攻击舰—-武器装备##舰船舰艇##两栖做战舰<br>075型两栖攻击舰4号舰—-武器装备##舰船舰艇##两栖做战舰<br>075型两栖攻击舰—-武器装备##舰船舰艇##两栖做战舰<br>无人机—-武器装备##飞行器##航空器##无人机<br>多功能弹药—-武器装备##爆炸物##炸弹<br>“毒刺”肩扛式防空导弹—-武器装备##导弹武器##地空导弹<br>MK-48重型鱼雷—-武器装备##爆炸物##水雷<br>MS-110侦察吊舱—-武器装备##枪械与单兵武器##侦察机载吊舱<br>“毒刺”防空导弹—-武器装备##导弹武器##地空导弹<br>“拖二A”—-武器装备##舰船舰艇##两栖做战舰<br>歼-16—-武器装备##飞行器##航空器##战斗机<br>歼-15—-武器装备##飞行器##航空器##战斗机<br>MK-48鱼雷—-武器装备##爆炸物##鱼雷<br>“火山”布雷系统—-武器装备##爆炸物##水雷<br>军舰—-武器装备##舰船舰艇##军舰<br>运9通信对抗机—-武器装备##飞行器##航空器##侦察机<br>台湾“潜舰自造”原型舰—-武器装备##舰船舰艇##潜艇舰<br>台造潜舰原型舰—-武器装备##舰船舰艇##潜艇<br>055大驱—-武器装备##舰船舰艇##驱逐舰<br>“剑龙级”潜舰—-武器装备##舰船舰艇##潜艇<br>海军航空兵—-军队##海军##海军航空兵<br>“歼-20”隐形战斗机—-武器装备##飞行器##航空器##战斗机<br>多用途弹—-武器装备##弹炮结合<br>增程型“雄风三”反舰导弹—-武器装备##导弹武器##反坦克导弹<br>轻型巡防舰原型舰—-武器装备##舰船舰艇##巡洋舰<br>山东舰—-武器装备##舰船舰艇##航空母舰<br>“天弓”导弹—-武器装备##导弹武器##空舰导弹<br>052D驱逐舰—-武器装备##舰船舰艇##驱逐舰<br>056护卫舰—-武器装备##舰船舰艇##护卫舰<br>美海岸警卫队“斯特拉顿”号炮舰—-武器装备##舰船舰艇##巡逻舰<br>中国海军航空母舰山东舰—-武器装备##飞行器##航空器##航空母舰<br>航空母舰山东舰编队—-武器装备##舰船舰艇##航空母舰<br>飞行U-2侦察机—-武器装备##飞行器##航空器##侦察机<br>反潜直升机—-武器装备##飞行器##航空器##反潜机<br>卡-28反潜直升机—-武器装备##飞行器##航空器##直升机<br>战斗机—-武器装备##飞行器##航空器##战斗机<br>战机—-武器装备##飞行器##航空器##战斗机<br>096型核潜艇—-武器装备##舰船舰艇##核潜舰<br>“蒙特利尔”号护卫舰—-武器装备##舰船舰艇##护卫舰<br>F-16—-武器装备##飞行器##航空器##战斗机<br>F&#x2F;A-18战机—-武器装备##飞行器##航空器##战斗机<br>F-35C舰载机—-武器装备##飞行器##航空器##战斗机<br>“毒刺”肩扛便携式防空导弹—-武器装备##导弹武器##地空导弹<br>“天弓三型”导弹—-武器装备##导弹武器##地空导弹<br>FIM-92肩射式毒刺防空导弹—-武器装备##导弹武器##地空导弹<br>航空母舰—-武器装备##舰船舰艇##航空母舰<br>新型F-16V战机—-武器装备##飞行器##航空器##战斗机<br>“刺针”导弹—-武器装备##导弹武器##反坦克导弹<br>微山湖舰—-武器装备##舰船舰艇##两栖做战舰<br>电力发电车—-武器装备##车辆##电动汽车<br>AK47步枪—-武器装备##枪械与单兵武器##自动步枪<br>F-16V型战机—-武器装备##飞行器##航空器##战斗机</p>
+<p>076型—-武器装备##舰船舰艇##两栖做战舰<br>076型两栖攻击舰—-武器装备##舰船舰艇##两栖做战舰<br>075型两栖攻击舰4号舰—-武器装备##舰船舰艇##两栖做战舰<br>075型两栖攻击舰—-武器装备##舰船舰艇##两栖做战舰<br>无人机—-武器装备##飞行器##航空器##无人机<br>多功能弹药—-武器装备##爆炸物##炸弹<br>“毒刺”肩扛式防空导弹—-武器装备##导弹武器##地空导弹<br>MK-48重型鱼雷—-武器装备##爆炸物##水雷<br>MS-110侦察吊舱—-武器装备##枪械与单兵武器##侦察机载吊舱<br>“毒刺”防空导弹—-武器装备##导弹武器##地空导弹<br>“拖二A”—-武器装备##舰船舰艇##两栖做战舰<br>歼-16—-武器装备##飞行器##航空器##战斗机<br>歼-15—-武器装备##飞行器##航空器##战斗机<br>MK-48鱼雷—-武器装备##爆炸物##鱼雷<br>“火山”布雷系统—-武器装备##爆炸物##水雷<br>军舰—-武器装备##舰船舰艇##军舰<br>运9通信对抗机—-武器装备##飞行器##航空器##侦察机<br>台湾“潜舰自造”原型舰—-武器装备##舰船舰艇##潜艇舰<br>台造潜舰原型舰—-武器装备##舰船舰艇##潜艇<br>055大驱—-武器装备##舰船舰艇##驱逐舰<br>“剑龙级”潜舰—-武器装备##舰船舰艇##潜艇<br>海军航空兵—-军队##海军##海军航空兵<br>“歼-20”隐形战斗机—-武器装备##飞行器##航空器##战斗机<br>多用途弹—-武器装备##弹炮结合<br>增程型“雄风三”反舰导弹—-武器装备##导弹武器##反坦克导弹<br>轻型巡防舰原型舰—-武器装备##舰船舰艇##巡洋舰<br>山东舰—-武器装备##舰船舰艇##航空母舰<br>“天弓”导弹—-武器装备##导弹武器##空舰导弹<br>052D驱逐舰—-武器装备##舰船舰艇##驱逐舰<br>056护卫舰—-武器装备##舰船舰艇##护卫舰<br>美海岸警卫队“斯特拉顿”号炮舰—-武器装备##舰船舰艇##巡逻舰<br>中国海军航空母舰山东舰—-武器装备##飞行器##航空器##航空母舰<br>航空母舰山东舰编队—-武器装备##舰船舰艇##航空母舰<br>飞行U-2侦察机—-武器装备##飞行器##航空器##侦察机<br>反潜直升机—-武器装备##飞行器##航空器##反潜机<br>卡-28反潜直升机—-武器装备##飞行器##航空器##直升机<br>战斗机—-武器装备##飞行器##航空器##战斗机<br>战机—-武器装备##飞行器##航空器##战斗机<br>096型核潜艇—-武器装备##舰船舰艇##核潜舰<br>“蒙特利尔”号护卫舰—-武器装备##舰船舰艇##护卫舰<br>F-16—-武器装备##飞行器##航空器##战斗机<br>F/A-18战机—-武器装备##飞行器##航空器##战斗机<br>F-35C舰载机—-武器装备##飞行器##航空器##战斗机<br>“毒刺”肩扛便携式防空导弹—-武器装备##导弹武器##地空导弹<br>“天弓三型”导弹—-武器装备##导弹武器##地空导弹<br>FIM-92肩射式毒刺防空导弹—-武器装备##导弹武器##地空导弹<br>航空母舰—-武器装备##舰船舰艇##航空母舰<br>新型F-16V战机—-武器装备##飞行器##航空器##战斗机<br>“刺针”导弹—-武器装备##导弹武器##反坦克导弹<br>微山湖舰—-武器装备##舰船舰艇##两栖做战舰<br>电力发电车—-武器装备##车辆##电动汽车<br>AK47步枪—-武器装备##枪械与单兵武器##自动步枪<br>F-16V型战机—-武器装备##飞行器##航空器##战斗机</p>
 </blockquote>
 <h3 id="关系抽取大模型"><a href="#关系抽取大模型" class="headerlink" title="关系抽取大模型"></a>关系抽取大模型</h3><p><a target="_blank" rel="noopener" href="https://github.com/zjunlp/KnowLM">KnowLM</a></p>
 <p><a target="_blank" rel="noopener" href="https://github.com/neukg/TechGPT">TechGPT</a></p>
-<img src="../../../../Downloads/doccano图片标注.png" alt="image-20230824090239110" style="zoom: 50%;" />
+<img src="../../../../Downloads/doccano图片标注.png" alt="image-20230824090239110" style="zoom: 50%;">
 
 <p>!!!Note:</p>
 <blockquote>
@@ -432,7 +550,7 @@
 <li>段落分成句子</li>
 <li>用UIE 句子，实体1, 实体2</li>
 <li>使用大模型进行数据标注实验</li>
-<li><strong>&#x3D;&#x3D;使用大模型标注的数据 进行 UIE 多实体抽取 代替 关系抽取&#x3D;&#x3D;</strong></li>
+<li><strong>==使用大模型标注的数据 进行 UIE 多实体抽取 代替 关系抽取==</strong></li>
 </ol>
 </blockquote>
 </li>
@@ -452,13 +570,13 @@
 <p>使用doccano,py 进行数据转换</p>
 <p>然后使用ernie模型进行微调</p>
 <blockquote>
-<img src="/home/killer/Gitee/blog/source/_posts/assets/image-20230905214447386.png" alt="image-20230905214447386" style="zoom: 50%;" />
+<img src="/home/killer/Gitee/blog/source/_posts/assets/image-20230905214447386.png" alt="image-20230905214447386" style="zoom: 50%;">
 
 <p>过早停止？ || 因为参数设置了 early_stop</p>
 </blockquote>
 <p>有个问题：训练数据没有覆盖全部标签，模型就没有学习到没有标签标注的信息</p>
 <blockquote>
-<p>python analysis&#x2F;evaluate.py –device “gpu” –max_seq_length 128 –batch_size 32 –bad_case_file “bad_case.txt” –dataset_dir “data” –params_path “.&#x2F;checkpoint”</p>
+<p>python analysis/evaluate.py –device “gpu” –max_seq_length 128 –batch_size 32 –bad_case_file “bad_case.txt” –dataset_dir “data” –params_path “./checkpoint”</p>
 <p>对每个类别分别进行评估，并输出预测错误样本（bad case）</p>
 </blockquote>
 <p>看看效果,测试效果</p>
@@ -488,9 +606,9 @@
 
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">st=&gt;start: Start</span><br><span class="line">op=&gt;operation: Your Operation</span><br><span class="line">cond=&gt;condition: Yes or No?</span><br><span class="line">e=&gt;end</span><br><span class="line"></span><br><span class="line">st-&gt;op-&gt;cond</span><br><span class="line">cond(yes)-&gt;e</span><br><span class="line">cond(no)-&gt;op</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line">A[Hard edge] --&gt;B(Round edge)</span><br><span class="line">    B --&gt; C&#123;Decision&#125;</span><br><span class="line">    C --&gt;|One| D[Result one]</span><br><span class="line">    C --&gt;|Two| E[Result two]</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line">A[Hard edge] --&gt;B(Round edge)</span><br><span class="line">    B --&gt; C{Decision}</span><br><span class="line">    C --&gt;|One| D[Result one]</span><br><span class="line">    C --&gt;|Two| E[Result two]</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">classDiagram</span><br><span class="line">      Animal &lt;|-- Duck</span><br><span class="line">      Animal &lt;|-- Fish</span><br><span class="line">      Animal &lt;|-- Zebra</span><br><span class="line">      Animal : +int age</span><br><span class="line">      Animal : +String gender</span><br><span class="line">      Animal: +isMammal()</span><br><span class="line">      Animal: +mate()</span><br><span class="line">      class Duck&#123;</span><br><span class="line">          +String beakColor</span><br><span class="line">          +swim()</span><br><span class="line">          +quack()</span><br><span class="line">      &#125;</span><br><span class="line">      class Fish&#123;</span><br><span class="line">          -int sizeInFeet</span><br><span class="line">          -canEat()</span><br><span class="line">      &#125;</span><br><span class="line">      class Zebra&#123;</span><br><span class="line">          +bool is_wild</span><br><span class="line">          +run()</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">classDiagram</span><br><span class="line">      Animal &lt;|-- Duck</span><br><span class="line">      Animal &lt;|-- Fish</span><br><span class="line">      Animal &lt;|-- Zebra</span><br><span class="line">      Animal : +int age</span><br><span class="line">      Animal : +String gender</span><br><span class="line">      Animal: +isMammal()</span><br><span class="line">      Animal: +mate()</span><br><span class="line">      class Duck{</span><br><span class="line">          +String beakColor</span><br><span class="line">          +swim()</span><br><span class="line">          +quack()</span><br><span class="line">      }</span><br><span class="line">      class Fish{</span><br><span class="line">          -int sizeInFeet</span><br><span class="line">          -canEat()</span><br><span class="line">      }</span><br><span class="line">      class Zebra{</span><br><span class="line">          +bool is_wild</span><br><span class="line">          +run()</span><br><span class="line">      }</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">mindmap</span><br><span class="line">  root((mindmap))</span><br><span class="line">    Origins</span><br><span class="line">      Long history</span><br><span class="line">      ::icon(fa fa-book)</span><br><span class="line">      Popularisation</span><br><span class="line">        British popular psychology author Tony Buzan</span><br><span class="line">    Research</span><br><span class="line">      On effectiveness&lt;br/&gt;and features</span><br><span class="line">      On Automatic creation</span><br><span class="line">        Uses</span><br><span class="line">            Creative techniques</span><br><span class="line">            Strategic planning</span><br><span class="line">            Argument mapping</span><br><span class="line">    Tools</span><br><span class="line">      Pen and paper</span><br><span class="line">      Mermaid</span><br></pre></td></tr></table></figure>
 
@@ -884,7 +1002,7 @@
 <h2 id="2-latex咋用"><a href="#2-latex咋用" class="headerlink" title="2. latex咋用"></a>2. latex咋用</h2><p>可以下载本地使用的软件，也可以使用在线网页来完成，在线网页比较方便，所以使用在线网页</p>
 <p>latex有点像C语言或者Java语言之类的代码语言，需要先调包，然后使用规定的语法来呈现对应的效果</p>
 <p>所以只需要学会latex的语法，就可以使用latex</p>
-<h2 id="3-latex基本语法"><a href="#3-latex基本语法" class="headerlink" title="3. latex基本语法"></a>3. latex基本语法</h2><figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">\documentclass</span>&#123;ctexrep&#125; <span class="comment">% 给定一个文档类型</span></span><br><span class="line"><span class="keyword">\usepackage</span>&#123;xxxxxxxx&#125; <span class="comment">% 使用啥包</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">\begin</span>&#123;document&#125;</span><br><span class="line"><span class="comment">% 这中间是写各种内容的</span></span><br><span class="line"><span class="comment">% 有点像C语言，int main() &#123;&#125;</span></span><br><span class="line"><span class="comment">% 这中间可以使用package里面的各种函数来实现排版</span></span><br><span class="line"><span class="keyword">\end</span>&#123;document&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="3-latex基本语法"><a href="#3-latex基本语法" class="headerlink" title="3. latex基本语法"></a>3. latex基本语法</h2><figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">\documentclass</span>{ctexrep} <span class="comment">% 给定一个文档类型</span></span><br><span class="line"><span class="keyword">\usepackage</span>{xxxxxxxx} <span class="comment">% 使用啥包</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">\begin</span>{document}</span><br><span class="line"><span class="comment">% 这中间是写各种内容的</span></span><br><span class="line"><span class="comment">% 有点像C语言，int main() {}</span></span><br><span class="line"><span class="comment">% 这中间可以使用package里面的各种函数来实现排版</span></span><br><span class="line"><span class="keyword">\end</span>{document}</span><br></pre></td></tr></table></figure>
 
 <p>基本上来说，latex就是一种编程语言，只不过latex这种语言是用来排版的，latex本身定义了一些格式函数，同时还有很多外部的包可以调用来实现更多的功能，所以latex只需要准备一本手册，在使用过程中需要用哪个格式就去找就行，没有必要专门背下来各种函数的作用。</p>
 
