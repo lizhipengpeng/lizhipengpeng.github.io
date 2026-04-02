@@ -2297,3 +2297,22 @@ embed {
 .index .post-button {
   display: none;
 }
+
+/* 首页列表更紧凑 */
+.index .post-block {
+  padding: 12px 0;
+  margin: 0;
+}
+.index .posts-expand .post-header {
+  margin-bottom: 0;
+  padding: 0;
+}
+.index .posts-expand .post-meta {
+  margin: 2px 0 10px 0;
+}
+.index .post-title {
+  font-size: 1.1em;
+}
+.index .post-eof {
+  display: none;
+}
