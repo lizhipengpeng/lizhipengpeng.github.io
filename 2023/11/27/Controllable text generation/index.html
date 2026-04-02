@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"সার্চ করা হচ্ছে...","empty":"আমরা উক্ত অনুসন্ধানের জন্য কোন ফলাফল খুঁজে পাইনি: ${query}","hits_time":"${hits} টি ফলাফল ${time} মিলিসেকেন্ড এ পাওয়া গেছে","hits":"${hits} টি ফলাফল পাওয়া গেছে"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="Survey of Controllable Text GenerationCTG 的定义 better meet the specific constraints in practical applications Controllable text generation (CTG) refers to the task of generating text according to the g">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Controllable text generation">
+<meta property="og:url" content="http://example.com/2023/11/27/Controllable%20text%20generation/index.html">
+<meta property="og:site_name" content="随笔">
+<meta property="og:description" content="Survey of Controllable Text GenerationCTG 的定义 better meet the specific constraints in practical applications Controllable text generation (CTG) refers to the task of generating text according to the g">
+<meta property="og:locale">
+<meta property="og:image" content="http://example.com/images/image-20231127212726619.png">
+<meta property="og:image" content="http://example.com/images/image-20231127213100182.png">
+<meta property="og:image" content="http://example.com/images/image-20231127215815938.png">
+<meta property="og:image" content="http://example.com/images/image-20231127220156236.png">
+<meta property="og:image" content="http://example.com/images/image-20231127220849538.png">
+<meta property="og:image" content="http://example.com/images/image-20231127221138206.png">
+<meta property="article:published_time" content="2023-11-26T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-04-01T15:20:19.512Z">
+<meta property="article:author" content="李治澎">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/image-20231127212726619.png">
+
+
+<link rel="canonical" href="http://example.com/2023/11/27/Controllable%20text%20generation/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-Hans","comments":true,"permalink":"http://example.com/2023/11/27/Controllable%20text%20generation/","path":"2023/11/27/Controllable text generation/","title":"Controllable text generation"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Controllable text generation | 随笔</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="নেভিগেশন বারের দৃশ্যমানতা টগল করুন" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">随笔</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="সার্চ" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          সূচীপত্র
+        </li>
+        <li class="sidebar-nav-overview">
+          সারাংশ
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Survey-of-Controllable-Text-Generation"><span class="nav-number">1.</span> <span class="nav-text">Survey of Controllable Text Generation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CTG-%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="nav-number">1.1.</span> <span class="nav-text">CTG 的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CTG%E7%9A%84%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">1.2.</span> <span class="nav-text">CTG的应用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CTG%E7%9A%84%E6%96%B9%E6%B3%95%E6%B5%81%E6%B4%BE"><span class="nav-number">1.3.</span> <span class="nav-text">CTG的方法流派</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-FineTuning"><span class="nav-number">1.3.1.</span> <span class="nav-text">1. FineTuning</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Retrain-Refactor"><span class="nav-number">1.3.2.</span> <span class="nav-text">2. Retrain&#x2F;Refactor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Post-Process"><span class="nav-number">1.3.3.</span> <span class="nav-text">3. Post-Process</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">李治澎</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">পোস্ট এর তালিকা</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/11/27/Controllable%20text%20generation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李治澎">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="随笔">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Controllable text generation | 随笔">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Controllable text generation
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">প্রকাশিত হয়েছে</span>
+
+      <time title="তৈরি করা হয়েছেঃ 2023-11-27 00:00:00" itemprop="dateCreated datePublished" datetime="2023-11-27T00:00:00+08:00">2023-11-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">সম্পাদিত হয়েছে</span>
+      <time title="পরিমার্জন করা হয়েছেঃ 2026-04-01 23:20:19" itemprop="dateModified" datetime="2026-04-01T23:20:19+08:00">2026-04-01</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="Survey-of-Controllable-Text-Generation"><a href="#Survey-of-Controllable-Text-Generation" class="headerlink" title="Survey of Controllable Text Generation"></a>Survey of Controllable Text Generation</h1><h2 id="CTG-的定义"><a href="#CTG-的定义" class="headerlink" title="CTG 的定义"></a>CTG 的定义</h2><ul>
+<li>better meet the specific constraints in practical applications</li>
+<li>Controllable text generation (CTG) refers to the task of generating text according to the given controlled element</li>
+</ul>
+<p><img src="/images/image-20231127212726619.png" alt="image-20231127212726619"></p>
+<p>举例说明</p>
+<ul>
+<li>第一个例子就是给定一个故事线，要求模型按照这样的思路去生成。</li>
+<li>第二个例子是关于传统人机对话中如果机器生成文本时不受控制可能带来的问题，比如会给出有害的建议，甚至说脏话，这个时候就需要我们在模型生成的时候加以控制。</li>
+</ul>
+<p>跟传统NLG的区别就在于我们会在输入的时候加入某些控制因素，从而让最终的输出满足某种条件。</p>
+<h2 id="CTG的应用场景"><a href="#CTG的应用场景" class="headerlink" title="CTG的应用场景"></a>CTG的应用场景</h2><ul>
+<li><strong>Attribute-based Generation</strong>，基于某种属性的自然语言生成，比如生成特定情感/口吻/风格的文本</li>
+<li><strong>Dialogue Generation</strong>，对话系统对NLG有更高的要求，因此CTG的应用就不言而喻了</li>
+<li><strong>Storytelling</strong>，用CTG来辅助文学创作，想想就很爽，而传统的NLG，基本给了开头你就无法控制了</li>
+<li><strong>Data to Text</strong>，使用一些结构化数据（table，graph）来生成自然语言，可用于给定每天的天气数据，来自动生成天气播报，或者把老板看不懂的表格数据用CTG技术翻译成人话给他听</li>
+<li><strong>Data Augmentation</strong>，使用CTG可以把已有的文本的某些信息给重新生成，变成我们想要的属性</li>
+<li><strong>Debiasing</strong>，这也非常重要，可以帮助我们把带有某些偏见的文本转化成无偏见的文本，让机器也符合伦理道德</li>
+<li><strong>Format Control</strong>，风格、格式的转换，比如中国古诗词就有明确的格式，这就需要在生成的时候加以控制</li>
+</ul>
+<h2 id="CTG的方法流派"><a href="#CTG的方法流派" class="headerlink" title="CTG的方法流派"></a>CTG的方法流派</h2><img src="/images/image-20231127213100182.png" alt="image-20231127213100182" style="zoom: 67%;">
+
+<p>大致上分为三类:</p>
+<ul>
+<li>改良派：在已有PLM的基础上继续预训练</li>
+<li>革命派：另起炉灶，重新训练一个大型预训练模型</li>
+<li>保守派：连PLM都不想动，直接在PLM的输出上做后处理</li>
+</ul>
+<h3 id="1-FineTuning"><a href="#1-FineTuning" class="headerlink" title="1. FineTuning"></a>1. FineTuning</h3><p>改良派，实际上就是沿用了PLM最经典的使用方法——Fine-tuning，虽然原始的PLM在训练的时候，并没有对某些属性、特点、要素进行控制，但是PLM预训练中学习的大规模知识是很有用的，所以我们使用特定的语料，让PLM进一步去学习我们希望的某种控制效果，就可以实现CTG的目的。</p>
+<p>而Finetuning中又分为三种方式：</p>
+<ul>
+<li>Adapted Module方式，通过额外添加一个控制模块，用于添加属性控制，然后连同PLM一起进行训练。代表方法包括 Auxiliary Tuning[2]，DialGPT[3]。</li>
+<li>Prompt方式，包括prompt Learning、prompt tuning[4]等方法，实际上基于prompt的方法，本身就是对PLM的生成加入了额外的控制，如果使用有监督的风格、属性数据集进行训练，就可以直接得到基于prompt的CTG模型。也有更新的工作Inverse Prompt[5]，用模型生成的句子来反过来去预测代表风格、主题等的prompt，从而让prompt对文本生成的控制力更强。</li>
+<li>基于强化学习RL的方法。</li>
+<li>指令微调, 构造指令数据集 进行有监督微调训练</li>
+</ul>
+<p>这些基于finetuning的方法，基本都要求我们有一个下游任务的有监督数据集，从而帮助我们学习某种控制性，比如你希望控制生成文本的情感属性，那么就需要你有情感分类的数据集，让模型去学习[指定情感]——&gt;[该情感的文本]的映射。</p>
+<h3 id="2-Retrain-Refactor"><a href="#2-Retrain-Refactor" class="headerlink" title="2. Retrain/Refactor"></a>2. Retrain/Refactor</h3><ol>
+<li><p>CTRL</p>
+<p> CTRL收集了140GB的数据，涵盖了很多个domain的语料（百科、reddit、影评、新闻、翻译、问答…），<strong>每个domain都设置有一个control code</strong>，从而训练一个大型的包含1.63B参数量的conditional language model, 那些control code是预定义好的，直接插入在sequence的开头</p>
+</li>
+<li><p><strong>Content-Conditioner (CoCon)</strong></p>
+<p> 以CTRL为代表的方法只能从一个总体的层面对生成文本增加限制，比如某种风格主题，但无法对具体内容进行精细控制，CoCon则是直接以原文中的部分内容作为condition，来预测下文, 核心思想就是<strong>使用文本的一部分作为condition，让模型对剩余部分进行复原</strong></p>
+</li>
+</ol>
+<img src="/images/image-20231127215815938.png" alt="image-20231127215815938" style="zoom:50%;">
+
+<p>上面列举的CTRL和CoCon的对NLG添加的实际上是比较soft的限制，并不强制要求模型一定要输出什么元素，而有一些工作则会使用hard的限制，要求模型必须输出给定的某些关键词：</p>
+<ol start="3">
+<li><p><strong>POINTER</strong></p>
+<p> POINTER的主要目的是训练根据指定词汇然后生成包含这些词汇的模型，采用的是一种基于插入的、渐进生成的方法,POINTER的生成是一种迭代式地生成，先生成给定的关键词，然后每一轮都按照重要性不断插入新的词，直到把句子给补齐。POINTER中使用的一种Transformer结构叫做<strong>Insertion Transformer</strong></p>
+ <img src="/images/image-20231127220156236.png" alt="image-20231127220156236" style="zoom:67%;">
+</li>
+<li><p><strong>Constrained BART (CBART)</strong></p>
+<p> 对BART进行了改造，通过在encoder上面添加一个token-level classifier来指导decoder在生成的时候应该进行replace还是insert</p>
+</li>
+</ol>
+<h3 id="3-Post-Process"><a href="#3-Post-Process" class="headerlink" title="3. Post-Process"></a>3. Post-Process</h3><ol>
+<li><p><strong>Plug and Play Language Models (PPLM)</strong></p>
+<p> PPLM不希望去训练PLM，而是通过额外的一个attribute model来对PLM的输出加以修正，从而符合某种预期。这里的attribute model，既可以是一个bag of words来代表某个topic，也可以是一个训练好的小模型来对某个topic进行打分，然后通过这个attribute model向PLM的hidden states传递梯度，从而对hidden states进行一定的修正，然后PLM的输出就会往我们希望的topic倾斜了。</p>
+ <img src="/images/image-20231127220849538.png" alt="image-20231127220849538" style="zoom:67%;">
+</li>
+<li><p><strong>MEGATRON-CNTRL</strong></p>
+<p> 选择利用外部知识库来辅助生成，给定一个context，MEGATRON-CNTRL会首先使用一个predictor生成一批关键词，然后通过一个retriever从知识库中找到跟这些关键词匹配的句子，然后通过一个ranker进行筛选，最后再输入PLM进行句子的生成：</p>
+</li>
+</ol>
+<p>还有工作比如<strong>PAIR</strong>[14]则是先生成一个包含关键词和位置信息的模板，然后对模板进行填空，从而进行控制性生成；<strong>GeDi</strong>[15]则是训练一个小型的discriminator来引导PLM的生成。</p>
+<img src="/images/image-20231127221138206.png" alt="image-20231127221138206" style="zoom:67%;">
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/08/15/LLM_data/" rel="prev" title="LLM_data">
+                  <i class="fa fa-angle-left"></i> LLM_data
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/11/30/%E6%9C%9F%E5%88%8A/" rel="next" title="期刊">
+                  期刊 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">李治澎</span>
+  </div>
+  <div class="powered-by"><a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> এর সাহায্যে চলছে
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="উপরে ফিরে যান">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
