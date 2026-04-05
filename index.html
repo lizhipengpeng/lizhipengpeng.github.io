@@ -2,1261 +2,336 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width">
-<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
-
-<link rel="stylesheet" href="/css/main.css">
-
-
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
-
-<script class="next-config" data-name="main" type="application/json">{"hostname":"lizhipengpeng.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
-
-    <meta name="description" content="researcher • developer • student">
-<meta property="og:type" content="website">
-<meta property="og:title" content="随笔">
-<meta property="og:url" content="https://lizhipengpeng.github.io/index.html">
-<meta property="og:site_name" content="随笔">
-<meta property="og:description" content="researcher • developer • student">
-<meta property="og:locale" content="zh_CN">
-<meta property="article:author" content="李治澎">
-<meta name="twitter:card" content="summary">
-
-
-<link rel="canonical" href="https://lizhipengpeng.github.io/">
-
-
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"index.html","title":""}</script>
-
-<script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>随笔</title>
-  
-
-
-
-
-
-
-
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
-<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
-
-  
-
-
-
-
-
-
-  
-
-
-
-
-
-  <noscript>
-    <link rel="stylesheet" href="/css/noscript.css">
-  </noscript>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{ 李治澎 }</title>
+  <meta name="description" content="">
+  <style>
+    :root {
+      --bg-color: #ffffff;
+      --text-color: #1a1a1a;
+      --link-color: #0066cc;
+      --muted-color: #666666;
+      --border-color: #e0e0e0;
+      --code-bg: #f5f5f5;
+    }
+    
+    [data-theme="dark"] {
+      --bg-color: #1a1a1a;
+      --text-color: #e0e0e0;
+      --link-color: #66b3ff;
+      --muted-color: #999999;
+      --border-color: #333333;
+      --code-bg: #2d2d2d;
+    }
+    
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    html { scroll-behavior: smooth; }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--text-color);
+      background-color: var(--bg-color);
+      min-height: 100vh;
+    }
+    
+    .container {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 1.5rem;
+    }
+    
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-bottom: 1rem;
+    }
+    
+    .site-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-color);
+    }
+    
+    .site-title::before { content: '{ '; color: var(--muted-color); }
+    .site-title::after { content: ' }'; color: var(--muted-color); }
+    
+    .site-subtitle {
+      font-size: 0.875rem;
+      color: var(--muted-color);
+      margin-top: 0.25rem;
+    }
+    
+    .theme-toggle {
+      background: none;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: 0.5rem;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    
+    h4 {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--muted-color);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin: 2rem 0 1rem 0;
+    }
+    
+    h4 a {
+      color: var(--muted-color);
+      margin-left: 0.5rem;
+      text-decoration: none;
+    }
+    
+    h4 a:hover { opacity: 0.7; }
+    
+    .post-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    
+    .post-list a {
+      display: flex;
+      gap: 1rem;
+      align-items: baseline;
+      text-decoration: none;
+      color: var(--text-color);
+      padding: 0.25rem 0;
+    }
+    
+    .post-list a:hover { opacity: 0.7; }
+    
+    .post-date {
+      font-size: 0.875rem;
+      color: var(--muted-color);
+      font-style: italic;
+      white-space: nowrap;
+    }
+    
+    .about-section p { margin-bottom: 1rem; line-height: 1.7; }
+    
+    .social-links { display: flex; gap: 1rem; margin: 1rem 0; }
+    
+    .social-links a {
+      color: var(--link-color);
+      display: inline-flex;
+      transition: opacity 0.2s;
+    }
+    
+    .social-links a:hover { opacity: 0.7; }
+    .social-links svg { width: 24px; height: 24px; }
+    
+    .footer {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border-color);
+      font-size: 0.75rem;
+      color: var(--muted-color);
+      text-align: center;
+    }
+    
+    .footer a {
+      color: var(--link-color);
+      text-decoration: none;
+    }
+    
+    .footer a:hover { text-decoration: underline; }
+    
+    @media (max-width: 640px) {
+      .container { padding: 1rem; }
+      .site-title { font-size: 1.25rem; }
+    }
+  </style>
 </head>
-
-<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
-  <div class="headband"></div>
-
-  <main class="main">
-    <div class="column">
-      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏" role="button">
-    </div>
-  </div>
-
-  <div class="site-meta">
-
-    <a href="/" class="brand" rel="start">
-      <i class="logo-line"></i>
-      <h1 class="site-title">随笔</h1>
-      <i class="logo-line"></i>
-    </a>
-  </div>
-
-  <div class="site-nav-right">
-    <div class="toggle popup-trigger" aria-label="搜索" role="button">
-    </div>
-  </div>
-</div>
-
-
-
-
-
-
-
-</header>
-        
-  
-  <aside class="sidebar">
-
-    <div class="sidebar-inner sidebar-overview-active">
-      <ul class="sidebar-nav">
-        <li class="sidebar-nav-toc">
-          文章目录
-        </li>
-        <li class="sidebar-nav-overview">
-          站点概览
-        </li>
-      </ul>
-
-      <div class="sidebar-panel-container">
-        <!--noindex-->
-        <div class="post-toc-wrap sidebar-panel">
-        </div>
-        <!--/noindex-->
-
-        <div class="site-overview-wrap sidebar-panel">
-          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">李治澎</p>
-  <div class="site-description" itemprop="description">researcher • developer • student</div>
-</div>
-<div class="site-state-wrap animated">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-        <a href="/archives/">
-          <span class="site-state-item-count">30</span>
-          <span class="site-state-item-name">日志</span>
-        </a>
+<body>
+  <div class="container">
+    <header class="header">
+      <div>
+        <h1 class="site-title">李治澎</h1>
+        <p class="site-subtitle"></p>
       </div>
-  </nav>
-</div>
-
-        </div>
-      </div>
+      <button class="theme-toggle" onclick="toggleTheme()">
+        <span id="theme-icon">🌙</span>
+      </button>
+    </header>
+    
+    <h4>Musings <a href="/rss.xml">📡</a></h4>
+    
+    <div class="post-list">
+      <a href="https://lizhipengpeng.github.io/2026/04/04/%E8%AF%AD%E8%A8%80%E4%B8%96%E7%95%8C%E8%A7%82/">
+        <span class="post-date">2026-04-04</span>
+        <span>语言世界观</span>
+      </a>
+      <a href="https://lizhipengpeng.github.io/2026/04/04/%E4%B8%89%E5%88%86%E7%B1%BB%E7%90%86%E8%AE%BA/">
+        <span class="post-date">2026-04-04</span>
+        <span>三分类理论</span>
+      </a>
+      <a href="https://lizhipengpeng.github.io/2026/04/01/fotran2cpp/">
+        <span class="post-date">2026-04-01</span>
+        <span>fotran2cpp</span>
+      </a>
+      <a href="https://lizhipengpeng.github.io/2026/03/11/%E6%96%AD%E7%BD%91GPU%E6%9C%8D%E5%8A%A1%E5%99%A8Claude_Code%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8D%97/">
+        <span class="post-date">2026-03-11</span>
+        <span>断网GPU服务器Claude_Code配置指南</span>
+      </a>
+      <a href="https://lizhipengpeng.github.io/2025/02/21/%E5%A4%B1%E6%81%8B%E5%92%8C%E7%88%B1%E6%83%85/">
+        <span class="post-date">2025-02-21</span>
+        <span>失恋和爱情</span>
+      </a>
+      <a href="https://lizhipengpeng.github.io/2025/02/16/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E7%AE%97%E6%B3%95%E5%AE%9E%E4%B9%A0%E5%85%AB%E8%82%A1/">
+        <span class="post-date">2025-02-16</span>
+        <span>大模型算法实习八股</span>
+      </a>
+      <a href="https://lizhipengpeng.github.io/2025/01/25/%E6%95%88%E5%BA%94/">
+        <span class="post-date">2025-01-25</span>
+        <span>效应</span>
+      </a>
+      <a href="https://lizhipengpeng.github.io/2024/07/09/%E4%B8%AD%E5%85%B4-%E7%9F%A5%E8%AF%86%E5%B7%A5%E7%A8%8B/">
+        <span class="post-date">2024-07-09</span>
+        <span>中兴-知识工程</span>
+      </a>
+      <a href="https://lizhipengpeng.github.io/2024/04/02/prompt_QAC/">
+        <span class="post-date">2024-04-02</span>
+        <span>prompt_QAC</span>
+      </a>
+      <a href="https://lizhipengpeng.github.io/2024/03/25/%E6%A6%82%E7%8E%87%E8%AE%BA/">
+        <span class="post-date">2024-03-25</span>
+        <span>概率论</span>
+      </a>
+      <a href="https://lizhipengpeng.github.io/2024/03/24/good%20paper/">
+        <span class="post-date">2024-03-24</span>
+        <span>good paper</span>
+      </a>
+      <a href="https://lizhipengpeng.github.io/2024/03/15/%E6%95%88%E7%8E%87/">
+        <span class="post-date">2024-03-15</span>
+        <span>效率</span>
+      </a>
+      <a href="https://lizhipengpeng.github.io/2024/03/10/%E5%AF%B9%E9%BD%90%E3%80%81%E5%B9%BB%E8%A7%89%E3%80%81%E5%8F%AF%E6%8E%A7%E6%96%87%E6%9C%AC%E7%94%9F%E6%88%90/">
+        <span class="post-date">2024-03-10</span>
+        <span>对齐、幻觉、可控文本生成</span>
+      </a>
+      <a href="https://lizhipengpeng.github.io/2024/03/10/%E6%94%B6%E9%9B%86/">
+        <span class="post-date">2024-03-10</span>
+        <span>一些网站、软件和项目的收集</span>
+      </a>
+      <a href="https://lizhipengpeng.github.io/2024/03/05/%E7%81%B5%E5%85%89%E4%B9%8D%E7%8E%B0/">
+        <span class="post-date">2024-03-05</span>
+        <span>想法</span>
+      </a>
+      <a href="https://lizhipengpeng.github.io/2024/02/28/%E5%AF%92%E6%AD%A6%E7%BA%AA%E5%B9%B3%E5%8F%B0%E4%BD%BF%E7%94%A8/">
+        <span class="post-date">2024-02-28</span>
+        <span>寒武纪平台使用</span>
+      </a>
+      <a href="https://lizhipengpeng.github.io/2023/12/14/LLM/">
+        <span class="post-date">2023-12-14</span>
+        <span>大语言模型的预训练、微调等技术</span>
+      </a>
+      <a href="https://lizhipengpeng.github.io/2023/12/08/%E5%A5%BD%E6%96%87/">
+        <span class="post-date">2023-12-08</span>
+        <span>好文收集</span>
+      </a>
+      <a href="https://lizhipengpeng.github.io/2023/12/04/%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85python%E7%9A%84%E5%BA%93%E5%8F%8A%E4%BE%9D%E8%B5%96%E5%BA%93/">
+        <span class="post-date">2023-12-04</span>
+        <span>离线安装python的库及依赖库</span>
+      </a>
+      <a href="https://lizhipengpeng.github.io/2023/11/30/%E6%9C%9F%E5%88%8A/">
+        <span class="post-date">2023-11-30</span>
+        <span>期刊</span>
+      </a>
+      <a href="https://lizhipengpeng.github.io/2023/11/27/Controllable%20text%20generation/">
+        <span class="post-date">2023-11-27</span>
+        <span>Controllable text generation</span>
+      </a>
+      <a href="https://lizhipengpeng.github.io/2023/08/15/LLM_data/">
+        <span class="post-date">2023-08-15</span>
+        <span>LLM_data</span>
+      </a>
+      <a href="https://lizhipengpeng.github.io/2023/07/13/%E7%A0%94%E7%A9%B6%E7%94%9F%E7%AC%AC%E4%B8%80%E5%AD%A6%E5%B9%B4%E5%A5%96%E5%AD%A6%E9%87%91%E8%AF%84%E5%AE%9A%E7%9A%84%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F/">
+        <span class="post-date">2023-07-13</span>
+        <span>研究生第一学年奖学金评定的软件系统</span>
+      </a>
+      <a href="https://lizhipengpeng.github.io/2023/07/04/%E4%BC%BC%E7%84%B6%E5%92%8C%E6%9E%81%E5%A4%A7%E4%BC%BC%E7%84%B6/">
+        <span class="post-date">2023-07-04</span>
+        <span>似然和极大似然估计</span>
+      </a>
+      <a href="https://lizhipengpeng.github.io/2023/06/24/NER/">
+        <span class="post-date">2023-06-24</span>
+        <span>关系抽取和层次分类</span>
+      </a>
+      <a href="https://lizhipengpeng.github.io/2023/06/15/%E9%A9%AC%E5%85%8B%E6%80%9D%E6%80%9D%E6%83%B3/">
+        <span class="post-date">2023-06-15</span>
+        <span>马克思思想</span>
+      </a>
+      <a href="https://lizhipengpeng.github.io/2023/06/12/%E6%9D%82%E8%A8%80/">
+        <span class="post-date">2023-06-12</span>
+        <span>一些记录</span>
+      </a>
+      <a href="https://lizhipengpeng.github.io/2023/06/08/%E5%A6%82%E4%BD%95%E6%8C%91%E9%80%89%E8%A1%A3%E6%9C%8D/">
+        <span class="post-date">2023-06-08</span>
+        <span>如何挑选好看的衣服</span>
+      </a>
+      <a href="https://lizhipengpeng.github.io/2023/05/29/Latex/">
+        <span class="post-date">2023-05-29</span>
+        <span>《简单高效LaTeX》</span>
+      </a>
+      <a href="https://lizhipengpeng.github.io/2023/04/02/%E5%B0%8F%E6%98%8E%E4%B8%8E%E7%8E%8B%E7%8C%AB/">
+        <span class="post-date">2023-04-02</span>
+        <span>看《小明与王猫》有感</span>
+      </a>
     </div>
-
     
-  </aside>
-
-
+    <h4>About</h4>
+    <div class="about-section">
+      <p>我是李治澎，对人工智能、机器学习和软件开发充满热情的开发者。这个博客记录了我的学习笔记、思考和探索。</p>
+      <p>Currently focused on LLM research and NLP applications.</p>
     </div>
-
-    <div class="main-inner index posts-expand">
-
     
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://lizhipengpeng.github.io/2026/04/04/%E8%AF%AD%E8%A8%80%E4%B8%96%E7%95%8C%E8%A7%82/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="李治澎">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="随笔">
-      <meta itemprop="description" content="researcher • developer • student">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 随笔">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2026/04/04/%E8%AF%AD%E8%A8%80%E4%B8%96%E7%95%8C%E8%A7%82/" class="post-title-link" itemprop="url">语言世界观</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2026-04-04 14:17:43 / 修改时间：14:57:47" itemprop="dateCreated datePublished" datetime="2026-04-04T14:17:43+08:00">2026-04-04</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="语言世界观"><a href="#语言世界观" class="headerlink" title="语言世界观"></a>语言世界观</h1><p>世界客观存在，它有固定的结构和运行原理。而人类对世界的理解，本质上是一种拟合——我们通过认知、观察、实验不断逼近真实，但这个逼近永远伴随着误差。这不是悲观的结论，而是认知的基本处境。承认这一点，反而让我们能更清醒地思考”理解世界”这件事究竟意味着什么。</p>
-<p>如果用语言来类比，会更直观。每个学科都是人类尝试表达世界的一种语言。物理学、数学、经济学、音乐、艺术，都不是世界本身，它们是我们为了理解世界、描述结构而创造的表达系统。每种学科强调世界不同的维度，就像不同语言有不同的词汇和语法，表达同样的意思也会有不同方式。在这个视角下，学科不再是孤立的板块，而是对世界不同维度的不同拟合方式。</p>
-<p>这些不同的语言，是否共享同一套底层字母？我的判断是肯定的。但这里需要一个重要的澄清：底层字母不是基本元素，而是基本运行原理。我们容易把”底层”理解成最小的组成单位，比如夸克、基因、像素——这是名词思维。但世界的底层语言是动词的，是运动、是原理、是规律，而不是静态的砖块。物理学从”物体与力”走向”最小作用量原理”再走向场论，正是这个方向：粒子是场的激发态，元素是运动的表现形式。不同学科共享的底层字母，是那些跨越具体领域、在不同维度上反复出现的基本原理——对称性、守恒、反馈、涌现……它们在物理学里是一种面貌，在经济学里是另一种面貌，但底层结构可能是同一件事。</p>
-<p>由此带来一个核心推论：复杂性不来自元素数量，而来自组合方式。数学公理有限，但可以组合出无穷定理；音符有限，但可以组合出无限音乐；逻辑门有限，但可以组合出无穷程序。世界的复杂性，是有限原理构成的生成系统在运作。值得注意的是，这个结构是自相似的——它不只适用于学科之间，在一个学科内部同样成立。每个领域内部也有自己的底层原理和组合规则，子领域之间也像不同语言一样彼此关联。同样的逻辑，在不同尺度上反复出现。</p>
-<p>理解了这一点，自然会问：怎么实际利用它？答案是类比。类比不是打比方，不是修辞手段，而是认知的底层机制——用一种语言的结构来理解另一种语言，或者发现两种语言在描述同一件事。侯世达在《表象与本质》里的核心论点正是如此：类比不是思维的装饰，而是思维本身。但类比有好坏之分。表面相似的类比只是隐喻，有用但不深。真正有力的类比，是两个领域在底层结构上真正同构——不只是描述上相似，而是能用A领域的逻辑，推导出B领域里你原本不知道的东西，然后去验证它。香农把”信息”用数学严格定义之后，信息论可以直接应用在生物学、物理学、经济学里，这不是隐喻，而是结构真的是同一件事。能产生新的可验证推论的类比，就不只是理解工具，而是发现工具。</p>
-<p>在这个框架下，创新也有了更清晰的分类。最根本的创新，是发现新的底层原理，拓展我们的字母表，让我们能够表达之前触及不到的结构。这类创新改变整个表达系统的边界，带来范式级突破。另一类创新，是在已有字母表上进行新的组合，形成新的结构或模式。两类创新都不容易——把两个字母有机地组合到一起，逻辑自洽地把一个领域的思想应用到另一个领域的问题上，本身就是一件极难的事。发现一个新字母，则更难。现实中这两类创新交织存在，但它们的难度和意义是不同量级的。</p>
-<p>认知不是线性进步的，这也是这套框架必须正视的一个现实。每一种语言在深入使用的过程中都会积累误差——不是因为语言错了，而是因为任何语言都有边界，越深入越接近边界，误差越大，直到不得不引入新的语言来填补，乃至整个框架的崩溃与重构。这个节奏在科学史上反复出现：19世纪末的物理学家面对黑体辐射问题，很多人以为只是计算不够精细，继续在经典框架内修补，但普朗克最终发现是底层假设出了问题——能量不是连续的。这里有一个关键判断需要做：误差到底来自哪里？如果是底层假设失效，需要换语言或扩展语言；如果只是复杂度不够，在同一语言内部精细化就够了。误判来源，就会在错误的方向上耗费大量资源。遇到困难时，元认知的第一步，是先诊断误差的性质，再决定用力的方向。</p>
-<p>最后，跨学科探索的价值也在这个框架下有了新的理解。通常我们认为跨学科是为了”覆盖更多维度”，用更多语言拟合世界，让理解更全面。但还有另一层价值往往被忽视：互相纠偏。每一种语言都自带认知偏移，用一种语言越深入，就越容易被这种语言的框架所塑造，看到的问题形状会被工具本身扭曲。切换语言，不只是获得新视角，也是校正当前语言带来的系统性偏差。这意味着，跨学科能力的核心不是”我掌握了很多字母”，而是能主动跳出当前语言，从外部审视它——看到它的边界，看到它的预设，看到它开始失真的地方。这种能力，比单纯积累学科知识要难培养得多，但也更根本。</p>
-<p>这套认知框架本身，也是一种语言，有自己的假设和边界。边界在哪里，现在还不知道——边界往往是用出来的，不是想出来的。它的价值不在于给出终极答案，而在于提供一条路径：理解世界的关键不在于记住规则，而在于掌握组合的能力，培养跳出语言审视语言的元认知，并在实践中不断扩展和校正自己的底层表达单位。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2026/04/04/%E8%AF%AD%E8%A8%80%E4%B8%96%E7%95%8C%E8%A7%82/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
+    <h4>Get in touch</h4>
+    <div class="social-links">
+      <a href="https://github.com/lizhipengpeng" title="GitHub">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+        </svg>
+      </a>
+      <a href="mailto:lizhipeng@example.com" title="Email">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="2" y="4" width="20" height="16" rx="2"/>
+          <path d="M2 7l10 7 10-7"/>
+        </svg>
+      </a>
     </div>
-
     
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
+    <footer class="footer">
+      <p>This blog is built with <a href="https://hexo.io" target="_blank">Hexo</a>.</p>
     </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://lizhipengpeng.github.io/2026/04/04/%E4%B8%89%E5%88%86%E7%B1%BB%E7%90%86%E8%AE%BA/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="李治澎">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="随笔">
-      <meta itemprop="description" content="researcher • developer • student">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 随笔">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2026/04/04/%E4%B8%89%E5%88%86%E7%B1%BB%E7%90%86%E8%AE%BA/" class="post-title-link" itemprop="url">三分类理论</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2026-04-04 00:48:27 / 修改时间：00:48:33" itemprop="dateCreated datePublished" datetime="2026-04-04T00:48:27+08:00">2026-04-04</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="三段创造"><a href="#三段创造" class="headerlink" title="三段创造"></a>三段创造</h1><p>我发现任何有点难度的工作，尤其是科研或高科技领域，都能分成三个阶段：0→1、1→99、99→100。这不是什么严谨的理论，就是个帮我自己理解世界的框架。</p>
-<h2 id="0→1"><a href="#0→1" class="headerlink" title="0→1"></a>0→1</h2><p>从学术上没人提过的想法，到写成论文、实验上严格证明出来。起点是空白，终点是一个可被复现的原理验证。</p>
-<p>这个阶段的核心问题是“这事能不能成”。做这件事的人需要容忍模糊、不怕试错、有点叛逆。让他们去搞流程管理或者跑渠道推广，基本是折磨。</p>
-<h2 id="1→99"><a href="#1→99" class="headerlink" title="1→99"></a>1→99</h2><p>原理有了，但还不稳定、不靠谱。1→99就是把它变成稳定、可规模化、可交付的东西。对一首歌来说，是编曲、录音、混音、母带。对一项技术来说，是把实验室里动不动就坏的原型变成一条能稳定运行的生产线。</p>
-<p>这个阶段的核心问题是“怎么能一直稳定地做成”。需要的是系统思维、耐心、项目管理能力。数字“1到99”只是个代号，不代表具体的进度值。</p>
-<h2 id="99→100"><a href="#99→100" class="headerlink" title="99→100"></a>99→100</h2><p>这是最容易被误解的一段。99→100不是把产品做到完美无瑕，而是让需要它的人能够通过便捷的渠道轻易找到并使用。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2026/04/04/%E4%B8%89%E5%88%86%E7%B1%BB%E7%90%86%E8%AE%BA/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://lizhipengpeng.github.io/2026/04/01/fotran2cpp/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="李治澎">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="随笔">
-      <meta itemprop="description" content="researcher • developer • student">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 随笔">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2026/04/01/fotran2cpp/" class="post-title-link" itemprop="url">fotran2cpp</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2026-04-01 00:00:00 / 修改时间：15:44:55" itemprop="dateCreated datePublished" datetime="2026-04-01T00:00:00+08:00">2026-04-01</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="Automatic-Fortran-to-C-conversion"><a href="#Automatic-Fortran-to-C-conversion" class="headerlink" title="Automatic Fortran to C++ conversion"></a>Automatic Fortran to C++ conversion</h1><h2 id="1-安装fable环境"><a href="#1-安装fable环境" class="headerlink" title="1. 安装fable环境"></a>1. 安装fable环境</h2><h3 id="Pre-requisites"><a href="#Pre-requisites" class="headerlink" title="Pre-requisites:"></a>Pre-requisites:</h3><ol>
-<li><p>Please have a Linux environment, bash shell.</p>
-</li>
-<li><p>Please create a working directory </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> WORK=&lt;new working directory&gt;</span><br><span class="line"><span class="built_in">cd</span> <span class="variable">$&#123;WORK&#125;</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Download source code:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget https://raw.githubusercontent.com/cctbx/cctbx_project/master/libtbx/auto_build/bootstrap.py --no-check-certificate</span><br><span class="line">python bootstrap.py hot update --builder=cctbx</span><br></pre></td></tr></table></figure></li>
-</ol>
-<h3 id="Create-and-configure-a-conda-environment"><a href="#Create-and-configure-a-conda-environment" class="headerlink" title="Create and configure a conda environment:"></a>Create and configure a conda environment:</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh --no-check-certificate</span><br><span class="line"><span class="built_in">chmod</span> u+x Miniconda2-latest-Linux-x86_64.sh</span><br><span class="line">./Miniconda2-latest-Linux-x86_64.sh <span class="comment"># tested with conda 4.5.11</span></span><br><span class="line">     <span class="comment"># please install in directory $&#123;WORK&#125;/miniconda2</span></span><br><span class="line">     <span class="comment"># no, do not prepend Miniconda2 to .bashrc</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">source</span> miniconda2/etc/profile.d/conda.sh</span><br><span class="line">conda create -y --name fable36 python=3.6</span><br><span class="line">conda activate fable36</span><br><span class="line">conda install six future</span><br></pre></td></tr></table></figure>
-
-<h3 id="Create-and-configure-FABLE"><a href="#Create-and-configure-FABLE" class="headerlink" title="Create and configure FABLE:"></a>Create and configure FABLE:</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> build36</span><br><span class="line"><span class="built_in">cd</span> <span class="variable">$&#123;WORK&#125;</span>/build36</span><br><span class="line">python ../modules/cctbx_project/libtbx/configure.py fable</span><br><span class="line"><span class="comment"># python ../modules/cctbx_project/libtbx/configure.py --enable_cxx11 fable # support C++11 standard</span></span><br><span class="line"><span class="built_in">source</span> <span class="variable">$&#123;WORK&#125;</span>/build36/setpaths.sh</span><br><span class="line"><span class="built_in">cd</span> <span class="variable">$&#123;WORK&#125;</span>/build36; make; <span class="built_in">cd</span> <span class="variable">$&#123;WORK&#125;</span></span><br><span class="line"><span class="built_in">cd</span> <span class="variable">$&#123;WORK&#125;</span>/build36; make; <span class="built_in">cd</span> <span class="variable">$&#123;WORK&#125;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="Test-FABLE-in-a-new-login-shell-bash-cd-WORK"><a href="#Test-FABLE-in-a-new-login-shell-bash-cd-WORK" class="headerlink" title="Test FABLE in a new login shell (bash, cd ${WORK}):"></a>Test FABLE in a new login shell (bash, cd ${WORK}):</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> miniconda2/etc/profile.d/conda.sh</span><br><span class="line">conda activate fable36</span><br><span class="line"><span class="built_in">source</span> <span class="variable">$&#123;WORK&#125;</span>/build36/setpaths.sh</span><br><span class="line"><span class="built_in">mkdir</span> test36; <span class="built_in">cd</span> test36</span><br><span class="line">libtbx.run_tests_parallel module=fable <span class="built_in">nproc</span>=Auto</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2026/04/01/fotran2cpp/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://lizhipengpeng.github.io/2026/03/11/%E6%96%AD%E7%BD%91GPU%E6%9C%8D%E5%8A%A1%E5%99%A8Claude_Code%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8D%97/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="李治澎">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="随笔">
-      <meta itemprop="description" content="researcher • developer • student">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 随笔">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2026/03/11/%E6%96%AD%E7%BD%91GPU%E6%9C%8D%E5%8A%A1%E5%99%A8Claude_Code%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8D%97/" class="post-title-link" itemprop="url">断网GPU服务器Claude_Code配置指南</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2026-03-11 15:50:17" itemprop="dateCreated datePublished" datetime="2026-03-11T15:50:17+08:00">2026-03-11</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-04-01 23:39:35" itemprop="dateModified" datetime="2026-04-01T23:39:35+08:00">2026-04-01</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="断网-GPU-服务器使用-Claude-Code-指南"><a href="#断网-GPU-服务器使用-Claude-Code-指南" class="headerlink" title="断网 GPU 服务器使用 Claude Code 指南"></a>断网 GPU 服务器使用 Claude Code 指南</h1><blockquote>
-<p>适用场景：本地 macOS + SSH 密码登录 + 服务器完全断网</p>
-</blockquote>
-<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">服务器 → SSH 反向隧道 → 本地电脑（Clash/pproxy）→ 互联网 → Anthropic API</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="方案选择"><a href="#方案选择" class="headerlink" title="方案选择"></a>方案选择</h2><table>
-<thead>
-<tr>
-<th>场景</th>
-<th>推荐方案</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>本地使用 Clash 代理上网</td>
-<td><strong>方案一：直接转发 Clash 端口</strong>（推荐）</td>
-</tr>
-<tr>
-<td>本地直连外网，无代理工具</td>
-<td><strong>方案二：pproxy 自建代理</strong></td>
-</tr>
-</tbody></table>
-<hr>
-<h2 id="方案一：转发-Clash-端口（推荐）"><a href="#方案一：转发-Clash-端口（推荐）" class="headerlink" title="方案一：转发 Clash 端口（推荐）"></a>方案一：转发 Clash 端口（推荐）</h2><p>如果本地使用 Clash&#x2F;Clashy 上网，直接把 Clash 的代理端口通过 SSH 隧道转发给服务器，流量完全走 Clash 的规则，VPN 分流等策略全部生效。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2026/03/11/%E6%96%AD%E7%BD%91GPU%E6%9C%8D%E5%8A%A1%E5%99%A8Claude_Code%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8D%97/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://lizhipengpeng.github.io/2025/02/21/%E5%A4%B1%E6%81%8B%E5%92%8C%E7%88%B1%E6%83%85/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="李治澎">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="随笔">
-      <meta itemprop="description" content="researcher • developer • student">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 随笔">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/02/21/%E5%A4%B1%E6%81%8B%E5%92%8C%E7%88%B1%E6%83%85/" class="post-title-link" itemprop="url">失恋和爱情</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2025-02-21 00:00:00" itemprop="dateCreated datePublished" datetime="2025-02-21T00:00:00+08:00">2025-02-21</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-04-01 15:44:55" itemprop="dateModified" datetime="2026-04-01T15:44:55+08:00">2026-04-01</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>曾经沧海难为水，除却巫山不是云</p>
-<p>终有弱水替沧海，再无相思寄巫山</p>
-<p>深爱之人藏心不挂嘴，久爱之人在梦不在眼</p>
-<p>相遇就像你特别喜欢可乐，喝的时候爽到了就是意义；重点不是结局在不在一起，而是共同创造了独属于你们的时间线。</p>
-<p>“如果有一天我不来找你，你会怎么办？”<br>    “我会试着不期望你来。”</p>
-<p>他说:<br>    “九叶重楼二两，<br>    冬至蝉蜕一钱。<br>    煎入隔年雪煮沸，<br>    可医世人相思疾苦。”<br>    我又问:<br>    “可重楼七叶一花，<br>    冬日何来蝉蜕<br>    雪又怎能隔年<br>    相思又怎可解。”<br>    大夫说:<br>    “孰不知，夏枯即为九重楼，<br>    掘地三尺寒蝉现，<br>    除夕子时雪，落地已隔年，<br>    过了离别时，相思亦可解！”<br>    ——<br>    吾悲叹:“可奈何，<br>    夏枯辛苦深寒，<br>    寒蝉体小声微，<br>    面拂寒夜风，隔年雪冻人。<br>    相思虽可解，但寒苦卑弥已入喉，肠已断，泪难收，回首白头亦乃无解。”</p>
-<p>没有什么一成不变，要学着允许一切发生。</p>
-<p>当你凌晨睡不着 突然意识到自己曾经最想共度一生的人 居然变成了人生中的一个教训时</p>
-<p>你根本没做错什么   我们都一样  爱就是会消散</p>
-<p>“她满脸厌恶的求我放过她，我忽然愣住了，想起很久以前她小心翼翼的问我，你会离开我吗”</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2025/02/21/%E5%A4%B1%E6%81%8B%E5%92%8C%E7%88%B1%E6%83%85/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://lizhipengpeng.github.io/2025/02/16/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E7%AE%97%E6%B3%95%E5%AE%9E%E4%B9%A0%E5%85%AB%E8%82%A1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="李治澎">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="随笔">
-      <meta itemprop="description" content="researcher • developer • student">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 随笔">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/02/16/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E7%AE%97%E6%B3%95%E5%AE%9E%E4%B9%A0%E5%85%AB%E8%82%A1/" class="post-title-link" itemprop="url">大模型算法实习八股</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2025-02-16 00:00:00" itemprop="dateCreated datePublished" datetime="2025-02-16T00:00:00+08:00">2025-02-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-04-01 23:20:19" itemprop="dateModified" datetime="2026-04-01T23:20:19+08:00">2026-04-01</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><strong>一般来说，开发岗位的算法面试是不会出题要求面试者临时设计一个数据结构来解决某个问题，大多数时候只是要求面试者能够熟练掌握常见的数据结构及其实现、能够说出这种数据结构的优缺点即可。</strong></p>
-<h1 id="大模型架构"><a href="#大模型架构" class="headerlink" title="大模型架构"></a>大模型架构</h1><h2 id="原始-Transformer"><a href="#原始-Transformer" class="headerlink" title="原始 Transformer"></a>原始 Transformer</h2><img src="/images/2-transformer.png" alt="transformer" style="zoom:50%;">
-
-<h2 id="分词方式"><a href="#分词方式" class="headerlink" title="分词方式"></a>分词方式</h2><h3 id="字节对编码-BPE"><a href="#字节对编码-BPE" class="headerlink" title="字节对编码 BPE"></a>字节对编码 BPE</h3><p>本质上是subword作为词表，只不过是优先合并出现频率高的字符，直到词表大小合适或者最高词频为1</p>
-<h2 id="注意力机制"><a href="#注意力机制" class="headerlink" title="注意力机制"></a>注意力机制</h2><h3 id="注意力评分函数"><a href="#注意力评分函数" class="headerlink" title="注意力评分函数"></a>注意力评分函数</h3><ul>
-<li><p>加性注意力评分函数<br>$$<br>a(q,k)&#x3D;w^T_vtanh(W_qq+W_kk)<br>$$<br> 加性注意力评分函数可以看作，将查询和键连结起来后输入到一个多层感知机（MLP）中， 感知机包含一个隐藏层，其隐藏单元数是一个超参数ℎ。 通过使用tanh作为激活函数，并且禁用偏置项，</p>
-</li>
-<li><p>缩放点积注意力评分函数<br>$$<br>a(q,k)&#x3D;\frac{QK^T}{\sqrt{d}}<br>$$<br> 为确保无论向量长度如何， 点积的方差在不考虑向量长度的情况下仍然是1， 将点积除以$$\sqrt{d}$$</p>
-</li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2025/02/16/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E7%AE%97%E6%B3%95%E5%AE%9E%E4%B9%A0%E5%85%AB%E8%82%A1/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://lizhipengpeng.github.io/2025/01/25/%E6%95%88%E5%BA%94/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="李治澎">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="随笔">
-      <meta itemprop="description" content="researcher • developer • student">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 随笔">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/01/25/%E6%95%88%E5%BA%94/" class="post-title-link" itemprop="url">效应</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2025-01-25 00:00:00" itemprop="dateCreated datePublished" datetime="2025-01-25T00:00:00+08:00">2025-01-25</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-04-01 15:44:55" itemprop="dateModified" datetime="2026-04-01T15:44:55+08:00">2026-04-01</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="心理学效应"><a href="#心理学效应" class="headerlink" title="心理学效应"></a>心理学效应</h1><h2 id="彼得原理"><a href="#彼得原理" class="headerlink" title="彼得原理"></a>彼得原理</h2><p>《彼得原理》(英语:Peter Principle)是管理学家劳伦斯·彼得在1969年出版的一本同名书，里面提出的“彼得原理”是指:在组织或企业的等级制度中，人会因其某种特质或特殊技能，令他被擢升到不能胜任的高阶职位，最终变成组织的障碍物(冗员)及负资产。</p>
-<h2 id="孕妇效应"><a href="#孕妇效应" class="headerlink" title="孕妇效应"></a>孕妇效应</h2><p>孕妇效应意即偶然因素随着自己的关注而让你觉得是个普遍现象，就是当人怀孕了就更容易发现孕妇，你开了奔驰就更容易看到奔驰，你拎了一个LV就容易发现满大街都是LV。用来形容人们容易把自己的关注点投射在外界，以寻找更多案例来证实内心想法的情况。</p>
-<h2 id="梅拉宾法则"><a href="#梅拉宾法则" class="headerlink" title="梅拉宾法则"></a>梅拉宾法则</h2><p>梅拉宾法则(The Rule of Mehrabian):梅拉宾在1971年提出:一个人对他人的印象，约有7%取决于谈话的内容，辅助表达的方法如手势、语气等则占了38%，肢体动作所占的比例则高达55%，</p>
-<h2 id="鹅卵石法则"><a href="#鹅卵石法则" class="headerlink" title="鹅卵石法则"></a>鹅卵石法则</h2><p>今天看到一个说法:人们会时不时把有趣的短视频、图片或者可爱的小故事分享给所爱的人。这种行为叫Pebbling，意为“丢鹅卵石”。据说有一种企鹅喜欢在伴侣的巢穴中留一块鹅卵石，告诉它我来过，我很关心你。</p>
-<h2 id="GABA"><a href="#GABA" class="headerlink" title="GABA"></a>GABA</h2>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2025/01/25/%E6%95%88%E5%BA%94/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://lizhipengpeng.github.io/2024/07/09/%E4%B8%AD%E5%85%B4-%E7%9F%A5%E8%AF%86%E5%B7%A5%E7%A8%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="李治澎">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="随笔">
-      <meta itemprop="description" content="researcher • developer • student">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 随笔">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/07/09/%E4%B8%AD%E5%85%B4-%E7%9F%A5%E8%AF%86%E5%B7%A5%E7%A8%8B/" class="post-title-link" itemprop="url">中兴-知识工程</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-07-09 00:00:00" itemprop="dateCreated datePublished" datetime="2024-07-09T00:00:00+08:00">2024-07-09</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-04-01 15:44:55" itemprop="dateModified" datetime="2026-04-01T15:44:55+08:00">2026-04-01</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <table>
-<thead>
-<tr>
-<th align="center">模型</th>
-<th align="center">分数</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">glm-4-9b-chat-1m_7.csv</td>
-<td align="center">53</td>
-</tr>
-<tr>
-<td align="center">glm-4-9b-chat-1m_15.csv</td>
-<td align="center">64</td>
-</tr>
-<tr>
-<td align="center">glm-4-9b-chat-1m_20.csv</td>
-<td align="center">63</td>
-</tr>
-<tr>
-<td align="center">Yi-9B-chat-15</td>
-<td align="center">70</td>
-</tr>
-<tr>
-<td align="center">Yi-9B-chat-7</td>
-<td align="center">63</td>
-</tr>
-<tr>
-<td align="center">Yi-9B-chat-20</td>
-<td align="center">53</td>
-</tr>
-<tr>
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">glm-4-9b-chat-1m_have_kongge_7.csv</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">glm-4-9b-chat-1m_have_kongge_15.csv</td>
-<td align="center">59</td>
-</tr>
-<tr>
-<td align="center">glm-4-9b-chat-1m_have_kongge_20.csv</td>
-<td align="center">74</td>
-</tr>
-<tr>
-<td align="center">glm-4-9b-chat-1m_have_kongge_25.csv</td>
-<td align="center">81</td>
-</tr>
-<tr>
-<td align="center">glm-4-9b-chat-1m_have_kongge_30.csv</td>
-<td align="center">79</td>
-</tr>
-<tr>
-<td align="center">glm-4-9b-chat-1m_have_kongge_35.csv</td>
-<td align="center">84</td>
-</tr>
-<tr>
-<td align="center">glm-4-9b-chat-1m_have_kongge_40.csv</td>
-<td align="center">79</td>
-</tr>
-<tr>
-<td align="center">glm-4-9b-chat-1m_have_kongge_45.csv</td>
-<td align="center">84</td>
-</tr>
-<tr>
-<td align="center">glm-4-9b-chat-1m_have_kongge_50.csv</td>
-<td align="center">76</td>
-</tr>
-<tr>
-<td align="center">glm-4-9b-chat-1m_have_kongge_55.csv</td>
-<td align="center">82</td>
-</tr>
-<tr>
-<td align="center">glm-4-9b-chat-1m_have_kongge_60.csv</td>
-<td align="center">81</td>
-</tr>
-<tr>
-<td align="center">glm-4-9b-chat-1m_have_kongge_65.csv</td>
-<td align="center">81</td>
-</tr>
-<tr>
-<td align="center">glm-4-9b-chat-1m_have_kongge_70.csv</td>
-<td align="center">77</td>
-</tr>
-<tr>
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">glm-4-9b-chat-1m_rerank_30_15</td>
-<td align="center">77</td>
-</tr>
-<tr>
-<td align="center">glm-4-9b-chat-1m_rerank_70_30</td>
-<td align="center">82</td>
-</tr>
-<tr>
-<td align="center">glm-4-9b-chat-1m_rerank_80_25</td>
-<td align="center">80</td>
-</tr>
-<tr>
-<td align="center">glm-4-9b-chat-1m_rerank_80_30</td>
-<td align="center">79</td>
-</tr>
-<tr>
-<td align="center">glm-4-9b-chat-1m_have_kongge_story_new_45</td>
-<td align="center">81</td>
-</tr>
-<tr>
-<td align="center">glm-4-9b-chat-1m_have_kongge_story_new_35</td>
-<td align="center">83</td>
-</tr>
-<tr>
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">Yi-9B-chat-7_have_kongge_15</td>
-<td align="center">50</td>
-</tr>
-<tr>
-<td align="center">Yi-9B-chat-7_have_kongge_16</td>
-<td align="center">61</td>
-</tr>
-<tr>
-<td align="center">Yi-9B-chat-7_have_kongge_17</td>
-<td align="center">58</td>
-</tr>
-<tr>
-<td align="center">Yi-9B-chat-7_have_kongge_12</td>
-<td align="center">59</td>
-</tr>
-<tr>
-<td align="center">Yi-9B-chat-7_have_kongge_13</td>
-<td align="center">59</td>
-</tr>
-<tr>
-<td align="center">Yi-9B-chat-7_have_kongge_7</td>
-<td align="center">52</td>
-</tr>
-<tr>
-<td align="center">Yi-9B-chat-7_have_kongge_20</td>
-<td align="center">57</td>
-</tr>
-<tr>
-<td align="center">qwen2-72B-In-have_kongge_15</td>
-<td align="center">68</td>
-</tr>
-<tr>
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center"></td>
-<td align="center">57</td>
-</tr>
-<tr>
-<td align="center">Yi-9B-chat-7_rerank_30_15</td>
-<td align="center">52</td>
-</tr>
-</tbody></table>
-<ul>
-<li><input disabled type="checkbox"> 数据清洗，去除文档里面的脏数据</li>
-<li><input disabled type="checkbox"> 切割文档的长度 这个参数还可以调</li>
-<li><input disabled type="checkbox"> 多次答案投票</li>
-<li><input disabled type="checkbox"> 微软的GraphRAG技术</li>
-<li><input checked disabled type="checkbox"> 英文没有空格</li>
-</ul>
-
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/07/09/%E4%B8%AD%E5%85%B4-%E7%9F%A5%E8%AF%86%E5%B7%A5%E7%A8%8B/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://lizhipengpeng.github.io/2024/04/02/prompt_QAC/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="李治澎">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="随笔">
-      <meta itemprop="description" content="researcher • developer • student">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 随笔">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/04/02/prompt_QAC/" class="post-title-link" itemprop="url">prompt_QAC</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-04-02 00:00:00" itemprop="dateCreated datePublished" datetime="2024-04-02T00:00:00+08:00">2024-04-02</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-04-01 15:44:55" itemprop="dateModified" datetime="2026-04-01T15:44:55+08:00">2026-04-01</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="A-Controllable-Text-Generation-Framework-based-Prompt-learning-for-Query-Auto-completion"><a href="#A-Controllable-Text-Generation-Framework-based-Prompt-learning-for-Query-Auto-completion" class="headerlink" title="A Controllable Text Generation Framework based Prompt learning for Query Auto-completion"></a>A Controllable Text Generation Framework based Prompt learning for Query Auto-completion</h1><h3 id="论文思路"><a href="#论文思路" class="headerlink" title="论文思路"></a>论文思路</h3><p>研究领域是query自动补全（QAC），对应的显示场景是搜索栏的用户搜索场景，用的研究方法是生成式模型而非召回是模型（该领域常规的方法是先生成候选词，然后对候选词排序）</p>
-<p>对于QAC领域，传统的召回式生成query仅仅通过候选词频率进行召回，缺乏对于query语意层面的理解，同时对于unseen 的输入，难以生成高质量的补全，以及召回式的生成难以充分实现个性化的生成</p>
-<p><strong>其他生成模型的历史信息的局限性：时间跨度短，数据量比较少，</strong>随着NLP领域中NLG模型的发展，transformer系列的自然语言生成式模型在各个领域展现出巨大的潜力，而且像GPT2这样在大量无监督数据上训练的模型，拥有强大的语意理解能力，有越来越多的研究工作研究生成式模型用于QAC,生成式的模型能够有效应对上述的几个问题。（蹭大模型的热度，垂直领域生成模型）</p>
-<p>对于GPT模型，我们使用提示学习来对GPT的生成做进一步的控制，来达到用户的个性化需求，通过使用提示学习对GPT进行微调，可以使GPT模型生成的query更加贴近用户偏好习惯，而传统上的提示学习包括hard提示和soft提示都是从自然语言语意层面对GPT的输出进行提示，而用户个人的消费行为习惯可能无法简单的从语言层面展现，而在使用bert模型进行语意理解和语意抽取进而进行下游任务的分类时，bert可以很好地进行高维度的特征表征，所以在本文中我们采用bert模型抽取高维度的用户个人特征表征作为GPT模型的提示，进而使GPT的输出达到个性化的要求。（特别的，bert和GPT使用统一词表来保证两个模型的高维映射空间是一致的）</p>
-<h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>Query auto-completion (QAC) aims at suggesting plausible completions for a given query prefix. The recent QAC methods introduce Natural Language Generation to generate the completions for user input. </p>
-<p>  However, NLG (Natural Lagnuage Generation) methods ususally output unsense or wrong words without controll. Moreover, A serious drawback of generative methods is that they can produce an ether effect. It severely affected the performance of the generative methods. </p>
-<p>  We proposed a framework that controls the generation of queries using prompt learning methods, thereby making the generative methods controllable. This framework consists of three parts: the control module, the prompt module, and the generation module. The control module generates a prompt vector endowed with implicit features, then the prompt module ingests the prompt vector and user input into the generation module, and ultimately, the generation module generates the query under control. </p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/04/02/prompt_QAC/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://lizhipengpeng.github.io/2024/03/25/%E6%A6%82%E7%8E%87%E8%AE%BA/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="李治澎">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="随笔">
-      <meta itemprop="description" content="researcher • developer • student">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 随笔">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/03/25/%E6%A6%82%E7%8E%87%E8%AE%BA/" class="post-title-link" itemprop="url">概率论</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-03-25 00:00:00" itemprop="dateCreated datePublished" datetime="2024-03-25T00:00:00+08:00">2024-03-25</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-04-01 15:44:55" itemprop="dateModified" datetime="2026-04-01T15:44:55+08:00">2026-04-01</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="程序员的数学2-概率统计"><a href="#程序员的数学2-概率统计" class="headerlink" title="程序员的数学2-概率统计"></a>程序员的数学2-概率统计</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
-<li>概率是面积与体积的泛化</li>
-<li>随机变量是一种以变量为名的函数</li>
-</ul>
-
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/03/25/%E6%A6%82%E7%8E%87%E8%AE%BA/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/2/"><i class="fa fa-angle-right"></i></a>
-  </nav>
-
-</div>
-  </main>
-
-  <footer class="footer">
-    <div class="footer-inner">
-
-  <div class="copyright">
-    &copy; 
-    <span itemprop="copyrightYear">2026</span>
-    <span class="with-love">
-      <i class="fa fa-heart"></i>
-    </span>
-    <span class="author" itemprop="copyrightHolder">李治澎</span>
   </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
-  </div>
-
-    </div>
-  </footer>
-
   
-  <div class="toggle sidebar-toggle" role="button">
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-  </div>
-  <div class="sidebar-dimmer"></div>
-  <div class="back-to-top" role="button" aria-label="返回顶部">
-    <i class="fa fa-arrow-up fa-lg"></i>
-    <span>0%</span>
-  </div>
-
-<noscript>
-  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
-</noscript>
-
+  <script>
+    function toggleTheme() {
+      const html = document.documentElement;
+      const icon = document.getElementById('theme-icon');
+      if (html.getAttribute('data-theme') === 'dark') {
+        html.removeAttribute('data-theme');
+        icon.textContent = '🌙';
+        localStorage.setItem('theme', 'light');
+      } else {
+        html.setAttribute('data-theme', 'dark');
+        icon.textContent = '☀️';
+        localStorage.setItem('theme', 'dark');
+      }
+    }
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      document.getElementById('theme-icon').textContent = '☀️';
+    }
+  </script>
 </body>
 </html>
