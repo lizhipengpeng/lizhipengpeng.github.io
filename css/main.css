@@ -2316,3 +2316,200 @@ embed {
 .index .post-eof {
   display: none;
 }
+
+/* ============================================ */
+/* Minimalist Theme Override */
+/* Inspired by mariozechner.at */
+/* ============================================ */
+
+/* Color Variables */
+:root {
+  --color-band-1: #ff6b6b;
+  --color-band-2: #feca57;
+  --color-band-3: #48dbfb;
+  --color-band-4: #ff9ff3;
+  --color-band-5: #54a0ff;
+}
+
+/* Hide headband */
+.headband {
+  display: none !important;
+  height: 0 !important;
+  background: transparent !important;
+}
+
+/* Main container styling */
+.main-inner {
+  max-width: 680px !important;
+  margin: 0 auto;
+  padding: 2rem 1.5rem !important;
+  background: var(--content-bg-color) !important;
+}
+
+/* Site brand - Add minimalist styling */
+.site-brand-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 0;
+}
+
+.site-meta {
+  text-align: left;
+}
+
+.brand {
+  text-decoration: none;
+}
+
+.site-title {
+  font-size: 1.75rem !important;
+  font-weight: 700 !important;
+  color: var(--text-color) !important;
+  letter-spacing: -0.02em;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+}
+
+.site-title::before {
+  content: '{ ' !important;
+  color: var(--text-color-secondary);
+}
+
+.site-title::after {
+  content: ' }' !important;
+  color: var(--text-color-secondary);
+}
+
+.site-subtitle {
+  font-size: 0.9rem !important;
+  color: var(--text-color-secondary) !important;
+  margin-top: 0.25rem;
+  letter-spacing: 0.02em;
+}
+
+/* Add color band after header */
+.header {
+  position: relative;
+}
+
+.header::after {
+  content: '';
+  display: block;
+  height: 80px;
+  margin: 1.5rem 0 2rem 0;
+  background: linear-gradient(
+    90deg,
+    var(--color-band-1) 0%,
+    var(--color-band-2) 20%,
+    var(--color-band-3) 40%,
+    var(--color-band-4) 60%,
+    var(--color-band-5) 80%,
+    var(--color-band-1) 100%
+  );
+  background-size: 200% 100%;
+  animation: gradient-shift 8s ease infinite;
+  border-radius: 6px;
+}
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Posts list styling */
+.posts-expand {
+  padding: 0 !important;
+}
+
+.post-block {
+  margin-bottom: 2.5rem !important;
+  padding-bottom: 2rem !important;
+  border-bottom: 1px solid var(--border-color) !important;
+}
+
+.post-block:last-child {
+  border-bottom: none !important;
+}
+
+.post-title {
+  font-size: 1.5rem !important;
+  font-weight: 600 !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.post-meta {
+  font-size: 0.85rem !important;
+  color: var(--text-color-secondary) !important;
+  margin-bottom: 1rem !important;
+}
+
+/* Sidebar - Hide it */
+.sidebar {
+  display: none !important;
+}
+
+.sidebar-toggle {
+  display: none !important;
+}
+
+/* Back to top - Hide for minimal style */
+.back-to-top {
+  display: none !important;
+}
+
+/* Footer styling */
+.footer {
+  margin-top: 3rem !important;
+  padding: 2rem 0 !important;
+  border-top: 1px solid var(--border-color) !important;
+  text-align: center;
+}
+
+/* Pagination styling */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 2rem 0;
+  padding: 1rem 0;
+  border-top: 1px solid var(--border-color);
+}
+
+.pagination .prev, .pagination .next {
+  padding: 0.5rem 1rem !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 4px !important;
+  text-decoration: none;
+  color: var(--text-color) !important;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.pagination .prev:hover, .pagination .next:hover {
+  background: var(--menu-item-bg-color) !important;
+  color: var(--link-color) !important;
+}
+
+/* Hide unnecessary elements */
+.site-state,
+.algolia-popup,
+.local-search-popup,
+.search-pop-overlay {
+  display: none !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .main-inner {
+    padding: 1rem !important;
+  }
+  
+  .site-title {
+    font-size: 1.5rem !important;
+  }
+  
+  .header::after {
+    height: 60px;
+    margin: 1rem 0 1.5rem 0;
+  }
+}

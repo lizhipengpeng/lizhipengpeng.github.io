@@ -18,33 +18,33 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lizhipengpeng.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
 
     <meta name="description" content="主要学习如何对大模型进行预训练工作，如果我们要使用一个已经经过一部分预训练的模型的话，实际上我们就可以得到这个预训练模型的预训练代码 1. 什么是大模型参数量很大（十几亿，几百亿）的深度神经网络模型 1.1 基座模型选择开源领域 ChatGLM，LLAMA，RWKV 主要就是这 3 种模型， 中文好一点就是 ChatGLM，潜力最好的就是 LLAMA，RNN 架构决定 RWKV 有很好的推理效率（">
 <meta property="og:type" content="article">
 <meta property="og:title" content="大语言模型的预训练、微调等技术">
-<meta property="og:url" content="http://example.com/2023/12/14/LLM/index.html">
+<meta property="og:url" content="https://lizhipengpeng.github.io/2023/12/14/LLM/index.html">
 <meta property="og:site_name" content="随笔">
 <meta property="og:description" content="主要学习如何对大模型进行预训练工作，如果我们要使用一个已经经过一部分预训练的模型的话，实际上我们就可以得到这个预训练模型的预训练代码 1. 什么是大模型参数量很大（十几亿，几百亿）的深度神经网络模型 1.1 基座模型选择开源领域 ChatGLM，LLAMA，RWKV 主要就是这 3 种模型， 中文好一点就是 ChatGLM，潜力最好的就是 LLAMA，RNN 架构决定 RWKV 有很好的推理效率（">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/images/2023-06-07_19-48.png">
-<meta property="og:image" content="http://example.com/images/2023-07-13_08-53.jpg">
-<meta property="og:image" content="http://example.com/images/image-20230713105751597.png">
-<meta property="og:image" content="http://example.com/images/image-20230713151118243.png">
-<meta property="og:image" content="http://example.com/images/2023-06-15_08-59.png">
-<meta property="og:image" content="http://example.com/images/image-20231004153011481.png">
-<meta property="og:image" content="http://example.com/images/image-20231028094229464.png">
+<meta property="og:image" content="https://lizhipengpeng.github.io/images/2023-06-07_19-48.png">
+<meta property="og:image" content="https://lizhipengpeng.github.io/images/2023-07-13_08-53.jpg">
+<meta property="og:image" content="https://lizhipengpeng.github.io/images/image-20230713105751597.png">
+<meta property="og:image" content="https://lizhipengpeng.github.io/images/image-20230713151118243.png">
+<meta property="og:image" content="https://lizhipengpeng.github.io/images/2023-06-15_08-59.png">
+<meta property="og:image" content="https://lizhipengpeng.github.io/images/image-20231004153011481.png">
+<meta property="og:image" content="https://lizhipengpeng.github.io/images/image-20231028094229464.png">
 <meta property="article:published_time" content="2023-12-13T16:00:00.000Z">
 <meta property="article:modified_time" content="2026-04-01T15:20:19.513Z">
 <meta property="article:author" content="李治澎">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/images/2023-06-07_19-48.png">
+<meta name="twitter:image" content="https://lizhipengpeng.github.io/images/2023-06-07_19-48.png">
 
 
-<link rel="canonical" href="http://example.com/2023/12/14/LLM/">
+<link rel="canonical" href="https://lizhipengpeng.github.io/2023/12/14/LLM/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2023/12/14/LLM/","path":"2023/12/14/LLM/","title":"大语言模型的预训练、微调等技术"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://lizhipengpeng.github.io/2023/12/14/LLM/","path":"2023/12/14/LLM/","title":"大语言模型的预训练、微调等技术"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>大语言模型的预训练、微调等技术 | 随笔</title>
@@ -71,12 +71,6 @@
   
 
 
-
-
-  
-
-  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
-<script src="/js/third-party/math/mathjax.js" defer></script>
 
 
 
@@ -254,7 +248,7 @@ mjx-container[display="true"] + br {
         <div class="site-overview-wrap sidebar-panel">
           <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <p class="site-author-name" itemprop="name">李治澎</p>
-  <div class="site-description" itemprop="description"></div>
+  <div class="site-description" itemprop="description">researcher • developer • student</div>
 </div>
 <div class="site-state-wrap animated">
   <nav class="site-state">
@@ -288,7 +282,7 @@ mjx-container[display="true"] + br {
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/12/14/LLM/">
+    <link itemprop="mainEntityOfPage" href="https://lizhipengpeng.github.io/2023/12/14/LLM/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -297,7 +291,7 @@ mjx-container[display="true"] + br {
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="随笔">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="researcher • developer • student">
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
