@@ -1,0 +1,6 @@
+/* Hide the colorful headband */
+.headband {
+  display: none !important;
+  height: 0 !important;
+  background: transparent !important;
+}

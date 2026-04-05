@@ -1384,7 +1384,7 @@ pre code {
   vertical-align: middle;
 }
 .links-of-author a::before {
-  background: #ffff2e;
+  background: #8838ff;
   display: inline-block;
   margin-right: 3px;
   transform: translateY(-2px);
@@ -2717,4 +2717,11 @@ header.header {
   .sidebar-active .footer-fixed {
     left: 320px;
   }
+}
+
+/* Hide colorful headband */
+.headband {
+  display: none !important;
+  height: 0 !important;
+  background: transparent !important;
 }
