@@ -76,119 +76,7 @@
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
-<style>mjx-container[jax="SVG"] {
-  direction: ltr;
-}
-
-mjx-container[jax="SVG"] > svg {
-  overflow: visible;
-}
-
-mjx-container[jax="SVG"][display="true"] {
-  display: block;
-  text-align: center;
-  margin: 1em 0;
-}
-
-mjx-container[jax="SVG"][justify="left"] {
-  text-align: left;
-}
-
-mjx-container[jax="SVG"][justify="right"] {
-  text-align: right;
-}
-
-g[data-mml-node="merror"] > g {
-  fill: red;
-  stroke: red;
-}
-
-g[data-mml-node="merror"] > rect[data-background] {
-  fill: yellow;
-  stroke: none;
-}
-
-g[data-mml-node="mtable"] > line[data-line] {
-  stroke-width: 70px;
-  fill: none;
-}
-
-g[data-mml-node="mtable"] > rect[data-frame] {
-  stroke-width: 70px;
-  fill: none;
-}
-
-g[data-mml-node="mtable"] > .mjx-dashed {
-  stroke-dasharray: 140;
-}
-
-g[data-mml-node="mtable"] > .mjx-dotted {
-  stroke-linecap: round;
-  stroke-dasharray: 0,140;
-}
-
-g[data-mml-node="mtable"] > svg {
-  overflow: visible;
-}
-
-[jax="SVG"] mjx-tool {
-  display: inline-block;
-  position: relative;
-  width: 0;
-  height: 0;
-}
-
-[jax="SVG"] mjx-tool > mjx-tip {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-mjx-tool > mjx-tip {
-  display: inline-block;
-  padding: .2em;
-  border: 1px solid #888;
-  font-size: 70%;
-  background-color: #F8F8F8;
-  color: black;
-  box-shadow: 2px 2px 5px #AAAAAA;
-}
-
-g[data-mml-node="maction"][data-toggle] {
-  cursor: pointer;
-}
-
-mjx-status {
-  display: block;
-  position: fixed;
-  left: 1em;
-  bottom: 1em;
-  min-width: 25%;
-  padding: .2em .4em;
-  border: 1px solid #888;
-  font-size: 90%;
-  background-color: #F8F8F8;
-  color: black;
-}
-
-foreignObject[data-mjx-xml] {
-  font-family: initial;
-  line-height: normal;
-  overflow: visible;
-}
-
-.MathJax path {
-  stroke-width: 3;
-}
-
-mjx-container[display="true"] {
-  overflow: auto hidden;
-}
-
-mjx-container[display="true"] + br {
-  display: none;
-}
-</style></head>
+</head>
 
 <body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
   <div class="headband"></div>
@@ -341,7 +229,7 @@ mjx-container[display="true"] + br {
 </ul>
 <p>跟传统NLG的区别就在于我们会在输入的时候加入某些控制因素，从而让最终的输出满足某种条件。</p>
 <h2 id="CTG的应用场景"><a href="#CTG的应用场景" class="headerlink" title="CTG的应用场景"></a>CTG的应用场景</h2><ul>
-<li><strong>Attribute-based Generation</strong>，基于某种属性的自然语言生成，比如生成特定情感/口吻/风格的文本</li>
+<li><strong>Attribute-based Generation</strong>，基于某种属性的自然语言生成，比如生成特定情感&#x2F;口吻&#x2F;风格的文本</li>
 <li><strong>Dialogue Generation</strong>，对话系统对NLG有更高的要求，因此CTG的应用就不言而喻了</li>
 <li><strong>Storytelling</strong>，用CTG来辅助文学创作，想想就很爽，而传统的NLG，基本给了开头你就无法控制了</li>
 <li><strong>Data to Text</strong>，使用一些结构化数据（table，graph）来生成自然语言，可用于给定每天的天气数据，来自动生成天气播报，或者把老板看不懂的表格数据用CTG技术翻译成人话给他听</li>
@@ -349,7 +237,7 @@ mjx-container[display="true"] + br {
 <li><strong>Debiasing</strong>，这也非常重要，可以帮助我们把带有某些偏见的文本转化成无偏见的文本，让机器也符合伦理道德</li>
 <li><strong>Format Control</strong>，风格、格式的转换，比如中国古诗词就有明确的格式，这就需要在生成的时候加以控制</li>
 </ul>
-<h2 id="CTG的方法流派"><a href="#CTG的方法流派" class="headerlink" title="CTG的方法流派"></a>CTG的方法流派</h2><img src="/images/image-20231127213100182.png" alt="image-20231127213100182" style="zoom: 67%;">
+<h2 id="CTG的方法流派"><a href="#CTG的方法流派" class="headerlink" title="CTG的方法流派"></a>CTG的方法流派</h2><img src="/images/image-20231127213100182.png" alt="image-20231127213100182" style="zoom: 67%;" />
 
 <p>大致上分为三类:</p>
 <ul>
@@ -366,7 +254,7 @@ mjx-container[display="true"] + br {
 <li>指令微调, 构造指令数据集 进行有监督微调训练</li>
 </ul>
 <p>这些基于finetuning的方法，基本都要求我们有一个下游任务的有监督数据集，从而帮助我们学习某种控制性，比如你希望控制生成文本的情感属性，那么就需要你有情感分类的数据集，让模型去学习[指定情感]——&gt;[该情感的文本]的映射。</p>
-<h3 id="2-Retrain-Refactor"><a href="#2-Retrain-Refactor" class="headerlink" title="2. Retrain/Refactor"></a>2. Retrain/Refactor</h3><ol>
+<h3 id="2-Retrain-Refactor"><a href="#2-Retrain-Refactor" class="headerlink" title="2. Retrain&#x2F;Refactor"></a>2. Retrain&#x2F;Refactor</h3><ol>
 <li><p>CTRL</p>
 <p> CTRL收集了140GB的数据，涵盖了很多个domain的语料（百科、reddit、影评、新闻、翻译、问答…），<strong>每个domain都设置有一个control code</strong>，从而训练一个大型的包含1.63B参数量的conditional language model, 那些control code是预定义好的，直接插入在sequence的开头</p>
 </li>
@@ -374,13 +262,13 @@ mjx-container[display="true"] + br {
 <p> 以CTRL为代表的方法只能从一个总体的层面对生成文本增加限制，比如某种风格主题，但无法对具体内容进行精细控制，CoCon则是直接以原文中的部分内容作为condition，来预测下文, 核心思想就是<strong>使用文本的一部分作为condition，让模型对剩余部分进行复原</strong></p>
 </li>
 </ol>
-<img src="/images/image-20231127215815938.png" alt="image-20231127215815938" style="zoom:50%;">
+<img src="/images/image-20231127215815938.png" alt="image-20231127215815938" style="zoom:50%;" />
 
 <p>上面列举的CTRL和CoCon的对NLG添加的实际上是比较soft的限制，并不强制要求模型一定要输出什么元素，而有一些工作则会使用hard的限制，要求模型必须输出给定的某些关键词：</p>
 <ol start="3">
 <li><p><strong>POINTER</strong></p>
 <p> POINTER的主要目的是训练根据指定词汇然后生成包含这些词汇的模型，采用的是一种基于插入的、渐进生成的方法,POINTER的生成是一种迭代式地生成，先生成给定的关键词，然后每一轮都按照重要性不断插入新的词，直到把句子给补齐。POINTER中使用的一种Transformer结构叫做<strong>Insertion Transformer</strong></p>
- <img src="/images/image-20231127220156236.png" alt="image-20231127220156236" style="zoom:67%;">
+ <img src="/images/image-20231127220156236.png" alt="image-20231127220156236" style="zoom:67%;" />
 </li>
 <li><p><strong>Constrained BART (CBART)</strong></p>
 <p> 对BART进行了改造，通过在encoder上面添加一个token-level classifier来指导decoder在生成的时候应该进行replace还是insert</p>
@@ -389,14 +277,14 @@ mjx-container[display="true"] + br {
 <h3 id="3-Post-Process"><a href="#3-Post-Process" class="headerlink" title="3. Post-Process"></a>3. Post-Process</h3><ol>
 <li><p><strong>Plug and Play Language Models (PPLM)</strong></p>
 <p> PPLM不希望去训练PLM，而是通过额外的一个attribute model来对PLM的输出加以修正，从而符合某种预期。这里的attribute model，既可以是一个bag of words来代表某个topic，也可以是一个训练好的小模型来对某个topic进行打分，然后通过这个attribute model向PLM的hidden states传递梯度，从而对hidden states进行一定的修正，然后PLM的输出就会往我们希望的topic倾斜了。</p>
- <img src="/images/image-20231127220849538.png" alt="image-20231127220849538" style="zoom:67%;">
+ <img src="/images/image-20231127220849538.png" alt="image-20231127220849538" style="zoom:67%;" />
 </li>
 <li><p><strong>MEGATRON-CNTRL</strong></p>
 <p> 选择利用外部知识库来辅助生成，给定一个context，MEGATRON-CNTRL会首先使用一个predictor生成一批关键词，然后通过一个retriever从知识库中找到跟这些关键词匹配的句子，然后通过一个ranker进行筛选，最后再输入PLM进行句子的生成：</p>
 </li>
 </ol>
 <p>还有工作比如<strong>PAIR</strong>[14]则是先生成一个包含关键词和位置信息的模板，然后对模板进行填空，从而进行控制性生成；<strong>GeDi</strong>[15]则是训练一个小型的discriminator来引导PLM的生成。</p>
-<img src="/images/image-20231127221138206.png" alt="image-20231127221138206" style="zoom:67%;">
+<img src="/images/image-20231127221138206.png" alt="image-20231127221138206" style="zoom:67%;" />
     </div>
 
     

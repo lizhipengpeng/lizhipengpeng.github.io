@@ -69,119 +69,7 @@
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
-<style>mjx-container[jax="SVG"] {
-  direction: ltr;
-}
-
-mjx-container[jax="SVG"] > svg {
-  overflow: visible;
-}
-
-mjx-container[jax="SVG"][display="true"] {
-  display: block;
-  text-align: center;
-  margin: 1em 0;
-}
-
-mjx-container[jax="SVG"][justify="left"] {
-  text-align: left;
-}
-
-mjx-container[jax="SVG"][justify="right"] {
-  text-align: right;
-}
-
-g[data-mml-node="merror"] > g {
-  fill: red;
-  stroke: red;
-}
-
-g[data-mml-node="merror"] > rect[data-background] {
-  fill: yellow;
-  stroke: none;
-}
-
-g[data-mml-node="mtable"] > line[data-line] {
-  stroke-width: 70px;
-  fill: none;
-}
-
-g[data-mml-node="mtable"] > rect[data-frame] {
-  stroke-width: 70px;
-  fill: none;
-}
-
-g[data-mml-node="mtable"] > .mjx-dashed {
-  stroke-dasharray: 140;
-}
-
-g[data-mml-node="mtable"] > .mjx-dotted {
-  stroke-linecap: round;
-  stroke-dasharray: 0,140;
-}
-
-g[data-mml-node="mtable"] > svg {
-  overflow: visible;
-}
-
-[jax="SVG"] mjx-tool {
-  display: inline-block;
-  position: relative;
-  width: 0;
-  height: 0;
-}
-
-[jax="SVG"] mjx-tool > mjx-tip {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-mjx-tool > mjx-tip {
-  display: inline-block;
-  padding: .2em;
-  border: 1px solid #888;
-  font-size: 70%;
-  background-color: #F8F8F8;
-  color: black;
-  box-shadow: 2px 2px 5px #AAAAAA;
-}
-
-g[data-mml-node="maction"][data-toggle] {
-  cursor: pointer;
-}
-
-mjx-status {
-  display: block;
-  position: fixed;
-  left: 1em;
-  bottom: 1em;
-  min-width: 25%;
-  padding: .2em .4em;
-  border: 1px solid #888;
-  font-size: 90%;
-  background-color: #F8F8F8;
-  color: black;
-}
-
-foreignObject[data-mjx-xml] {
-  font-family: initial;
-  line-height: normal;
-  overflow: visible;
-}
-
-.MathJax path {
-  stroke-width: 3;
-}
-
-mjx-container[display="true"] {
-  overflow: auto hidden;
-}
-
-mjx-container[display="true"] + br {
-  display: none;
-}
-</style></head>
+</head>
 
 <body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
   <div class="headband"></div>
@@ -345,7 +233,7 @@ mjx-container[display="true"] + br {
 </tr>
 </tbody></table>
 <hr>
-<h2 id="方案一：转发-Clash-端口（推荐）"><a href="#方案一：转发-Clash-端口（推荐）" class="headerlink" title="方案一：转发 Clash 端口（推荐）"></a>方案一：转发 Clash 端口（推荐）</h2><p>如果本地使用 Clash/Clashy 上网，直接把 Clash 的代理端口通过 SSH 隧道转发给服务器，流量完全走 Clash 的规则，VPN 分流等策略全部生效。</p>
+<h2 id="方案一：转发-Clash-端口（推荐）"><a href="#方案一：转发-Clash-端口（推荐）" class="headerlink" title="方案一：转发 Clash 端口（推荐）"></a>方案一：转发 Clash 端口（推荐）</h2><p>如果本地使用 Clash&#x2F;Clashy 上网，直接把 Clash 的代理端口通过 SSH 隧道转发给服务器，流量完全走 Clash 的规则，VPN 分流等策略全部生效。</p>
 <h3 id="第一步：确认-Clash-代理端口"><a href="#第一步：确认-Clash-代理端口" class="headerlink" title="第一步：确认 Clash 代理端口"></a>第一步：确认 Clash 代理端口</h3><p>在 Clashy 界面查看 HTTP 代理端口，默认为 <code>7890</code>。</p>
 <h3 id="第二步：建立-SSH-反向隧道（终端1）"><a href="#第二步：建立-SSH-反向隧道（终端1）" class="headerlink" title="第二步：建立 SSH 反向隧道（终端1）"></a>第二步：建立 SSH 反向隧道（终端1）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -R 2081:localhost:7890 -N -p 30513 root@10.8.128.123</span><br></pre></td></tr></table></figure>
 
@@ -390,7 +278,7 @@ mjx-container[display="true"] + br {
 
 <hr>
 <h2 id="安装其他软件包"><a href="#安装其他软件包" class="headerlink" title="安装其他软件包"></a>安装其他软件包</h2><p>设置好环境变量后，pip、npm、claude 均可直接使用。apt 需一次性写入代理配置：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">'Acquire::http::Proxy "http://127.0.0.1:2081";'</span> &gt; /etc/apt/apt.conf.d/proxy.conf</span><br><span class="line"><span class="built_in">echo</span> <span class="string">'Acquire::https::Proxy "http://127.0.0.1:2081";'</span> &gt;&gt; /etc/apt/apt.conf.d/proxy.conf</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;Acquire::http::Proxy &quot;http://127.0.0.1:2081&quot;;&#x27;</span> &gt; /etc/apt/apt.conf.d/proxy.conf</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;Acquire::https::Proxy &quot;http://127.0.0.1:2081&quot;;&#x27;</span> &gt;&gt; /etc/apt/apt.conf.d/proxy.conf</span><br></pre></td></tr></table></figure>
 
 <p>之后各工具直接使用：</p>
 <table>
@@ -449,7 +337,7 @@ mjx-container[display="true"] + br {
 <tr>
 <td><code>channel 2: open failed</code></td>
 <td>GatewayPorts 未开启</td>
-<td>服务器执行 <code>echo "GatewayPorts yes" &gt;&gt; /etc/ssh/sshd_config &amp;&amp; systemctl restart sshd</code></td>
+<td>服务器执行 <code>echo &quot;GatewayPorts yes&quot; &gt;&gt; /etc/ssh/sshd_config &amp;&amp; systemctl restart sshd</code></td>
 </tr>
 <tr>
 <td>服务器能联网但未走 VPN</td>
