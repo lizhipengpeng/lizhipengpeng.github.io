@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"boywuxu.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="LeCun 在做一件很不一样的事最近我花了一些时间试图搞清楚 Yann LeCun 的世界模型的想法。他是卷积神经网络的发明者、2018年图灵奖得主，深度学习三位教父之一——同时也是过去几年里最公开、最持续地唱衰 LLM 的人。他在 Meta 一边帮忙做 Llama，一边说 LLM 是死路。这种内部矛盾让他的批评很难被简单地忽视。2025年底他离开 Meta，创立 AMI Labs，全押世界模型。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LeCunn的世界模型">
+<meta property="og:url" content="https://boywuxu.github.io/2026/04/05/LeCunn%E7%9A%84%E4%B8%96%E7%95%8C%E6%A8%A1%E5%9E%8B/index.html">
+<meta property="og:site_name" content="无序的个人博客">
+<meta property="og:description" content="LeCun 在做一件很不一样的事最近我花了一些时间试图搞清楚 Yann LeCun 的世界模型的想法。他是卷积神经网络的发明者、2018年图灵奖得主，深度学习三位教父之一——同时也是过去几年里最公开、最持续地唱衰 LLM 的人。他在 Meta 一边帮忙做 Llama，一边说 LLM 是死路。这种内部矛盾让他的批评很难被简单地忽视。2025年底他离开 Meta，创立 AMI Labs，全押世界模型。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-04-05T15:51:19.000Z">
+<meta property="article:modified_time" content="2026-04-05T17:02:57.130Z">
+<meta property="article:author" content="无序">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://boywuxu.github.io/2026/04/05/LeCunn%E7%9A%84%E4%B8%96%E7%95%8C%E6%A8%A1%E5%9E%8B/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://boywuxu.github.io/2026/04/05/LeCunn%E7%9A%84%E4%B8%96%E7%95%8C%E6%A8%A1%E5%9E%8B/","path":"2026/04/05/LeCunn的世界模型/","title":"LeCunn的世界模型"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>LeCunn的世界模型 | 无序的个人博客</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">无序的个人博客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">researcher • LLM Algorithm Engineer</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#LeCun-%E5%9C%A8%E5%81%9A%E4%B8%80%E4%BB%B6%E5%BE%88%E4%B8%8D%E4%B8%80%E6%A0%B7%E7%9A%84%E4%BA%8B"><span class="nav-number">1.</span> <span class="nav-text">LeCun 在做一件很不一样的事</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#LLM-%E7%9A%84%E6%88%90%E5%8A%9F%E6%81%B0%E6%81%B0%E6%9A%B4%E9%9C%B2%E4%BA%86%E5%AE%83%E7%9A%84%E4%B8%8A%E9%99%90"><span class="nav-number">1.1.</span> <span class="nav-text">LLM 的成功恰恰暴露了它的上限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%84%E6%B5%8B%E4%B8%8B%E4%B8%80%E4%B8%AA%E8%AF%8D%EF%BC%8C%E6%98%AF%E4%B8%80%E4%B8%AA%E9%94%99%E8%AF%AF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87"><span class="nav-number">1.2.</span> <span class="nav-text">预测下一个词，是一个错误的学习目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JEPA%EF%BC%9A%E5%9C%A8%E6%8A%BD%E8%B1%A1%E7%A9%BA%E9%97%B4%E9%87%8C%E9%A2%84%E6%B5%8B%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF%E5%9C%A8%E5%8E%9F%E5%A7%8B%E7%A9%BA%E9%97%B4%E9%87%8C%E9%87%8D%E5%BB%BA"><span class="nav-number">1.3.</span> <span class="nav-text">JEPA：在抽象空间里预测，而不是在原始空间里重建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%96%E7%95%8C%E6%A8%A1%E5%9E%8B%E7%9A%84%E7%9C%9F%E6%AD%A3%E7%94%A8%E9%80%94%EF%BC%9A%E5%9C%A8%E8%84%91%E5%AD%90%E9%87%8C%E8%A7%84%E5%88%92%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF%E6%8F%8F%E8%BF%B0%E8%A7%84%E5%88%92"><span class="nav-number">1.4.</span> <span class="nav-text">世界模型的真正用途：在脑子里规划，而不是描述规划</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%99%E4%B8%AA%E6%96%B9%E5%90%91%E7%9B%AE%E5%89%8D%E8%BF%98%E6%B2%A1%E6%9C%89%E8%A7%A3%E5%86%B3%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">1.5.</span> <span class="nav-text">这个方向目前还没有解决的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%99%E4%B8%AA%E6%96%B9%E5%90%91%E5%9C%A8%E6%A6%82%E5%BF%B5%E4%B8%8A%E5%80%BC%E5%BE%97%E8%AE%A4%E7%9C%9F%E5%AF%B9%E5%BE%85"><span class="nav-number">1.6.</span> <span class="nav-text">为什么这个方向在概念上值得认真对待</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">无序</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://boywuxu.github.io/2026/04/05/LeCunn%E7%9A%84%E4%B8%96%E7%95%8C%E6%A8%A1%E5%9E%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="无序">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="无序的个人博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="LeCunn的世界模型 | 无序的个人博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          LeCunn的世界模型
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-04-05 23:51:19" itemprop="dateCreated datePublished" datetime="2026-04-05T23:51:19+08:00">2026-04-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-04-06 01:02:57" itemprop="dateModified" datetime="2026-04-06T01:02:57+08:00">2026-04-06</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="LeCun-在做一件很不一样的事"><a href="#LeCun-在做一件很不一样的事" class="headerlink" title="LeCun 在做一件很不一样的事"></a>LeCun 在做一件很不一样的事</h1><p>最近我花了一些时间试图搞清楚 Yann LeCun 的世界模型的想法。他是卷积神经网络的发明者、2018年图灵奖得主，深度学习三位教父之一——同时也是过去几年里最公开、最持续地唱衰 LLM 的人。他在 Meta 一边帮忙做 Llama，一边说 LLM 是死路。这种内部矛盾让他的批评很难被简单地忽视。2025年底他离开 Meta，创立 AMI Labs，全押世界模型。我想搞清楚他到底押的是什么。</p>
+<hr>
+<h2 id="LLM-的成功恰恰暴露了它的上限"><a href="#LLM-的成功恰恰暴露了它的上限" class="headerlink" title="LLM 的成功恰恰暴露了它的上限"></a>LLM 的成功恰恰暴露了它的上限</h2><p>LeCun 对 LLM 的批评不是”它不够好”，而是”它的成功本身就是一个信号，说明它在解决一个比我们想象中简单得多的问题”。</p>
+<p>语言之所以能被 LLM 驾驭，是因为语言是一个低维度的、离散的、有强统计结构的空间。它是人类思维的”序列化版本”——我们把三维的、连续的、多模态的世界经验，压缩成一串符号传递给对方。LLM 学会了在这个压缩后的符号空间里做插值，做得非常好，好到能通过司法考试、写出流畅的代码。但这恰恰说明语言本身足够简单，而不是说 AI 足够聪明。</p>
+<p>LeCun 用一个对比来说明这件事：任何一个 17 岁的人，花 20 小时就能学会开车。但人类花了数十年、数十亿美元，至今没有造出真正的 5 级自动驾驶。不是因为工程师不够努力，而是因为开车需要对物理世界的实时理解——那个世界是连续的、高维的、充满噪声的，不是语言能描述的。AI 在语言上赢了，在猫会做的事情上输了。这个剪刀差，才是 LeCun 真正在意的。</p>
+<hr>
+<h2 id="预测下一个词，是一个错误的学习目标"><a href="#预测下一个词，是一个错误的学习目标" class="headerlink" title="预测下一个词，是一个错误的学习目标"></a>预测下一个词，是一个错误的学习目标</h2><p>理解 LeCun 在做什么，首先要理解他认为 LLM 的学习目标本身是错的。</p>
+<p>LLM 的自监督学习方式是：遮住一段文字的后半部分，让模型预测被遮住的词。图像生成模型的做法类似：遮住图片的一部分，预测每个被遮住的像素。这个框架很优雅，但它有一个根本性的问题——它强迫模型预测那些在物理上本来就不可预测的细节。</p>
+<p>想象一张猫坐在沙发上的照片，窗帘随风飘动。如果遮住右半部分，让模型还原：猫耳朵的大致形状是可以预测的，沙发的材质颜色是可以预测的，但窗帘此刻飘到什么角度、猫毛每根丝的朝向、光线折射的精确分布——这些在物理上就是随机的，根本无法被正确预测。生成模型于是只能”编造”一个合理的版本，这就是幻觉的来源之一。模型不是在说谎，它是在用力完成一个不可能完成的任务。</p>
+<p>LeCun 的问题是：为什么要预测像素？我们真正需要的是理解”那里有猫的后半身”——这是语义，不是像素。如果学习目标本身就要求预测所有细节，那么模型永远无法把精力集中在真正有意义的结构上。</p>
+<hr>
+<h2 id="JEPA：在抽象空间里预测，而不是在原始空间里重建"><a href="#JEPA：在抽象空间里预测，而不是在原始空间里重建" class="headerlink" title="JEPA：在抽象空间里预测，而不是在原始空间里重建"></a>JEPA：在抽象空间里预测，而不是在原始空间里重建</h2><p>这是 LeCun 的核心技术方案，叫做 JEPA（Joint Embedding Predictive Architecture，联合嵌入预测架构）。</p>
+<p>它的思路是：不在像素空间或 token 空间里做预测，而是先把输入编码成抽象的表征向量，然后在这个表征空间里做预测。表征向量是神经网络对输入的”理解”——它不包含每个像素的精确值，而是编码了”这是一只猫”、”物体在左边”、”场景是室内”这类语义信息。那些无法预测的随机细节，在编码过程中自然被丢掉了。</p>
+<p>具体训练时，JEPA 有两个编码器：一个处理可见的上下文部分，一个处理被遮住的目标部分。预测器接受上下文的表征，输出对目标表征的预测，然后计算预测结果和真实目标表征之间的误差。整个损失计算发生在表征空间里，而不是像素空间。这意味着模型不需要还原窗帘的精确角度，它只需要知道”那里有窗帘，而且它在飘动”。</p>
+<p>这个设计有一个必须解决的技术难题，叫做”表征崩塌”——如果模型把所有输入都映射到同一个向量，预测误差永远是零，但什么都没学到。LeCun 在 2025 年发表的 LeJEPA 用数学证明了最优的表征分布应该是各向同性高斯分布，并设计了对应的正则化方法来防止崩塌。这是 JEPA 从理论到可扩展实践的关键一步。</p>
+<hr>
+<h2 id="世界模型的真正用途：在脑子里规划，而不是描述规划"><a href="#世界模型的真正用途：在脑子里规划，而不是描述规划" class="headerlink" title="世界模型的真正用途：在脑子里规划，而不是描述规划"></a>世界模型的真正用途：在脑子里规划，而不是描述规划</h2><p>JEPA 训练出的表征学习能力，是为了支撑一个更大的目标：让 AI 能够规划和行动。</p>
+<p>LeCun 的设想是，一个训练好的世界模型，能够给定当前状态和一个动作，预测执行这个动作之后世界会变成什么状态——不是预测每个像素，而是预测状态的抽象表征。有了这个能力，规划就变成了一个优化问题：我现在在状态 S，我想到达目标状态 G，那么什么样的动作序列 A 能让世界模型预测出的结果最接近 G？</p>
+<p>这里有一个容易误解的地方。动作序列不是靠枚举候选方案来生成的——物理动作空间是连续的，枚举根本不可行。实际的做法是把动作序列 A 本身当作可优化的参数，随机初始化之后，通过梯度反传不断调整，直到世界模型预测出”执行 A 之后会到达 G”。整个过程不涉及语言，不涉及采样，纯粹是在连续数学空间里的优化。这和大脑接住一个飞来的球的方式，在结构上是类似的：不是在脑子里用语言推理抛物线方程，而是直接在运动表征空间里做实时预测和调整。</p>
+<p>Reasoning 模型（比如 o1、o3）也在做某种规划，但它的规划是在语言空间里发生的：生成中间步骤的文字描述，评估哪条路径更好，输出结论。LeCun 把这称为”System 1.1”——比纯粹的直觉反应强一点，但本质上还是在语言 token 的统计空间里搜索，而不是在连续物理空间里优化。对于数学推理和代码生成，这可能已经足够；对于机器人操作和物理世界的实时交互，语言作为中介本身就是瓶颈。</p>
+<hr>
+<h2 id="这个方向目前还没有解决的问题"><a href="#这个方向目前还没有解决的问题" class="headerlink" title="这个方向目前还没有解决的问题"></a>这个方向目前还没有解决的问题</h2><p>诚实地说，LeCun 的方案在概念上有说服力，在视觉表征学习上已经有扎实的成果，但在完整的规划-执行闭环上，还有几个没有干净答案的问题。</p>
+<p>首先是目标的表达问题。如果目标可以用一张图来描述（”让杯子在右边”），那可以直接编码成目标向量。但很多时候目标是模糊的、偏好性的，比如”把这个房间收拾得好看一点”——这种目标目前没有好的处理方式。</p>
+<p>其次是动作空间的问题。动作序列从随机初始化出发做梯度优化，在简单任务上可行，但对于全新的、复杂的任务，收敛是很困难的。分层规划（先规划高层子目标，再规划底层动作）是缓解方式，但不是完整的解。</p>
+<p>最根本的问题在于训练数据。世界模型训练需要(状态, 动作, 下一状态)这样的数据，但大多数视频只有(状态, 下一状态)，动作是缺失的隐变量。用隐变量模型来推断”是什么因素让世界从 S 变到了 S’”是可行的思路，但推断出的隐变量和真实物理动作之间的对应关系是模糊的，要把它转化成可执行的机器人指令，还需要额外的数据和模块。</p>
+<p>LeCun 自己也说，需要几个重大概念突破，才能实现他想要的东西。这几个问题，大概就是那些突破需要发生在哪里。</p>
+<hr>
+<h2 id="为什么这个方向在概念上值得认真对待"><a href="#为什么这个方向在概念上值得认真对待" class="headerlink" title="为什么这个方向在概念上值得认真对待"></a>为什么这个方向在概念上值得认真对待</h2><p>LeCun 的方案有说服力，不是因为它已经工作了，而是因为它对准了一个真实的、长期存在的失败，并且给出了一个在逻辑上自洽的解释。</p>
+<p>这个失败叫做 Moravec 悖论：让计算机通过考试很容易，让它像猫一样走路很难。过去几十年，每一波 AI 浪潮都是靠绕开这个悖论来获得成功的——选择那些天然适合符号处理和统计学习的任务，而不是正面解决物理世界的连续性和高维性。LeCun 的方案是少数几个正面回应这个悖论的方向之一。</p>
+<p>它和神经科学的吻合也增加了说服力。婴儿在会说话之前已经理解了重力、物体permanence、因果关系，这些都是从观察和互动里学到的，不是从语言里学到的。”预测性编码”是神经科学里的主流理论之一，认为大脑的核心工作就是不断预测感官输入并用预测误差更新内部模型——这和 JEPA 在表征空间里做预测的思路，在结构上高度一致。这个吻合不能证明 LeCun 是对的，但它意味着这个方向至少没有走错科。</p>
+<p>最有力的论点是：LLM 的问题不是工程缺陷，而是学习目标决定了它能学到什么。一个从没见过颜色的盲人，可以学到所有关于”红色”的语言描述——红色是长波光，红色让人联想到热情——但他永远不知道红色看起来是什么。语言描述是对物理现实的有损压缩，而这个损失是不可逆的，更多的文本数据无法恢复它。如果这个论点是对的，那么 LLM 的天花板不是算力问题，而是信息论问题。</p>
+<p>当然，反对方也有论据。Scaling 派会说：也许语言这个有损压缩保留的信息已经足够了，也许语言就是智能的正确基底。这场争论的核心是一个目前没有答案的问题：语言理解和物理世界理解，哪个是另一个的基础？LeCun 押注物理在先，Scaling 派押注语言够用。两边都没有被决定性地证伪。</p>
+<p>但有一件事是确定的：如果我们想要的是那种能收拾房间、能学会开车、能在物理世界里真正行动的智能，那么一个从来没有看过世界、只读过关于世界的文字描述的系统，和我们想要的东西之间，有一个结构性的距离。LeCun 在做的，是试图量化并跨越这个距离。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/04/04/%E8%AF%AD%E8%A8%80%E4%B8%96%E7%95%8C%E8%A7%82/" rel="prev" title="语言世界观">
+                  <i class="fa fa-angle-left"></i> 语言世界观
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">无序</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
